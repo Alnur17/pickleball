@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const mainColor = Color(0xFFFFFFFF);
-  static const mainColorTwo = Color(0xFFF1F1F1);
+  //static const mainColorTwo = Color(0xFFF1F1F1);
   static const logoBgColor = Color(0xFFECF7FF);
-  static const bottomNavbar = Color(0xffF9F9F9);
+  static const bottomNavbar = Color(0xffADADAD);
   static const textColorBlue = Color(0xff003A71);
   static const textColorBlueV2 = Color(0xff007FF5);
   static const gradientColor = [Color(0xff2E8DD6), Color(0xff4742B5)];
@@ -20,6 +20,7 @@ class AppColors {
   static const black100 = Color(0xff5C5C5C);
   static const black200 = Color(0xff3C3C3C);
   static const green = Color(0xff00BA11);
+  static const lightGreen = Color(0xff59FF00);
   static const borderColor = Color(0xffCACACA);
   static const blueLight = Color(0xff105FCB);
   static const blue = Color(0xff1A63A6);
@@ -27,7 +28,7 @@ class AppColors {
   static const lightBlue = Color(0xff40C4FF);
   static const hintColor = Color(0xff8b8989);
   static const greenLight = Color(0xffe0f3f1);
-  static const whiteDark = Color(0xffBEBEBE);
+  static const whiteDark = Color(0xffc3c3c3);
   static const primary = Color(0xff4DB5AD);
   static const orange = Color(0xffff6200);
   static const orangeLight = Color(0xffFFAE35);

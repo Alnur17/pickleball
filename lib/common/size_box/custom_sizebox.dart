@@ -17,6 +17,7 @@ const sw20 = SizedBox(width: 20);
 const sh24 = SizedBox(height: 24);
 const sw24 = SizedBox(width: 24);
 const sh30 = SizedBox(height: 30);
+const sw30 = SizedBox(width: 30);
 const sh40 = SizedBox(height: 40);
 const sw40 = SizedBox(width: 40);
 const sh50 = SizedBox(height: 50);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pickleball/common/size_box/custom_sizebox.dart';
 
 import '../app_color/app_colors.dart';
 import '../app_text_style/styles.dart';
@@ -18,10 +19,10 @@ class CustomContainer extends StatelessWidget {
     required this.text,
     this.textStyle,
     required this.imagePath,
-    this.backgroundColor = AppColors.white,
+    this.backgroundColor = AppColors.transparent,
     this.padding,
     this.borderRadius,
-    this.height = 54,
+    this.height = 48,
     required this.onTap,
   });
 
@@ -37,9 +38,19 @@ class CustomContainer extends StatelessWidget {
           color: backgroundColor,
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(text, style: textStyle ?? h3),
+            Text(
+              text,
+              style: textStyle ??
+                  h6.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.white,
+                  ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
+            sw5,
             Image.asset(imagePath, scale: 4),
           ],
         ),

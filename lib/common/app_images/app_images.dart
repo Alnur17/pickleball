@@ -2,6 +2,8 @@ class AppImages {
   //================ Icons ==================>
   static const splashLogo = "assets/icons/logo.png";
   static const homeLogo = "assets/icons/home logo.png";
+  static const arrowFly = "assets/icons/arrow_fly.png";
+  static const arrowFlyBig = "assets/icons/arrow_fly_big.png";
   static const arrowRight = "assets/icons/arrow right.png";
   static const arrowRightNormal = "assets/icons/Arrow right light.png";
   static const arrowDown = "assets/icons/arrow down.png";
@@ -11,7 +13,8 @@ class AppImages {
   static const checkBoxFilled = "assets/icons/checkbox filled.png";
   static const eyeClose = "assets/icons/eye close.png";
   static const mail = "assets/icons/mail.png";
-  static const person = "assets/icons/User_light.png";
+  static const profile = "assets/icons/profile.png";
+  static const booking = "assets/icons/booking.png";
   static const personFilled = "assets/icons/User_fill.png";
   static const home = "assets/icons/home.png";
   static const homeFilled = "assets/icons/Home_fill.png";
@@ -47,7 +50,7 @@ class AppImages {
   static const locationRoundTwo = "assets/icons/location round 2.png";
   static const favorite = "assets/icons/Favorite.png";
   static const share = "assets/icons/share.png";
-  static const star = "assets/icons/stars.png";
+  static const star = "assets/icons/Star.png";
   static const upload = "assets/icons/upload.png";
   static const send = "assets/icons/send.png";
   static const attachFile = "assets/icons/attach file.png";
@@ -63,6 +66,8 @@ class AppImages {
   static const call = "assets/icons/call.png";
   static const callRound = "assets/icons/call round.png";
   static const close = "assets/icons/close.png";
+  static const clock = "assets/icons/clock.png";
+  static const calendar = "assets/icons/calendar.png";
 
   static const starCard = "assets/icons/star card.png";
   static const starCardTwo = "assets/icons/star card 2.png";
@@ -102,6 +107,8 @@ class AppImages {
   static const verifyCodeImage = "assets/images/verify.png";
   static const groupImage = "assets/images/groupImage.png";
   static const starImage = "assets/images/star image.png";
+  static const containerImage = "assets/images/container image.jpg";
+  static const containerImageTwo = "assets/images/container image two.jpg";
 
   static const profileImage = 'https://images.unsplash.com/photo-1578320339911-5e7974b2720a?q=80&w=778&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
   static const profileImageTwo = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D';
