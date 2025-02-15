@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:pickleball/app/modules/my_search/views/session_details_view.dart';
-import 'package:pickleball/app/modules/my_search/views/trainer_profile_view.dart';
-import 'package:pickleball/common/app_images/app_images.dart';
-import 'package:pickleball/common/widgets/search_filed.dart';
+import 'package:pickleball/common/helper_widget/booking_card_confirm_widget.dart';
 
 import '../../../../common/app_color/app_colors.dart';
-import '../../../../common/helper_widget/course_card_widget.dart';
-import '../../../../common/helper_widget/profile_card_widget.dart';
+import '../../../../common/app_images/app_images.dart';
+import '../../../../common/helper_widget/booking_card_waitlist_widget.dart';
 import '../../../../common/size_box/custom_sizebox.dart';
-import '../controllers/my_search_controller.dart';
+import '../../../../common/widgets/search_filed.dart';
+import '../controllers/booking_controller.dart';
 
-class MySearchView extends GetView<MySearchController> {
-  const MySearchView({super.key});
+class BookingView extends GetView<BookingController> {
+  const BookingView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +29,9 @@ class MySearchView extends GetView<MySearchController> {
           children: [
             TabBar(
               tabs: [
-                Tab(text: 'Sessions'),
+                Tab(text: 'Confirmed'),
                 Tab(
-                  text: 'Trainers',
+                  text: 'Waitlist',
                 ),
               ],
               indicatorSize: TabBarIndicatorSize.tab,
@@ -82,20 +80,18 @@ class MySearchView extends GetView<MySearchController> {
                                 padding: EdgeInsets.only(
                                   bottom: index == 5 - 1 ? 116 : 8,
                                 ),
-                                child: CourseCardWidget(
-                                  height: 350,
-                                  width: double.infinity,
-                                  title: "Doubles Strategy Masterclass",
-                                  description:
-                                      "Master the art of playing doubles in this comprehensive session designed for intermediate to advanced Pickleball players...",
+                                child: BookingCardConfirmWidget(
+                                  coachName: "Coach John Smith",
+                                  sessionTitle: "Doubles Strategy Masterclass",
                                   date: "25 January 2025",
                                   time: "2:00 PM - 3:00 PM",
-                                  location:
-                                      "Sunset Pickleball Club, Miami Beach",
-                                  skillLevel: "Beginner",
-                                  price: "25",
-                                  onViewDetails: () {
-                                    Get.to(()=> SessionDetailsView());
+                                  imageUrl: AppImages.profileImageTwo,
+                                  // Replace with actual URL
+                                  onReschedule: () {
+                                    // Handle reschedule action
+                                  },
+                                  onCancel: () {
+                                    // Handle cancel action
                                   },
                                 ),
                               );
@@ -131,27 +127,20 @@ class MySearchView extends GetView<MySearchController> {
                         ),
                         sh20,
                         Expanded(
-                          child: GridView.builder(
+                          child: ListView.builder(
                             shrinkWrap: true,
                             primary: false,
-                            padding: EdgeInsets.only(bottom: 116),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 20,
-                              mainAxisSpacing: 20,
-                              childAspectRatio: 0.9,
-                            ),
+                           // padding: EdgeInsets.only(bottom: 116),
                             itemCount: 20,
                             itemBuilder: (context, index) {
-                              return ProfileCardWidget(
-                                name: 'John Smith',
-                                rating: 4.5,
-                                experience: '10+ Years',
-                                hourlyRate: '50/hour',
-                                profileImage: AppImages.profileImageTwo,
-                                onTap: () {
-                                  Get.to(()=> TrainerProfileView());
+                              return BookingCardWaitlistWidget(
+                                coachName: "Coach John Smith",
+                                sessionTitle: "Doubles Strategy Masterclass",
+                                date: "25 January 2025",
+                                time: "2:00 PM - 3:00 PM",
+                                imageUrl: AppImages.profileImageTwo,
+                                onCancel: () {
+                                  // Handle cancel action
                                 },
                               );
                             },

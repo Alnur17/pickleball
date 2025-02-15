@@ -11,6 +11,8 @@ class ProfileCardWidget extends StatelessWidget {
   final String experience;
   final String hourlyRate;
   final String profileImage;
+  final double? width;
+  final double? height;
   final VoidCallback onTap;
 
   const ProfileCardWidget({
@@ -20,13 +22,16 @@ class ProfileCardWidget extends StatelessWidget {
     required this.experience,
     required this.hourlyRate,
     required this.profileImage,
+    this.width = 180,
+    this.height = 190,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 180,
+      height: height,
+      width: width,
       //margin: const EdgeInsets.only(left: 20, right: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -39,9 +44,11 @@ class ProfileCardWidget extends StatelessWidget {
         children: [
           CircleAvatar(radius: 22, backgroundImage: NetworkImage(profileImage)),
           sh8,
-          Text(name, style: h2.copyWith(fontSize: 12, fontWeight: FontWeight.bold)),
+          Text(name,
+              style: h2.copyWith(fontSize: 12, fontWeight: FontWeight.bold)),
           sh5,
-          Text("⭐ ${rating.toStringAsFixed(1)}", style: h2.copyWith(fontSize: 12, fontWeight: FontWeight.bold)),
+          Text("⭐ ${rating.toStringAsFixed(1)}",
+              style: h2.copyWith(fontSize: 12, fontWeight: FontWeight.bold)),
           sh8,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -57,7 +64,9 @@ class ProfileCardWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("View Details", style: h3.copyWith(fontSize: 12, fontWeight: FontWeight.w500)),
+                Text("View Details",
+                    style:
+                        h3.copyWith(fontSize: 12, fontWeight: FontWeight.w500)),
                 sw5,
                 Image.asset(AppImages.arrowFly, scale: 4),
               ],

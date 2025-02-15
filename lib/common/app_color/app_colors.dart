@@ -7,7 +7,8 @@ class AppColors {
   static const bottomNavbar = Color(0xffADADAD);
   static const textColorBlue = Color(0xff003A71);
   static const textColorBlueV2 = Color(0xff007FF5);
-  static const gradientColor = [Color(0xff2E8DD6), Color(0xff4742B5)];
+  static const textColorBlueLight = Color(0x1a305fa1);
+  static const gradientColor = [Color(0xff007FF5), Color(0xff003A71)];
 
   //fixed color
   static const transparent = Colors.transparent;
@@ -21,6 +22,7 @@ class AppColors {
   static const black200 = Color(0xff3C3C3C);
   static const green = Color(0xff00BA11);
   static const lightGreen = Color(0xff59FF00);
+  static const lightGreenTwo = Color(0xffB2D235);
   static const borderColor = Color(0xffCACACA);
   static const blueLight = Color(0xff105FCB);
   static const blue = Color(0xff1A63A6);
@@ -33,5 +35,6 @@ class AppColors {
   static const orange = Color(0xffff6200);
   static const orangeLight = Color(0xffFFAE35);
   static const red = Color(0xffff3c00);
+  static const redLight = Color(0x1aff3c00);
   static const purple = Color(0xff5366BE);
 }

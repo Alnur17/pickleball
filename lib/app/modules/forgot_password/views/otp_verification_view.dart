@@ -89,6 +89,7 @@ class OtpVerificationView extends GetView{
               onPressed: () {
                 Get.to(() => const ResetPasswordView());
               },
+              gradientColors: AppColors.gradientColor,
             ),
             sh30,
             Text(

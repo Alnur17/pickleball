@@ -101,6 +101,7 @@ class LoginView extends GetView<LoginController> {
                 onPressed: () {
                   Get.to(() =>  DashboardView());
                 },
+                gradientColors: AppColors.gradientColor,
               ),
               sh20,
 

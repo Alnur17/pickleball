@@ -69,6 +69,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
               onPressed: () {
                 Get.to(() => OtpVerificationView());
               },
+              gradientColors: AppColors.gradientColor,
             ),
           ],
         ),

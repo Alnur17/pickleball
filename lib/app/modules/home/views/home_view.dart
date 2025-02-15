@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pickleball/app/modules/home/views/notification_view.dart';
 import 'package:pickleball/common/app_color/app_colors.dart';
 import 'package:pickleball/common/app_images/app_images.dart';
 import 'package:pickleball/common/app_text_style/styles.dart';
@@ -25,20 +26,22 @@ class HomeView extends GetView<HomeController> {
           children: [
             sw5,
             Container(
-                height: 42,
-                width: 42,
-                //padding: EdgeInsets.only(left: 16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.grey,
+              height: 42,
+              width: 42,
+              //padding: EdgeInsets.only(left: 16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.grey,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  AppImages.profileImageTwo,
+                  scale: 4,
+                  fit: BoxFit.cover,
                 ),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      AppImages.profileImageTwo,
-                      scale: 4,
-                      fit: BoxFit.cover,
-                    ))),
+              ),
+            ),
             sw12,
             Text(
               'Hey Sunan',
@@ -48,10 +51,12 @@ class HomeView extends GetView<HomeController> {
         ),
         automaticallyImplyLeading: false,
         actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: GestureDetector(
-              onTap: () {},
+          GestureDetector(
+            onTap: () {
+              Get.to(()=> NotificationView());
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Image.asset(
                 AppImages.notification,
                 scale: 4,
@@ -135,7 +140,8 @@ Widget _buildRecommendationSection() {
               ),
               child: CourseCardWidget(
                 title: "Doubles Strategy Masterclass",
-                description: "Master the art of playing doubles in this comprehensive session designed for intermediate to advanced Pickleball players...",
+                description:
+                    "Master the art of playing doubles in this comprehensive session designed for intermediate to advanced Pickleball players...",
                 date: "25 January 2025",
                 time: "2:00 PM - 3:00 PM",
                 location: "Sunset Pickleball Club, Miami Beach",

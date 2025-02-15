@@ -10,6 +10,9 @@ abstract class Routes {
   static const DASHBOARD = _Paths.DASHBOARD;
   static const SEARCH = _Paths.SEARCH;
   static const MY_SEARCH = _Paths.MY_SEARCH;
+  static const BOOKING = _Paths.BOOKING;
+  static const PROFILE = _Paths.PROFILE;
+  static const PROFILE_AND_SETTINGS = _Paths.PROFILE_AND_SETTINGS;
 }
 
 abstract class _Paths {
@@ -21,4 +24,7 @@ abstract class _Paths {
   static const DASHBOARD = '/dashboard';
   static const SEARCH = '/search';
   static const MY_SEARCH = '/my-search';
+  static const BOOKING = '/booking';
+  static const PROFILE = '/profile';
+  static const PROFILE_AND_SETTINGS = '/profile-and-settings';
 }

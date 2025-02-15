@@ -7,6 +7,7 @@ class HeaderSectionWidget extends StatelessWidget {
   final String title;
   final String actionText;
   final String actionIcon;
+  final Color? textColor;
   final VoidCallback onTap;
 
   const HeaderSectionWidget({
@@ -14,7 +15,7 @@ class HeaderSectionWidget extends StatelessWidget {
     required this.title,
     required this.actionText,
     required this.actionIcon,
-    required this.onTap,
+    required this.onTap, this.textColor,
   });
 
   @override
@@ -32,7 +33,7 @@ class HeaderSectionWidget extends StatelessWidget {
             children: [
               Text(
                 actionText,
-                style: h6.copyWith(color: AppColors.textColorBlue),
+                style: h6.copyWith(color: textColor ?? AppColors.textColorBlue),
               ),
               Image.asset(
                 actionIcon,

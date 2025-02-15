@@ -84,6 +84,7 @@ class ResetPasswordView extends GetView{
               onPressed: () {
                 Get.offAll(()=> LoginView());
               },
+              gradientColors: AppColors.gradientColor,
             ),
           ],
         ),

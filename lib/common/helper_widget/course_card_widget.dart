@@ -16,8 +16,9 @@ class CourseCardWidget extends StatelessWidget {
   final String skillLevel;
   final String price;
   final String? backgroundImage;
-  final VoidCallback onViewDetails;
   final double? width;
+  final double? height;
+  final VoidCallback onViewDetails;
 
   const CourseCardWidget({
     super.key,
@@ -29,12 +30,15 @@ class CourseCardWidget extends StatelessWidget {
     required this.skillLevel,
     required this.price,
     this.backgroundImage,
-    required this.onViewDetails, this.width = 300,
+    this.width = 300,
+    this.height = 300,
+    required this.onViewDetails,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: height,
       width: width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -152,10 +156,11 @@ class CourseCardWidget extends StatelessWidget {
                       ),
                     ),
                     CustomContainer(
+                      backgroundColor: Colors.black38,
                       text: 'View Details',
                       imagePath: AppImages.arrowFlyBig,
                       onTap: onViewDetails,
-                      padding: EdgeInsets.zero,
+                      //padding: EdgeInsets.zero,
                     )
                   ],
                 ),

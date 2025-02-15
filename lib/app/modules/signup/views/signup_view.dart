@@ -143,6 +143,7 @@ class SignupView extends GetView<SignupController> {
                 onPressed: () {
                   Get.offAll(() => const VerifyYourEmailView());
                 },
+                gradientColors: AppColors.gradientColor,
               ),
               sh10,
               GestureDetector(

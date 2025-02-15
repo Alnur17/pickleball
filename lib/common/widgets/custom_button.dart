@@ -13,7 +13,7 @@ class CustomButton extends StatelessWidget {
   final double? width;
   final String? imageAssetPath;
   final double? borderRadius;
-  final List<Color>? gradientColors;  // Accept a list of colors
+  final List<Color>? gradientColors; // Accept a list of colors
 
   const CustomButton({
     super.key,
@@ -27,7 +27,7 @@ class CustomButton extends StatelessWidget {
     this.borderColor,
     this.imageAssetPath,
     this.borderRadius = 40,
-    this.gradientColors, // Accept gradientColors as an optional parameter
+    this.gradientColors,
   });
 
   @override
@@ -42,18 +42,16 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius!),
           border: Border.all(color: borderColor ?? AppColors.transparent),
           // Apply the default gradient if gradientColors is null
+          color: gradientColors == null
+              ? backgroundColor ?? AppColors.transparent
+              : null,
           gradient: gradientColors != null
               ? LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: gradientColors!, // Use provided gradient colors
-          )
-              : LinearGradient(  // Default gradient if none is provided
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xff007FF5), Color(0xff003A71)],
-          ),
-          color: null,
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: gradientColors!,
+                )
+              : null, // Remove default gradient when `gradientColors` is null
         ),
         child: Center(
           child: Row(
@@ -70,10 +68,11 @@ class CustomButton extends StatelessWidget {
               ],
               Text(
                 text,
-                style: textStyle ?? h3.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: textColor ?? AppColors.white,
-                ),
+                style: textStyle ??
+                    h3.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: textColor ?? AppColors.white,
+                    ),
               ),
             ],
           ),

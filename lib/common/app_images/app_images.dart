@@ -28,6 +28,7 @@ class AppImages {
   static const basket = "assets/icons/Basket_alt_3.png";
   static const basketFilled = "assets/icons/Basket_alt_3_fill.png";
   static const search = "assets/icons/search.png";
+  static const searchTwo = "assets/icons/Search 2.png";
   static const searchNav = "assets/icons/Search nav.png";
   static const language = "assets/icons/world.png";
   static const languageTwo = "assets/icons/language 2.png";
@@ -39,7 +40,7 @@ class AppImages {
   static const bookmarkSmall = "assets/icons/bookmark-small.png";
   static const delete = "assets/icons/delete.png";
   static const deleteTwo = "assets/icons/delete 2.png";
-  static const edit = "assets/icons/Edit.png";
+  static const edit = "assets/icons/edit.png";
   static const editRound = "assets/icons/edit round.png";
   static const add = "assets/icons/add.png";
   static const addRound = "assets/icons/add round.png";
@@ -51,6 +52,7 @@ class AppImages {
   static const favorite = "assets/icons/Favorite.png";
   static const share = "assets/icons/share.png";
   static const star = "assets/icons/Star.png";
+  static const stars = "assets/icons/stars.png";
   static const upload = "assets/icons/upload.png";
   static const send = "assets/icons/send.png";
   static const attachFile = "assets/icons/attach file.png";
@@ -59,15 +61,22 @@ class AppImages {
   static const helpCenter = "assets/icons/help center.png";
   static const myOrder = "assets/icons/my order.png";
   static const notification = "assets/icons/notification.png";
-  static const payment = "assets/icons/payment.png";
-  static const policy = "assets/icons/policy.png";
+  static const notificationTwo = "assets/icons/notification two.png";
+  static const key = "assets/icons/key.png";
+  static const privacy = "assets/icons/privacy.png";
   static const logout = "assets/icons/logout.png";
-  static const filter = "assets/icons/Filter_big.png";
+  static const filter = "assets/icons/Filter.png";
   static const call = "assets/icons/call.png";
+  static const email = "assets/icons/email.png";
   static const callRound = "assets/icons/call round.png";
   static const close = "assets/icons/close.png";
   static const clock = "assets/icons/clock.png";
   static const calendar = "assets/icons/calendar.png";
+  static const soundGreenLight = "assets/icons/sound greenLight.png";
+  static const soundBlue = "assets/icons/sound blue.png";
+  static const soundRed = "assets/icons/sound red.png";
+  static const sound = "assets/icons/sound.png";
+  static const history = "assets/icons/history.png";
 
   static const starCard = "assets/icons/star card.png";
   static const starCardTwo = "assets/icons/star card 2.png";
