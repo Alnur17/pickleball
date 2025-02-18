@@ -10,6 +10,7 @@ class AppImages {
   static const arrowRightSmall = "assets/icons/arrow right small.png";
   static const checkBox = "assets/icons/checkbox.png";
   static const checkBoxCircle = "assets/icons/circle checkbox.png";
+  static const checkBoxCircleFilled = "assets/icons/circle checkbox filled.png";
   static const checkBoxFilled = "assets/icons/checkbox filled.png";
   static const eyeClose = "assets/icons/eye close.png";
   static const mail = "assets/icons/mail.png";
@@ -77,6 +78,7 @@ class AppImages {
   static const soundRed = "assets/icons/sound red.png";
   static const sound = "assets/icons/sound.png";
   static const history = "assets/icons/history.png";
+  static const toggleButton = "assets/icons/Toggle Button.png";
 
   static const starCard = "assets/icons/star card.png";
   static const starCardTwo = "assets/icons/star card 2.png";

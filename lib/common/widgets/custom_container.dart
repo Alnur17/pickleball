@@ -7,6 +7,7 @@ import '../app_text_style/styles.dart';
 class CustomContainer extends StatelessWidget {
   final String text;
   final double? height;
+  final double? width;
   final TextStyle? textStyle;
   final String imagePath;
   final Color backgroundColor;
@@ -23,7 +24,7 @@ class CustomContainer extends StatelessWidget {
     this.padding,
     this.borderRadius,
     this.height = 48,
-    required this.onTap,
+    required this.onTap, this.width,
   });
 
   @override
@@ -32,13 +33,14 @@ class CustomContainer extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: height,
+        width: width,
         padding: padding ?? const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
           borderRadius: borderRadius ?? BorderRadius.circular(8),
           color: backgroundColor,
         ),
         child: Row(
-         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               text,
