@@ -1,7 +1,7 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pickleball/app/modules/my_search/views/booking_confirmation_view.dart';
 import 'package:pickleball/common/app_images/app_images.dart';
 import 'package:pickleball/common/helper_widget/header_section_widget.dart';
 import 'package:pickleball/common/size_box/custom_sizebox.dart';
@@ -97,7 +97,7 @@ class SessionDetailsView extends GetView {
                     text: 'Book Now',
                     imagePath: AppImages.arrowFly,
                     onTap: () {
-                      log('Book Now Tapped');
+                      Get.to(()=> BookingConfirmationView());
                     },
                     backgroundColor: AppColors.textColorBlue,
                   ),

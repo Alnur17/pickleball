@@ -65,6 +65,7 @@ class AppImages {
   static const notificationTwo = "assets/icons/notification two.png";
   static const key = "assets/icons/key.png";
   static const privacy = "assets/icons/privacy.png";
+  static const termsAndConditions = "assets/icons/terms and conditions.png";
   static const logout = "assets/icons/logout.png";
   static const filter = "assets/icons/Filter.png";
   static const call = "assets/icons/call.png";

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pickleball/app/modules/profile_and_settings/views/about_us_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/history_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/language_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/notifications_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/password_management_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/privacy_and_security_view.dart';
+import 'package:pickleball/app/modules/profile_and_settings/views/term_and_conditios_view.dart';
 import 'package:pickleball/common/app_text_style/styles.dart';
 
 import '../../../../common/app_color/app_colors.dart';
@@ -105,11 +107,30 @@ class ProfileAndSettingsView extends GetView<ProfileAndSettingsController> {
             ),
             Divider(),
             CustomListTile(
+              onTap: () {
+                Get.to(() => TermsAndConditionsView());
+              },
+              leadingImage: AppImages.termsAndConditions,
+              title: 'Terms & Conditions',
+              trailingImage: AppImages.arrowRightSmall,
+            ),
+            Divider(),
+            CustomListTile(
+              onTap: () {
+                Get.to(() => AboutUsView());
+              },
+              leadingImage: AppImages.aboutUs,
+              title: 'About Us',
+              trailingImage: AppImages.arrowRightSmall,
+            ),
+            Divider(),
+            CustomListTile(
               onTap: () {},
               leadingImage: AppImages.logout,
               title: 'Log out',
               trailingImage: AppImages.arrowRightSmall,
             ),
+            sh116,
           ],
         ),
       ),

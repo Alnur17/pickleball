@@ -8,17 +8,16 @@ import '../../../../common/app_images/app_images.dart';
 import '../../../../common/const_text/const_text.dart';
 import '../../../../common/size_box/custom_sizebox.dart';
 
-class PrivacyAndSecurityView extends GetView {
-  const PrivacyAndSecurityView({super.key});
+class AboutUsView extends GetView {
+  const AboutUsView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.mainColor,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
+        backgroundColor: AppColors.white,
         scrolledUnderElevation: 0,
-        backgroundColor: AppColors.mainColor,
-        title: Text('Privacy & Security',style: appBarStyle,),
-
+        title: Text('About Us',style: appBarStyle,),
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -27,8 +26,7 @@ class PrivacyAndSecurityView extends GetView {
             AppImages.back,
             scale: 4,
           ),
-        ),
-      ),
+        ),      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 16,right: 16,bottom: 16),
@@ -37,39 +35,47 @@ class PrivacyAndSecurityView extends GetView {
             children: [
               sh30,
               // Text(
-              //   'Privacy Policy',
+              //   'About Us',
               //   style: h2,
               // ),
               // sh24,
               Text(
-                policyIntroduction,
+                acceptance0fTerms,
                 style: h4.copyWith(
                   fontSize: 14,
                 ),
               ),
               sh24,
               Text(
-                policyIntroduction,
+                acceptance0fTerms,
                 style: h4.copyWith(
                   fontSize: 14,
                 ),
               ),
               sh24,
               Text(
-                policyIntroduction,
+                acceptance0fTerms,
                 style: h4.copyWith(
                   fontSize: 14,
                 ),
               ),
               sh24,
               Text(
-                policyIntroduction,
+                acceptance0fTerms,
                 style: h4.copyWith(
                   fontSize: 14,
                 ),
-              ), sh24,
+              ),
+              sh24,
               Text(
-                policyIntroduction,
+                acceptance0fTerms,
+                style: h4.copyWith(
+                  fontSize: 14,
+                ),
+              ),
+              sh24,
+              Text(
+                acceptance0fTerms,
                 style: h4.copyWith(
                   fontSize: 14,
                 ),
