@@ -25,9 +25,12 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
           onTap: () {
             Get.back();
           },
-          child: Image.asset(
-            AppImages.back,
-            scale: 4,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, top: 4),
+            child: Image.asset(
+              AppImages.back,
+              scale: 4,
+            ),
           ),
         ),
       ),

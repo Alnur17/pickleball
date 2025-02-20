@@ -30,7 +30,7 @@ class SignupView extends GetView<SignupController> {
             Get.back();
           },
           child: Padding(
-            padding: const EdgeInsets.only(left: 16, top: 4),
+            padding: const EdgeInsets.only(left: 20, top: 4),
             child: Image.asset(
               AppImages.back,
               scale: 4,
@@ -39,7 +39,7 @@ class SignupView extends GetView<SignupController> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
           child: Column(
             children: [

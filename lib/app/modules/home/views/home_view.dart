@@ -26,9 +26,9 @@ class HomeView extends GetView<HomeController> {
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
         scrolledUnderElevation: 0,
+        titleSpacing: 20,
         title: Row(
           children: [
-            sw5,
             Container(
               height: 42,
               width: 42,
@@ -64,7 +64,6 @@ class HomeView extends GetView<HomeController> {
               scale: 4,
             ),
           ),
-          //sw12,
           GestureDetector(
             onTap: () {
               Get.to(()=> NotificationView());

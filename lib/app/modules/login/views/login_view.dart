@@ -22,6 +22,7 @@ class LoginView extends GetView<LoginController> {
       backgroundColor: AppColors.mainColor,
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
+        titleSpacing: 20,
         title:  Text('Log In',style: appBarStyle,),
         automaticallyImplyLeading: false,
       ),

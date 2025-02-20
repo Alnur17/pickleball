@@ -21,14 +21,17 @@ class VerifyYourEmailView extends GetView {
       backgroundColor: AppColors.mainColor,
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
-        title: Text('Verify Your Email',style: appBarStyle),
+        title: Text('Verify Your Email', style: appBarStyle),
         leading: GestureDetector(
           onTap: () {
             Get.back();
           },
-          child: Image.asset(
-            AppImages.back,
-            scale: 4,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, top: 4),
+            child: Image.asset(
+              AppImages.back,
+              scale: 4,
+            ),
           ),
         ),
       ),
@@ -47,7 +50,7 @@ class VerifyYourEmailView extends GetView {
               style: h5,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 30),
+            sh30,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: PinCodeTextField(

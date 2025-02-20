@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/about_us_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/history_view.dart';
-import 'package:pickleball/app/modules/profile_and_settings/views/language_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/notifications_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/password_management_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/privacy_and_security_view.dart';
@@ -76,15 +75,6 @@ class ProfileAndSettingsView extends GetView<ProfileAndSettingsController> {
               },
               leadingImage: AppImages.key,
               title: 'Password Management',
-              trailingImage: AppImages.arrowRightSmall,
-            ),
-            Divider(),
-            CustomListTile(
-              onTap: () {
-                Get.to(() => LanguageView());
-              },
-              leadingImage: AppImages.language,
-              title: 'language',
               trailingImage: AppImages.arrowRightSmall,
             ),
             Divider(),

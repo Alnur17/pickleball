@@ -23,15 +23,18 @@ class PrivacyAndSecurityView extends GetView {
           onTap: () {
             Get.back();
           },
-          child: Image.asset(
-            AppImages.back,
-            scale: 4,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, top: 4),
+            child: Image.asset(
+              AppImages.back,
+              scale: 4,
+            ),
           ),
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 16,right: 16,bottom: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

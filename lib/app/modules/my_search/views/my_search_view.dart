@@ -206,6 +206,7 @@ class MySearchView extends GetView<MySearchController> {
                   ),
                 )
               : null,
+          titleSpacing: 20,
           title: Text('Search', style: appBarStyle),
         ),
         body: Column(
