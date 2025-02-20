@@ -20,7 +20,6 @@ class ResetPasswordView extends GetView{
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
         title: Text('Reset Password',style: appBarStyle),
-        centerTitle: true,
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -32,7 +31,7 @@ class ResetPasswordView extends GetView{
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -41,7 +40,7 @@ class ResetPasswordView extends GetView{
               alignment: Alignment.center,
               child: Text(
                 'Set Your New Password',
-                style: h4,
+                style: h4.copyWith(),
               ),
             ),
             sh16,

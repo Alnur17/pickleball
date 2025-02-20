@@ -6,6 +6,7 @@ import 'package:pickleball/common/app_images/app_images.dart';
 import 'package:pickleball/common/size_box/custom_sizebox.dart';
 
 import '../../../../common/app_text_style/styles.dart';
+import '../../../../common/widgets/custom_container.dart';
 
 class BookingConfirmationView extends GetView {
   const BookingConfirmationView({super.key});
@@ -13,17 +14,29 @@ class BookingConfirmationView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
+        backgroundColor: AppColors.white,
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Image.asset(
+            AppImages.back,
+            scale: 4,
+          ),
+        ),
         title: Text(
-          'BookingConfirmation',
+          'Booking Confirmation',
           style: appBarStyle,
         ),
-        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
+            sh16,
             Container(
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
@@ -111,7 +124,7 @@ class BookingConfirmationView extends GetView {
                 ],
               ),
             ),
-            sh12,
+            sh20,
             Row(
               children: [
                 Text(
@@ -124,6 +137,17 @@ class BookingConfirmationView extends GetView {
                   style: h3,
                 ),
               ],
+            ),
+            sh60,
+            Center(
+              child: CustomContainer(
+                text: 'Proceed to Pay',
+                imagePath: AppImages.arrowFly,
+                onTap: () {},
+                height: 35,
+                width: 170,
+                backgroundColor: AppColors.textColorBlue,
+              ),
             ),
           ],
         ),

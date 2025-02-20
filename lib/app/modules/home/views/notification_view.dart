@@ -49,7 +49,9 @@ class NotificationView extends GetView {
           style: appBarStyle,
         ),
         leading: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Get.back();
+          },
           child: Image.asset(
             AppImages.back,
             scale: 4,

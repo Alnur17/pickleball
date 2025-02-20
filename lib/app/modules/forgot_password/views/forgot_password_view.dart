@@ -21,7 +21,6 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
         title:  Text('Forgot Password',style: appBarStyle),
-        centerTitle: true,
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -33,7 +32,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pickleball/app/modules/profile_and_settings/views/write_review_view.dart';
 import 'package:pickleball/common/app_text_style/styles.dart';
 import 'package:pickleball/common/helper_widget/booking_completed_history_card.dart';
 
@@ -96,7 +97,9 @@ class HistoryView extends GetView {
                                     imageUrl: AppImages.profileImageTwo,
                                     status: "Complete",
                                     onRebook: () => print("Rebook Pressed"),
-                                    onLeaveReview: () => print("Leave Review Pressed"),
+                                    onLeaveReview: () {
+                                      Get.to(() => WriteReviewView());
+                                    }
                                   ),
                                   BookingCompletedHistoryCard(
                                     coachName: "Coach John Smith",
@@ -107,7 +110,9 @@ class HistoryView extends GetView {
                                     imageUrl: AppImages.profileImageTwo,
                                     status: "Canceled",
                                     onRebook: () => print("Rebook Pressed"),
-                                    onViewRefund: () => print("View Refund Pressed"),
+                                    onViewRefund: () {
+
+                                    },
                                   ),
                                 ],
                               );

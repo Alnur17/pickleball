@@ -22,7 +22,6 @@ class VerifyYourEmailView extends GetView {
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
         title: Text('Verify Your Email',style: appBarStyle),
-        centerTitle: true,
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -34,7 +33,7 @@ class VerifyYourEmailView extends GetView {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
             sh30,
@@ -50,7 +49,7 @@ class VerifyYourEmailView extends GetView {
             ),
             const SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: PinCodeTextField(
                 length: 4,
                 obscureText: false,
@@ -89,6 +88,7 @@ class VerifyYourEmailView extends GetView {
               onPressed: () {
                 Get.to(() => const LoginView());
               },
+              gradientColors: AppColors.gradientColor,
             ),
             sh30,
             Row(

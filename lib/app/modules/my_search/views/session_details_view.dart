@@ -51,7 +51,9 @@ class SessionDetailsView extends GetView {
                   left: 20,
                   top: 20,
                   child: GestureDetector(
-                    onTap: (){},
+                    onTap: (){
+                      Get.back();
+                    },
                     child: Image.asset(
                       AppImages.back,
                       scale: 4,
@@ -79,14 +81,18 @@ class SessionDetailsView extends GetView {
                   left: 20,
                   bottom: 10,
                   right: Get.width * 0.35,
-                  child: Expanded(
-                    child: Text(
-                      'Doubles Strategy Masterclass',
-                      style: h1.copyWith(
-                        color: AppColors.white,
-                        fontSize: 20,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Doubles Strategy Masterclass',
+                          style: h1.copyWith(
+                            color: AppColors.white,
+                            fontSize: 20,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
                 Positioned(
@@ -95,7 +101,7 @@ class SessionDetailsView extends GetView {
                   child: CustomContainer(
                     height: 35,
                     text: 'Book Now',
-                    imagePath: AppImages.arrowFly,
+                    imagePath: AppImages.arrowFlyWhite,
                     onTap: () {
                       Get.to(()=> BookingConfirmationView());
                     },

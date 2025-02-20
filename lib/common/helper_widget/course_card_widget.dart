@@ -156,6 +156,7 @@ class CourseCardWidget extends StatelessWidget {
                       ),
                     ),
                     CustomContainer(
+                      borderRadius: BorderRadius.circular(30),
                       backgroundColor: Colors.black38,
                       text: 'View Details',
                       imagePath: AppImages.arrowFlyBig,

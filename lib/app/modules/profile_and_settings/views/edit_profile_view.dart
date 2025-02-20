@@ -95,7 +95,7 @@ class EditProfileView extends GetView {
                   Center(
                     child: CustomContainer(
                       text: 'Save Changes',
-                      imagePath: AppImages.arrowFly,
+                      imagePath: AppImages.arrowFlyWhite,
                       onTap: () {},
                       height: 35,
                       width: 170,

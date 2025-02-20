@@ -133,19 +133,22 @@ class BookingView extends GetView<BookingController> {
                            // padding: EdgeInsets.only(bottom: 116),
                             itemCount: 20,
                             itemBuilder: (context, index) {
-                              return BookingCardWaitlistWidget(
-                                coachName: "Coach John Smith",
-                                sessionTitle: "Doubles Strategy Masterclass",
-                                date: "25 January 2025",
-                                time: "2:00 PM - 3:00 PM",
-                                imageUrl: AppImages.profileImageTwo,
-                                onCancel: () {
-                                  // Handle cancel action
-                                },
+                              return Padding(
+                                padding:  EdgeInsets.only(bottom: index == 20 -1 ? 116: 12),
+                                child: BookingCardWaitlistWidget(
+                                  coachName: "Coach John Smith",
+                                  sessionTitle: "Doubles Strategy Masterclass",
+                                  date: "25 January 2025",
+                                  time: "2:00 PM - 3:00 PM",
+                                  imageUrl: AppImages.profileImageTwo,
+                                  onCancel: () {
+                                    // Handle cancel action
+                                  },
+                                ),
                               );
                             },
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

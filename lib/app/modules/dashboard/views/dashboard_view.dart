@@ -30,8 +30,8 @@ class DashboardView extends GetView<DashboardController> {
                     index: dashboardController.selectedIndex.value,
                     children: [
                       HomeView(),
-                      BookingView(),
                       MySearchView(),
+                      BookingView(),
                       ProfileAndSettingsView(),
                     ],
                   );
@@ -92,31 +92,6 @@ class DashboardView extends GetView<DashboardController> {
                               width: 40,
                               height: 40,
                               child: Image.asset(
-                                AppImages.booking,
-                                scale: 4,
-                                color: AppColors.white,
-                              ),
-                            )
-                          : SizedBox(
-                              width: 40,
-                              height: 40,
-                              child: Image.asset(
-                                AppImages.booking,
-                                fit: BoxFit.cover,
-                                scale: 4,
-                              ),
-                            ),
-                      text: 'Menu',
-                      iconColor: Colors.blue,
-                      backgroundColor: AppColors.textColorBlue,
-                    ),
-                    GButton(
-                      icon: Icons.circle,
-                      leading: dashboardController.selectedIndex.value == 2
-                          ? SizedBox(
-                              width: 40,
-                              height: 40,
-                              child: Image.asset(
                                 AppImages.search,
                                 scale: 4,
                                 color: AppColors.white,
@@ -132,6 +107,31 @@ class DashboardView extends GetView<DashboardController> {
                               ),
                             ),
                       text: 'Search',
+                      iconColor: Colors.blue,
+                      backgroundColor: AppColors.textColorBlue,
+                    ),
+                    GButton(
+                      icon: Icons.circle,
+                      leading: dashboardController.selectedIndex.value == 2
+                          ? SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: Image.asset(
+                          AppImages.booking,
+                          scale: 4,
+                          color: AppColors.white,
+                        ),
+                      )
+                          : SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: Image.asset(
+                          AppImages.booking,
+                          fit: BoxFit.cover,
+                          scale: 4,
+                        ),
+                      ),
+                      text: 'Booking',
                       iconColor: Colors.blue,
                       backgroundColor: AppColors.textColorBlue,
                     ),

@@ -3,6 +3,7 @@ class AppImages {
   static const splashLogo = "assets/icons/logo.png";
   static const homeLogo = "assets/icons/home logo.png";
   static const arrowFly = "assets/icons/arrow_fly.png";
+  static const arrowFlyWhite = "assets/icons/arrow_fly white.png";
   static const arrowFlyBig = "assets/icons/arrow_fly_big.png";
   static const arrowRight = "assets/icons/arrow right.png";
   static const arrowRightNormal = "assets/icons/Arrow right light.png";
@@ -80,6 +81,9 @@ class AppImages {
   static const sound = "assets/icons/sound.png";
   static const history = "assets/icons/history.png";
   static const toggleButton = "assets/icons/Toggle Button.png";
+  static const rightBlack = "assets/icons/right black.png";
+  static const rightGold = "assets/icons/right gold.png";
+  static const subscriptionButton = "assets/icons/subscription button.png";
 
   static const starCard = "assets/icons/star card.png";
   static const starCardTwo = "assets/icons/star card 2.png";

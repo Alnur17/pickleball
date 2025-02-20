@@ -22,7 +22,6 @@ class OtpVerificationView extends GetView{
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
         title: Text('OTP Verification',style: appBarStyle),
-        centerTitle: true,
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -34,13 +33,13 @@ class OtpVerificationView extends GetView{
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
             sh30,
             Text(
               'Verify Your Identity',
-              style: h4,
+              style: h4.copyWith(fontWeight: FontWeight.bold),
             ),
             sh20,
             Text(

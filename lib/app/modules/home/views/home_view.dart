@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:pickleball/app/modules/home/views/notification_view.dart';
+import 'package:pickleball/app/modules/home/views/subscription_view.dart';
+import 'package:pickleball/app/modules/my_search/views/my_search_view.dart';
+import 'package:pickleball/app/modules/my_search/views/trainer_profile_view.dart';
 import 'package:pickleball/common/app_color/app_colors.dart';
 import 'package:pickleball/common/app_images/app_images.dart';
 import 'package:pickleball/common/app_text_style/styles.dart';
@@ -10,6 +13,7 @@ import 'package:pickleball/common/size_box/custom_sizebox.dart';
 import 'package:pickleball/common/helper_widget/header_section_widget.dart';
 import 'package:pickleball/common/helper_widget/profile_card_widget.dart';
 
+import '../../my_search/views/session_details_view.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -44,13 +48,23 @@ class HomeView extends GetView<HomeController> {
             ),
             sw12,
             Text(
-              'Hey Sunan',
+              'Hey Nur',
               style: appBarStyle,
             ),
           ],
         ),
         automaticallyImplyLeading: false,
         actions: [
+          GestureDetector(
+            onTap: () {
+              Get.to(()=> SubscriptionView());
+            },
+            child: Image.asset(
+              AppImages.subscriptionButton,
+              scale: 4,
+            ),
+          ),
+          //sw12,
           GestureDetector(
             onTap: () {
               Get.to(()=> NotificationView());
@@ -124,7 +138,9 @@ Widget _buildRecommendationSection() {
           title: 'Recommended for You',
           actionText: 'See more..',
           actionIcon: AppImages.arrowRight,
-          onTap: () {},
+          onTap: () {
+            Get.to(()=> MySearchView(tabIndex: 0,showBackButton: true,));
+          },
         ),
       ),
       SizedBox(
@@ -136,7 +152,7 @@ Widget _buildRecommendationSection() {
             return Padding(
               padding: EdgeInsets.only(
                 left: index == 0 ? 20 : 0,
-                right: index == 5 - 1 ? 20 : 8,
+                right: index == 5 - 1 ? 20 : 12,
               ),
               child: CourseCardWidget(
                 title: "Doubles Strategy Masterclass",
@@ -148,8 +164,7 @@ Widget _buildRecommendationSection() {
                 skillLevel: "Beginner",
                 price: "25",
                 onViewDetails: () {
-                  // Handle button tap
-                  print("View Details Clicked");
+                  Get.to(()=> SessionDetailsView());
                 },
               ),
             );
@@ -170,7 +185,9 @@ Widget _buildExpertSection() {
           title: 'Recommended for You',
           actionText: 'See more..',
           actionIcon: AppImages.arrowRight,
-          onTap: () {},
+          onTap: () {
+            Get.to(()=> MySearchView(tabIndex: 1,showBackButton: true,));
+          },
         ),
       ),
       SizedBox(
@@ -182,7 +199,7 @@ Widget _buildExpertSection() {
             return Padding(
               padding: EdgeInsets.only(
                 left: index == 0 ? 20 : 0,
-                right: index == 5 - 1 ? 20 : 8,
+                right: index == 5 - 1 ? 20 : 12,
               ),
               child: ProfileCardWidget(
                 name: 'John Smith',
@@ -190,7 +207,9 @@ Widget _buildExpertSection() {
                 experience: '10+ Years',
                 hourlyRate: '50/hour',
                 profileImage: AppImages.profileImageTwo,
-                onTap: () {},
+                onTap: () {
+                  Get.to(()=> TrainerProfileView());
+                },
               ),
             );
           },

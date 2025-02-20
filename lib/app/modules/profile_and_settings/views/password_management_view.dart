@@ -18,8 +18,7 @@ class PasswordManagementView extends GetView {
       backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: AppColors.white,
-        title: const Text('Reset Password'),
-        centerTitle: true,
+        title:  Text('Password Management',style: appBarStyle,),
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -78,7 +77,7 @@ class PasswordManagementView extends GetView {
             Center(
               child: CustomContainer(
                 text: 'Update Password',
-                imagePath: AppImages.arrowFly,
+                imagePath: AppImages.arrowFlyWhite,
                 onTap: () {},
                 height: 35,
                 width: 170,
