@@ -17,6 +17,7 @@ class PrivacyAndSecurityView extends GetView {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         backgroundColor: AppColors.mainColor,
+        titleSpacing: 20,
         title: Text('Privacy & Security',style: appBarStyle,),
 
         leading: GestureDetector(
