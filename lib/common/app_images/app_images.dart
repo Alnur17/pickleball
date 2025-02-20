@@ -6,6 +6,7 @@ class AppImages {
   static const arrowFlyWhite = "assets/icons/arrow_fly white.png";
   static const arrowFlyBig = "assets/icons/arrow_fly_big.png";
   static const arrowRight = "assets/icons/arrow right.png";
+  static const arrowLeft = "assets/icons/arrow left.png";
   static const arrowRightNormal = "assets/icons/Arrow right light.png";
   static const arrowDown = "assets/icons/arrow down.png";
   static const arrowRightSmall = "assets/icons/arrow right small.png";
@@ -14,6 +15,7 @@ class AppImages {
   static const checkBoxCircleFilled = "assets/icons/circle checkbox filled.png";
   static const checkBoxFilled = "assets/icons/checkbox filled.png";
   static const eyeClose = "assets/icons/eye close.png";
+  static const camera = "assets/icons/camera.png";
   static const mail = "assets/icons/mail.png";
   static const profile = "assets/icons/profile.png";
   static const booking = "assets/icons/booking.png";
@@ -84,6 +86,8 @@ class AppImages {
   static const rightBlack = "assets/icons/right black.png";
   static const rightGold = "assets/icons/right gold.png";
   static const subscriptionButton = "assets/icons/subscription button.png";
+  static const payment = "assets/icons/payment.png";
+  static const download = "assets/icons/download.png";
 
   static const starCard = "assets/icons/star card.png";
   static const starCardTwo = "assets/icons/star card 2.png";
@@ -99,7 +103,6 @@ class AppImages {
   static const settings = "assets/icons/settings.png";
   static const placeHolderImage = "assets/icons/placeholder no image.png";
   static const adminSettings = "assets/icons/admin settings.png";
-  static const camera = "assets/icons/camera.png";
   static const gallery = "assets/icons/gallery.png";
   static const car = "assets/icons/car.png";
   static const carShipped = "assets/icons/car shipped.png";

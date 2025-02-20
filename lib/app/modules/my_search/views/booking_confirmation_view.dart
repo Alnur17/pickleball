@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pickleball/app/modules/payment/views/payment_confirmation_view.dart';
 import 'package:pickleball/common/app_color/app_colors.dart';
 import 'package:pickleball/common/app_images/app_images.dart';
 import 'package:pickleball/common/size_box/custom_sizebox.dart';
@@ -142,8 +143,10 @@ class BookingConfirmationView extends GetView {
             Center(
               child: CustomContainer(
                 text: 'Proceed to Pay',
-                imagePath: AppImages.arrowFly,
-                onTap: () {},
+                imagePath: AppImages.arrowFlyWhite,
+                onTap: () {
+                  Get.to(()=> PaymentConfirmationView());
+                },
                 height: 35,
                 width: 170,
                 backgroundColor: AppColors.textColorBlue,

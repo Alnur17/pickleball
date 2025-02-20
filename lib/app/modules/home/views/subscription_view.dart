@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pickleball/app/modules/payment/views/payment_confirmation_view.dart';
 import 'package:pickleball/common/app_text_style/styles.dart';
 import 'package:pickleball/common/size_box/custom_sizebox.dart';
 
 import '../../../../common/app_color/app_colors.dart';
 import '../../../../common/app_images/app_images.dart';
 import '../../../../common/widgets/custom_button.dart';
+import '../controllers/subscription_controller.dart';
 
 class SubscriptionView extends StatefulWidget {
   const SubscriptionView({super.key});
@@ -15,7 +17,7 @@ class SubscriptionView extends StatefulWidget {
 }
 
 class _SubscriptionViewState extends State<SubscriptionView> {
-  bool isYearly = true;
+  final SubscriptionController subscriptionController = Get.put(SubscriptionController());
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 0,
+        scrolledUnderElevation: 0,
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -58,48 +60,29 @@ class _SubscriptionViewState extends State<SubscriptionView> {
             sh20,
             Row(
               children: [
-                _buildPlanOption(
-                  "Monthly",
-                  "\$20.00",
-                  !isYearly,
-                  'Select your plan',
-                ),
-                SizedBox(width: 10),
-                _buildPlanOption(
-                  "Yearly",
-                  "\$200.00",
-                  isYearly,
-                  'Select your plan',
-                ),
+                Obx(() => _buildPlanOption(
+                      "Monthly",
+                      "\$20.00",
+                      !subscriptionController.isYearly.value,
+                      'Select your plan',
+                    )),
+                sw12,
+                Obx(() => _buildPlanOption(
+                      "Yearly",
+                      "\$200.00",
+                      subscriptionController.isYearly.value,
+                      'Select your plan',
+                    )),
               ],
             ),
             sh50,
             CustomButton(
               text: 'Buy Now',
-              onPressed: () {},
+              onPressed: () {
+                Get.off(()=> PaymentConfirmationView());
+              },
               gradientColors: AppColors.gradientColor,
             ),
-            // SizedBox(
-            //   width: double.infinity,
-            //   height: 50,
-            //   child: ElevatedButton(
-            //     style: ElevatedButton.styleFrom(
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(30),
-            //       ),
-            //       backgroundColor: Colors.blue,
-            //     ),
-            //     onPressed: () {},
-            //     child: Text(
-            //       "Buy Now",
-            //       style: TextStyle(
-            //         color: Colors.white,
-            //         fontSize: 18,
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -108,14 +91,20 @@ class _SubscriptionViewState extends State<SubscriptionView> {
 
   Widget _buildFeatureItem(String feature) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5.0),
+      padding: EdgeInsets.symmetric(vertical: 12),
       child: Row(
         children: [
-          Image.asset(AppImages.rightBlack,scale: 4,),
-          SizedBox(width: 10),
+          Image.asset(
+            AppImages.rightBlack,
+            scale: 4,
+          ),
+          sw12,
           Text(
             feature,
-            style: h3.copyWith(fontSize: 20, fontWeight: FontWeight.w400),
+            style: h3.copyWith(
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ],
       ),
@@ -127,9 +116,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          setState(() {
-            isYearly = title == "Yearly";
-          });
+          subscriptionController.isYearly.value = title == "Yearly";
         },
         child: Container(
           padding: EdgeInsets.all(15),
@@ -141,12 +128,19 @@ class _SubscriptionViewState extends State<SubscriptionView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (selected) Image.asset(AppImages.rightGold,scale: 4,),
+              if (selected)
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Image.asset(
+                    AppImages.rightGold,
+                    scale: 4,
+                  ),
+                ),
               Text(
                 title,
                 style: h4,
               ),
-              SizedBox(height: 5),
+              sh5,
               Text(
                 price,
                 style: h2,

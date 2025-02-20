@@ -12,6 +12,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/my_search/bindings/my_search_binding.dart';
 import '../modules/my_search/views/my_search_view.dart';
+import '../modules/payment/bindings/payment_binding.dart';
+import '../modules/payment/views/payment_view.dart';
 import '../modules/profile_and_settings/bindings/profile_and_settings_binding.dart';
 import '../modules/profile_and_settings/views/profile_and_settings_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
@@ -64,6 +66,11 @@ class AppPages {
       name: _Paths.PROFILE_AND_SETTINGS,
       page: () => const ProfileAndSettingsView(),
       binding: ProfileAndSettingsBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAYMENT,
+      page: () => const PaymentView(),
+      binding: PaymentBinding(),
     ),
   ];
 }

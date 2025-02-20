@@ -13,6 +13,7 @@ import '../../../../common/widgets/custom_textfield.dart';
 
 class EditProfileView extends GetView {
   const EditProfileView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +30,10 @@ class EditProfileView extends GetView {
             scale: 4,
           ),
         ),
-        title: Text('Edit Profile',style: appBarStyle,),
+        title: Text(
+          'Edit Profile',
+          style: appBarStyle,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -41,23 +45,25 @@ class EditProfileView extends GetView {
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage:
-                    NetworkImage(AppImages.profileImageTwo),
+                    backgroundImage: NetworkImage(AppImages.profileImageTwo),
                   ),
                   Positioned(
-                    bottom: 5,
-                    right: 0,
+                    bottom: 2.5,
                     left: 0,
+                    right: 0,
                     child: GestureDetector(
                       onTap: () {
                         log("Add icon tapped");
                       },
-                      child: const CircleAvatar(
+                      child: CircleAvatar(
                         radius: 15,
                         backgroundColor: AppColors.black,
-                        child: Icon(
-                          Icons.add,
-                          color: AppColors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Image.asset(
+                            AppImages.camera,
+                            scale: 4,
+                          ),
                         ),
                       ),
                     ),
@@ -68,25 +74,37 @@ class EditProfileView extends GetView {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Full Name',style: h6.copyWith(fontWeight: FontWeight.w700),),
+                  Text(
+                    'Full Name',
+                    style: h6.copyWith(fontWeight: FontWeight.w700),
+                  ),
                   sh8,
                   CustomTextField(
                     hintText: 'Lukas Wagner',
                   ),
                   sh12,
-                  Text('Email',style: h6.copyWith(fontWeight: FontWeight.w700),),
+                  Text(
+                    'Email',
+                    style: h6.copyWith(fontWeight: FontWeight.w700),
+                  ),
                   sh8,
                   CustomTextField(
                     hintText: 'lukas.wagner@gmail.com',
                   ),
                   sh12,
-                  Text('Age',style: h6.copyWith(fontWeight: FontWeight.w700),),
+                  Text(
+                    'Age',
+                    style: h6.copyWith(fontWeight: FontWeight.w700),
+                  ),
                   sh8,
                   CustomTextField(
                     hintText: '24',
                   ),
                   sh12,
-                  Text('Contact',style: h6.copyWith(fontWeight: FontWeight.w700),),
+                  Text(
+                    'Contact',
+                    style: h6.copyWith(fontWeight: FontWeight.w700),
+                  ),
                   sh8,
                   CustomTextField(
                     hintText: '+8801521547864',
