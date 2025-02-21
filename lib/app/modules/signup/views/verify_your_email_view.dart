@@ -42,7 +42,7 @@ class VerifyYourEmailView extends GetView {
             sh30,
             Text(
               'Enter OTP',
-              style: h4,
+              style: h4.copyWith(fontWeight: FontWeight.bold),
             ),
             sh20,
             Text(

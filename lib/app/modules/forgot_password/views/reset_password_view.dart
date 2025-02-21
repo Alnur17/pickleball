@@ -43,7 +43,7 @@ class ResetPasswordView extends GetView{
               alignment: Alignment.center,
               child: Text(
                 'Set Your New Password',
-                style: h4.copyWith(),
+                style: h4.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
             sh16,
