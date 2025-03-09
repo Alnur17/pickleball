@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pickleball/app/modules/profile_and_settings/controllers/profile_and_settings_controller.dart';
 import 'package:pickleball/common/app_text_style/styles.dart';
 
 import '../../../../common/app_color/app_colors.dart';
@@ -11,8 +12,20 @@ import '../../../../common/size_box/custom_sizebox.dart';
 import '../../../../common/widgets/custom_container.dart';
 import '../../../../common/widgets/custom_textfield.dart';
 
-class EditProfileView extends GetView {
+class EditProfileView extends StatefulWidget {
   const EditProfileView({super.key});
+
+  @override
+  State<EditProfileView> createState() => _EditProfileViewState();
+}
+
+class _EditProfileViewState extends State<EditProfileView> {
+  ProfileAndSettingsController profileAndSettingsController = Get.find<ProfileAndSettingsController>();
+
+  final TextEditingController nameTEController = TextEditingController();
+  final TextEditingController emailTEController = TextEditingController();
+  final TextEditingController ageTEController = TextEditingController();
+  final TextEditingController contactTEController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
