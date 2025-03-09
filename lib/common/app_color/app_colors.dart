@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const mainColor = Color(0xFFFFFFFF);
-  //static const mainColorTwo = Color(0xFFF1F1F1);
+  static const splashStartColor = Color(0xFFF7FFD9);
+  static const splashEndColor = Color(0xFFCAE0FF);
   static const logoBgColor = Color(0xFFECF7FF);
   static const bottomNavbar = Color(0xffADADAD);
   static const textColorBlue = Color(0xff003A71);

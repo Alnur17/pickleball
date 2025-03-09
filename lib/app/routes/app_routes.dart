@@ -14,6 +14,7 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const PROFILE_AND_SETTINGS = _Paths.PROFILE_AND_SETTINGS;
   static const PAYMENT = _Paths.PAYMENT;
+  static const SPLASH = _Paths.SPLASH;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const PROFILE_AND_SETTINGS = '/profile-and-settings';
   static const PAYMENT = '/payment';
+  static const SPLASH = '/splash';
 }

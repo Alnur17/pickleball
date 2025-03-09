@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pickleball/common/size_box/custom_sizebox.dart';
 import '../app_color/app_colors.dart';
 import '../app_text_style/styles.dart';
 
@@ -57,6 +58,15 @@ class CustomButton extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Text(
+                text,
+                style: textStyle ??
+                    h3.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: textColor ?? AppColors.white,
+                    ),
+              ),
+              sw12,
               if (imageAssetPath != null) ...[
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
@@ -66,14 +76,6 @@ class CustomButton extends StatelessWidget {
                   ),
                 ),
               ],
-              Text(
-                text,
-                style: textStyle ??
-                    h3.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: textColor ?? AppColors.white,
-                    ),
-              ),
             ],
           ),
         ),

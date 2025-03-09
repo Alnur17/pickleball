@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:pickleball/common/widgets/custom_container.dart';
+import 'package:pickleball/app/modules/profile_and_settings/controllers/profile_and_settings_controller.dart';
 
 import '../../../../common/app_color/app_colors.dart';
 import '../../../../common/app_images/app_images.dart';
 import '../../../../common/app_text_style/styles.dart';
 import '../../../../common/size_box/custom_sizebox.dart';
+import '../../../../common/widgets/custom_button.dart';
+import '../../../../common/widgets/custom_loader.dart';
+import '../../../../common/widgets/custom_snackbar.dart';
 import '../../../../common/widgets/custom_textfield.dart';
 
 class PasswordManagementView extends GetView {
-  const PasswordManagementView({super.key});
+  PasswordManagementView({super.key});
+
+  final ProfileAndSettingsController profileAndSettingsController = Get.put(ProfileAndSettingsController());
+  final TextEditingController currentPassTEController = TextEditingController();
+  final TextEditingController newPassTEController = TextEditingController();
+  final TextEditingController confirmPassTEController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +27,7 @@ class PasswordManagementView extends GetView {
       backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: AppColors.white,
-        title:  Text('Password Management',style: appBarStyle,),
+        title: Text('Password Management', style: appBarStyle,),
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -44,6 +53,7 @@ class PasswordManagementView extends GetView {
             ),
             sh12,
             CustomTextField(
+              controller: currentPassTEController,
               hintText: '**********',
               sufIcon: Image.asset(
                 AppImages.eyeClose,
@@ -57,6 +67,7 @@ class PasswordManagementView extends GetView {
             ),
             sh12,
             CustomTextField(
+              controller: newPassTEController,
               sufIcon: Image.asset(
                 AppImages.eyeClose,
                 scale: 4,
@@ -70,23 +81,50 @@ class PasswordManagementView extends GetView {
             ),
             sh12,
             CustomTextField(
+              controller: confirmPassTEController,
               sufIcon: Image.asset(
                 AppImages.eyeClose,
                 scale: 4,
               ),
               hintText: '**********',
             ),
-            sh16,
-            Center(
-              child: CustomContainer(
-                text: 'Update Password',
-                imagePath: AppImages.arrowFlyWhite,
-                onTap: () {},
-                height: 35,
-                width: 170,
-                backgroundColor: AppColors.textColorBlue,
+            sh30,
+            Obx(
+                  () =>
+              profileAndSettingsController.isLoading.value == true
+                  ? CustomLoader(
+                color: AppColors.white,
+              )
+                  : CustomButton(
+                imageAssetPath: AppImages.arrowFlyWhite,
+                text: "Update Password",
+                  gradientColors: AppColors.gradientColor,
+                  //backgroundColor: AppColors.textColorBlue,
+                onPressed: () {
+                  if (newPassTEController.text ==
+                      confirmPassTEController.text) {
+                    profileAndSettingsController.changePassword(
+                        currentPassword: currentPassTEController.text,
+                        newPassword: newPassTEController.text,
+                        context: context);
+                  } else {
+                    kSnackBar(
+                        message: "Password not match",
+                        bgColor: AppColors.mainColor);
+                  }
+                },
               ),
             ),
+            // Center(
+            //   child: CustomContainer(
+            //     text: 'Update Password',
+            //     imagePath: AppImages.arrowFlyWhite,
+            //     onTap: () {},
+            //     height: 35,
+            //     width: 170,
+            //     backgroundColor: AppColors.textColorBlue,
+            //   ),
+            // ),
           ],
         ),
       ),

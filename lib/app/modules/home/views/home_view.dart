@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:pickleball/app/modules/home/views/notification_view.dart';
-import 'package:pickleball/app/modules/home/views/subscription_view.dart';
 import 'package:pickleball/app/modules/my_search/views/my_search_view.dart';
 import 'package:pickleball/app/modules/my_search/views/trainer_profile_view.dart';
+import 'package:pickleball/app/modules/profile_and_settings/controllers/profile_and_settings_controller.dart';
 import 'package:pickleball/common/app_color/app_colors.dart';
 import 'package:pickleball/common/app_images/app_images.dart';
 import 'package:pickleball/common/app_text_style/styles.dart';
@@ -17,7 +17,10 @@ import '../../my_search/views/session_details_view.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({super.key});
+  HomeView({super.key});
+
+  final ProfileAndSettingsController profileAndSettingsController =
+      Get.put(ProfileAndSettingsController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,46 +30,52 @@ class HomeView extends GetView<HomeController> {
         backgroundColor: AppColors.mainColor,
         scrolledUnderElevation: 0,
         titleSpacing: 20,
-        title: Row(
-          children: [
-            Container(
-              height: 42,
-              width: 42,
-              //padding: EdgeInsets.only(left: 16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.grey,
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  AppImages.profileImageTwo,
-                  scale: 4,
-                  fit: BoxFit.cover,
+        title: Obx(
+          () {
+            return Row(
+              children: [
+                Container(
+                  height: 42,
+                  width: 42,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.grey,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      profileAndSettingsController
+                              .myProfileData.value?.photoUrl ??
+                          AppImages.profileImageCamera,
+                      scale: 4,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            sw12,
-            Text(
-              'Hey Nur',
-              style: appBarStyle,
-            ),
-          ],
+                sw12,
+                Text(
+                  profileAndSettingsController.myProfileData.value?.name ??
+                      'Unknown',
+                  style: appBarStyle,
+                ),
+              ],
+            );
+          },
         ),
         automaticallyImplyLeading: false,
         actions: [
+          // GestureDetector(
+          //   onTap: () {
+          //     Get.to(()=> SubscriptionView());
+          //   },
+          //   child: Image.asset(
+          //     AppImages.subscriptionButton,
+          //     scale: 4,
+          //   ),
+          // ),
           GestureDetector(
             onTap: () {
-              Get.to(()=> SubscriptionView());
-            },
-            child: Image.asset(
-              AppImages.subscriptionButton,
-              scale: 4,
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              Get.to(()=> NotificationView());
+              Get.to(() => NotificationView());
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -138,7 +147,10 @@ Widget _buildRecommendationSection() {
           actionText: 'See more..',
           actionIcon: AppImages.arrowRight,
           onTap: () {
-            Get.to(()=> MySearchView(tabIndex: 0,showBackButton: true,));
+            Get.to(() => MySearchView(
+                  tabIndex: 0,
+                  showBackButton: true,
+                ));
           },
         ),
       ),
@@ -163,7 +175,7 @@ Widget _buildRecommendationSection() {
                 skillLevel: "Beginner",
                 price: "25",
                 onViewDetails: () {
-                  Get.to(()=> SessionDetailsView());
+                  Get.to(() => SessionDetailsView());
                 },
               ),
             );
@@ -185,7 +197,10 @@ Widget _buildExpertSection() {
           actionText: 'See more..',
           actionIcon: AppImages.arrowRight,
           onTap: () {
-            Get.to(()=> MySearchView(tabIndex: 1,showBackButton: true,));
+            Get.to(() => MySearchView(
+                  tabIndex: 1,
+                  showBackButton: true,
+                ));
           },
         ),
       ),
@@ -207,7 +222,7 @@ Widget _buildExpertSection() {
                 hourlyRate: '50/hour',
                 profileImage: AppImages.profileImageTwo,
                 onTap: () {
-                  Get.to(()=> TrainerProfileView());
+                  Get.to(() => TrainerProfileView());
                 },
               ),
             );

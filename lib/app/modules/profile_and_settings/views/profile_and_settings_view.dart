@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pickleball/app/modules/login/views/login_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/about_us_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/history_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/notifications_view.dart';
@@ -10,14 +11,19 @@ import 'package:pickleball/app/modules/profile_and_settings/views/term_and_condi
 import 'package:pickleball/common/app_text_style/styles.dart';
 
 import '../../../../common/app_color/app_colors.dart';
+import '../../../../common/app_constant/app_constant.dart';
 import '../../../../common/app_images/app_images.dart';
+import '../../../../common/helper_widget/local_store.dart';
 import '../../../../common/size_box/custom_sizebox.dart';
 import '../../../../common/widgets/custom_list_tile.dart';
 import '../controllers/profile_and_settings_controller.dart';
 import 'edit_profile_view.dart';
 
 class ProfileAndSettingsView extends GetView<ProfileAndSettingsController> {
-  const ProfileAndSettingsView({super.key});
+  ProfileAndSettingsView({super.key});
+
+  final ProfileAndSettingsController profileAndSettingsController =
+      Get.find<ProfileAndSettingsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +47,26 @@ class ProfileAndSettingsView extends GetView<ProfileAndSettingsController> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             sh20,
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: NetworkImage(AppImages.profileImageTwo),
+            Obx(
+              () => Container(
+                decoration: ShapeDecoration(
+                    shape: CircleBorder(side: BorderSide(width: 1.5))),
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundColor: AppColors.white,
+                  backgroundImage: NetworkImage(profileAndSettingsController
+                          .myProfileData.value?.photoUrl ??
+                      AppImages.profileImageCamera),
+                ),
+              ),
             ),
             sh12,
-            Text(
-              'Lukas Wagner',
-              style: h2.copyWith(fontSize: 20),
+            Obx(
+              () => Text(
+                profileAndSettingsController.myProfileData.value?.name ??
+                    'Unknown',
+                style: h2.copyWith(fontSize: 20),
+              ),
             ),
             sh12,
             CustomListTile(
@@ -115,7 +133,11 @@ class ProfileAndSettingsView extends GetView<ProfileAndSettingsController> {
             ),
             Divider(),
             CustomListTile(
-              onTap: () {},
+              onTap: () {
+                LocalStorage.removeData(key: AppConstant.accessToken);
+                Get.offAll(() => LoginView(),
+                    transition: Transition.leftToRight);
+              },
               leadingImage: AppImages.logout,
               title: 'Log out',
               trailingImage: AppImages.arrowRightSmall,

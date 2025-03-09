@@ -1,19 +1,21 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:pickleball/app/modules/forgot_password/views/reset_password_view.dart';
+import 'package:pickleball/app/modules/forgot_password/controllers/forgot_password_controller.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
 import '../../../../common/app_color/app_colors.dart';
-import '../../../../common/app_images/app_images.dart';
 import '../../../../common/app_text_style/styles.dart';
-import '../../../../common/size_box/custom_sizebox.dart';
 import '../../../../common/widgets/custom_button.dart';
+import '../../../../common/size_box/custom_sizebox.dart';
+import '../../../../common/app_images/app_images.dart';
 
-class OtpVerificationView extends GetView{
-  const OtpVerificationView({super.key});
+class OtpVerificationView extends GetView<ForgotPasswordController> {
+  final String email;
+
+  OtpVerificationView({super.key, required this.email});
+
+  final TextEditingController otpTEController = TextEditingController();
+  final ForgotPasswordController forgotPasswordController =
+      Get.put(ForgotPasswordController());
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class OtpVerificationView extends GetView{
       backgroundColor: AppColors.mainColor,
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
-        title: Text('OTP Verification',style: appBarStyle),
+        title: Text('OTP Verification', style: appBarStyle),
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -51,53 +53,64 @@ class OtpVerificationView extends GetView{
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: PinCodeTextField(
-                length: 4,
-                obscureText: false,
-                keyboardType: TextInputType.number,
-                animationType: AnimationType.fade,
-                pinTheme: PinTheme(
-                  shape: PinCodeFieldShape.box,
-                  borderRadius: BorderRadius.circular(8),
-                  fieldHeight: 70,
-                  fieldWidth: 65,
-                  // Reduce the width slightly for the gap
-                  activeColor: AppColors.borderColor,
-                  activeFillColor: AppColors.white,
-                  inactiveColor: AppColors.borderColor,
-                  inactiveFillColor: AppColors.white,
-                  selectedColor: AppColors.blue,
-                  selectedFillColor: AppColors.white,
-                ),
-                animationDuration: const Duration(milliseconds: 300),
-                backgroundColor: AppColors.transparent,
-                cursorColor: AppColors.blue,
-                enablePinAutofill: true,
-                enableActiveFill: true,
-                onCompleted: (v) {},
-                onChanged: (value) {},
-                beforeTextPaste: (text) {
-                  log("Allowing to paste $text");
-                  return true;
-                },
-                appContext: context,
+            PinCodeTextField(
+              controller: otpTEController,
+              length: 6,
+              obscureText: false,
+              keyboardType: TextInputType.number,
+              animationType: AnimationType.fade,
+              pinTheme: PinTheme(
+                shape: PinCodeFieldShape.box,
+                borderRadius: BorderRadius.circular(8),
+                fieldHeight: 70,
+                fieldWidth: 60,
+                activeColor: AppColors.borderColor,
+                activeFillColor: AppColors.white,
+                inactiveColor: AppColors.borderColor,
+                inactiveFillColor: AppColors.white,
+                selectedColor: AppColors.blue,
+                selectedFillColor: AppColors.white,
               ),
+              animationDuration: const Duration(milliseconds: 300),
+              backgroundColor: AppColors.transparent,
+              cursorColor: AppColors.blue,
+              enablePinAutofill: true,
+              enableActiveFill: true,
+              onCompleted: (v) {},
+              onChanged: (value) {},
+              beforeTextPaste: (text) {
+                return true;
+              },
+              appContext: context,
             ),
             sh20,
             CustomButton(
               text: 'Confirm',
               onPressed: () {
-                Get.to(() => const ResetPasswordView());
+                forgotPasswordController.verifyOtp(
+                  email: email,
+                  otp: otpTEController.text,
+                );
               },
               gradientColors: AppColors.gradientColor,
             ),
             sh30,
-            Text(
-              'Resend code in 53s',
-              style: h3,
-            ),
+            Obx(() {
+              return forgotPasswordController.countdown.value > 0
+                  ? Text(
+                      'Resend code in ${forgotPasswordController.countdown.value}s',
+                      style: h3,
+                    )
+                  : GestureDetector(
+                      onTap: forgotPasswordController.countdown.value == 0 ? () {
+                        forgotPasswordController.reSendOtp(email: email);
+                      } : null,
+                      child: Text(
+                        'Resend code',
+                        style: h3.copyWith(color: AppColors.textColorBlue),
+                      ),
+                    );
+            }),
           ],
         ),
       ),

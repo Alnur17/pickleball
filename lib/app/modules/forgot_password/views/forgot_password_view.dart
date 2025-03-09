@@ -9,10 +9,13 @@ import '../../../../common/size_box/custom_sizebox.dart';
 import '../../../../common/widgets/custom_button.dart';
 import '../../../../common/widgets/custom_textfield.dart';
 import '../controllers/forgot_password_controller.dart';
-import 'otp_verification_view.dart';
 
 class ForgotPasswordView extends GetView<ForgotPasswordController> {
-  const ForgotPasswordView({super.key});
+   ForgotPasswordView({super.key});
+
+  final TextEditingController emailTEController = TextEditingController();
+  final ForgotPasswordController forgotPasswordController =
+  Get.put(ForgotPasswordController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
       backgroundColor: AppColors.mainColor,
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
-        title:  Text('Forgot Password',style: appBarStyle),
+        title: Text('Forgot Password', style: appBarStyle),
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -59,6 +62,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                 )),
             sh8,
             CustomTextField(
+              controller: emailTEController,
               hintText: 'Enter your email',
               preIcon: Image.asset(
                 AppImages.mail,
@@ -69,7 +73,9 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
             CustomButton(
               text: 'Send',
               onPressed: () {
-                Get.to(() => OtpVerificationView());
+                forgotPasswordController.forgotPassword(
+                  email: emailTEController.text.toLowerCase(),
+                );
               },
               gradientColors: AppColors.gradientColor,
             ),
