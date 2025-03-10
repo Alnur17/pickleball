@@ -50,7 +50,13 @@ class ProfileAndSettingsView extends GetView<ProfileAndSettingsController> {
             Obx(
               () => Container(
                 decoration: ShapeDecoration(
-                    shape: CircleBorder(side: BorderSide(width: 1.5))),
+                  shape: CircleBorder(
+                    side: BorderSide(
+                      width: 2,
+                      color: AppColors.green,
+                    ),
+                  ),
+                ),
                 child: CircleAvatar(
                   radius: 50,
                   backgroundColor: AppColors.white,

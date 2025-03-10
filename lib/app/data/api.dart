@@ -12,8 +12,11 @@ class Api {
   static const resetPassword = "$baseUrl/auth/reset-password"; //done
   static const changePassword = "$baseUrl/auth/change-password"; //
 
-  ///College Data
-  static const schoolData = "$baseUrl/schools"; //
+  ///Sessions Data
+  static const sessions = "$baseUrl/sessions"; //done
+
+  ///Trainers Data
+  static const trainers = "$baseUrl/trainers"; //
 
   ///showBookMarked
   static const bookMarked = "$baseUrl/bookmarks"; //

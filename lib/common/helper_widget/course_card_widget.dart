@@ -11,10 +11,11 @@ class CourseCardWidget extends StatelessWidget {
   final String title;
   final String description;
   final String date;
-  final String time;
+  final String startTime;
+  final String endTime;
   final String location;
   final String skillLevel;
-  final String price;
+  final int price;
   final String? backgroundImage;
   final double? width;
   final double? height;
@@ -25,14 +26,14 @@ class CourseCardWidget extends StatelessWidget {
     required this.title,
     required this.description,
     required this.date,
-    required this.time,
+    required this.startTime,
     required this.location,
     required this.skillLevel,
     required this.price,
     this.backgroundImage,
     this.width = 300,
     this.height = 300,
-    required this.onViewDetails,
+    required this.onViewDetails, required this.endTime,
   });
 
   @override
@@ -120,7 +121,15 @@ class CourseCardWidget extends StatelessWidget {
                         ),
                         sw5,
                         Text(
-                          time,
+                          startTime,
+                          style: h6.copyWith(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(' - ',style: TextStyle(color: AppColors.white),),
+                        Text(
+                          endTime,
                           style: h6.copyWith(
                             color: AppColors.white,
                             fontWeight: FontWeight.w500,

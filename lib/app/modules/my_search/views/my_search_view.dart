@@ -255,10 +255,11 @@ class MySearchView extends GetView<MySearchController> {
                     title: "Doubles Strategy Masterclass",
                     description: "Master the art of doubles in Pickleball...",
                     date: "25 January 2025",
-                    time: "2:00 PM - 3:00 PM",
+                    startTime: "2:00 PM",
+                    endTime: "3:00 PM",
                     location: "Sunset Pickleball Club, Miami Beach",
                     skillLevel: "Beginner",
-                    price: "25",
+                    price: 25,
                     onViewDetails: () {
                       Get.to(() => SessionDetailsView());
                     },
@@ -292,7 +293,7 @@ class MySearchView extends GetView<MySearchController> {
               itemBuilder: (context, index) {
                 return ProfileCardWidget(
                   name: 'John Smith',
-                  rating: 4.5,
+                  rating: 4,
                   experience: '10+ Years',
                   hourlyRate: '50/hour',
                   profileImage: AppImages.profileImageTwo,

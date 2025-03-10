@@ -117,12 +117,9 @@ class ProfileAndSettingsController extends GetxController {
   Future<void> updateProfile({
     //required BuildContext context,
     required String name,
-    required String height,
-    required String primaryPosition,
-    required String clubTeam,
-    required String clubCoachName,
-    required String clubCoachEmail,
-    required String address,
+    required String email,
+    required String age,
+    required String contactNumber,
   })
   async {
     try {
@@ -142,6 +139,9 @@ class ProfileAndSettingsController extends GetxController {
       // Add JSON payload as text
       Map<String, dynamic> data = {
         "name": name,
+        "email": email,
+        "age": age,
+        "contactNumber": contactNumber,
       };
 
       request.fields['data'] = jsonEncode(data);
@@ -153,7 +153,7 @@ class ProfileAndSettingsController extends GetxController {
 
         request.files.add(
           await http.MultipartFile.fromPath(
-            'photoUrl',
+            'image',
             imagePath,
             contentType: MediaType.parse(mimeType), //from http_parser package
           ),

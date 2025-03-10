@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
@@ -9,7 +8,8 @@ import 'package:pickleball/common/app_text_style/styles.dart';
 import '../../../../common/app_color/app_colors.dart';
 import '../../../../common/app_images/app_images.dart';
 import '../../../../common/size_box/custom_sizebox.dart';
-import '../../../../common/widgets/custom_container.dart';
+import '../../../../common/widgets/custom_button.dart';
+import '../../../../common/widgets/custom_loader.dart';
 import '../../../../common/widgets/custom_textfield.dart';
 
 class EditProfileView extends StatefulWidget {
@@ -20,12 +20,31 @@ class EditProfileView extends StatefulWidget {
 }
 
 class _EditProfileViewState extends State<EditProfileView> {
-  ProfileAndSettingsController profileAndSettingsController = Get.find<ProfileAndSettingsController>();
+  ProfileAndSettingsController profileAndSettingsController =
+      Get.find<ProfileAndSettingsController>();
 
   final TextEditingController nameTEController = TextEditingController();
   final TextEditingController emailTEController = TextEditingController();
   final TextEditingController ageTEController = TextEditingController();
   final TextEditingController contactTEController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileData();
+  }
+
+  void _loadProfileData() {
+    nameTEController.text =
+        profileAndSettingsController.myProfileData.value?.name ?? '';
+    emailTEController.text =
+        profileAndSettingsController.myProfileData.value?.email ?? '';
+    ageTEController.text =
+        (profileAndSettingsController.myProfileData.value?.age ?? '')
+            .toString();
+    contactTEController.text =
+        profileAndSettingsController.myProfileData.value?.contactNumber ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,34 +76,61 @@ class _EditProfileViewState extends State<EditProfileView> {
           child: Column(
             children: [
               sh20,
-              Stack(
-                children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(AppImages.profileImageTwo),
-                  ),
-                  Positioned(
-                    bottom: 2.5,
-                    left: 0,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: () {
-                        log("Add icon tapped");
-                      },
-                      child: CircleAvatar(
-                        radius: 15,
-                        backgroundColor: AppColors.black,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: Image.asset(
-                            AppImages.camera,
-                            scale: 4,
+              Obx(
+                () {
+                  return Stack(
+                    children: [
+                      Container(
+                        decoration: ShapeDecoration(
+                          shape: CircleBorder(
+                            side: BorderSide(
+                              width: 2,
+                              color: AppColors.green,
+                            ),
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: profileAndSettingsController
+                                      .selectedImage.value !=
+                                  null
+                              ? FileImage(profileAndSettingsController
+                                  .selectedImage.value!)
+                              : (profileAndSettingsController
+                                              .myProfileData.value?.photoUrl !=
+                                          null &&
+                                      profileAndSettingsController.myProfileData
+                                          .value!.photoUrl!.isNotEmpty)
+                                  ? NetworkImage(profileAndSettingsController
+                                      .myProfileData.value!.photoUrl!)
+                                  : AssetImage(AppImages.profileImageCamera)
+                                      as ImageProvider,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 2.5,
+                        left: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            profileAndSettingsController.pickImage();
+                          },
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundColor: AppColors.black,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: Image.asset(
+                                AppImages.camera,
+                                scale: 4,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                ],
+                    ],
+                  );
+                },
               ),
               sh20,
               Column(
@@ -96,7 +142,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                   ),
                   sh8,
                   CustomTextField(
-                    hintText: 'Lukas Wagner',
+                    controller: nameTEController,
+                    hintText: 'Enter your name',
                   ),
                   sh12,
                   Text(
@@ -105,7 +152,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                   ),
                   sh8,
                   CustomTextField(
-                    hintText: 'lukas.wagner@gmail.com',
+                    controller: emailTEController,
+                    hintText: 'Enter your email',
                   ),
                   sh12,
                   Text(
@@ -114,7 +162,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                   ),
                   sh8,
                   CustomTextField(
-                    hintText: '24',
+                    controller: ageTEController,
+                    hintText: 'Enter your age',
                   ),
                   sh12,
                   Text(
@@ -123,19 +172,47 @@ class _EditProfileViewState extends State<EditProfileView> {
                   ),
                   sh8,
                   CustomTextField(
-                    hintText: '+8801521547864',
+                    controller: contactTEController,
+                    hintText: 'Enter your number',
                   ),
                   sh60,
-                  Center(
-                    child: CustomContainer(
-                      text: 'Save Changes',
-                      imagePath: AppImages.arrowFlyWhite,
-                      onTap: () {},
-                      height: 35,
-                      width: 170,
-                      backgroundColor: AppColors.textColorBlue,
-                    ),
+                  Obx(
+                    () => profileAndSettingsController.isLoading.value == true
+                        ? CustomLoader(
+                            color: AppColors.white,
+                          )
+                        : CustomButton(
+                            imageAssetPath: AppImages.arrowFlyWhite,
+                            text: "Save Changes",
+                            gradientColors: AppColors.gradientColor,
+                            //backgroundColor: AppColors.textColorBlue,
+                            onPressed: () {
+                              profileAndSettingsController.updateProfile(
+                                name: nameTEController.text,
+                                email: emailTEController.text.toLowerCase(),
+                                age: ageTEController.text,
+                                contactNumber: contactTEController.text,
+                              );
+                            },
+                          ),
                   ),
+                  // Center(
+                  //   child: CustomContainer(
+                  //     text: 'Save Changes',
+                  //     imagePath: AppImages.arrowFlyWhite,
+                  //     onTap: () {
+                  //       profileAndSettingsController.updateProfile(
+                  //         name: nameTEController.text,
+                  //         email: emailTEController.text.toLowerCase(),
+                  //         age: ageTEController.text,
+                  //         contactNumber: contactTEController.text,
+                  //       );
+                  //     },
+                  //     height: 35,
+                  //     width: 170,
+                  //     backgroundColor: AppColors.textColorBlue,
+                  //   ),
+                  // ),
                 ],
               ),
             ],
