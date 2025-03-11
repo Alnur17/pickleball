@@ -13,10 +13,17 @@ class Api {
   static const changePassword = "$baseUrl/auth/change-password"; //
 
   ///Sessions Data
-  static const sessions = "$baseUrl/sessions"; //done
+  static sessions(String? query) => query?.isNotEmpty ?? false
+      ? "$baseUrl/sessions?searchTerm=$query"
+      : "$baseUrl/sessions"; // If query is null or empty, omit searchTerm //done
 
   ///Trainers Data
-  static const trainers = "$baseUrl/trainers"; //
+  static trainers(String? query) {
+    // Add the searchTerm parameter only if the query is not null or empty
+    return query?.isNotEmpty ?? false
+        ? "$baseUrl/trainers?searchTerm=$query"
+        : "$baseUrl/trainers"; // If query is null or empty, omit searchTerm
+  } //done
 
   ///showBookMarked
   static const bookMarked = "$baseUrl/bookmarks"; //

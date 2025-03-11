@@ -16,11 +16,11 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchCourseSessions();
-    fetchTrainers();
+    fetchCourseSessions(null);
+    fetchTrainers(null);
   }
 
-  Future<void> fetchCourseSessions() async {
+  Future<void> fetchCourseSessions(String? sessionQuery) async {
     try {
       isLoading(true);
       String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
@@ -30,17 +30,14 @@ class HomeController extends GetxController {
       };
 
       var response = await BaseClient.getRequest(
-        api: Api.sessions,
+        api: Api.sessions(sessionQuery ?? ''),
         headers: headers,
       );
 
       var responseBody = await BaseClient.handleResponse(response);
-      debugPrint(
-          "==================================> Response: $responseBody <================================");
-      CourseSessionsModel courseSessionsModel =
-          CourseSessionsModel.fromJson(responseBody);
-      courseSessions.value =
-          courseSessionsModel.data; // Update course sessions list
+      CourseSessionsModel courseSessionsModel = CourseSessionsModel.fromJson(responseBody);
+      courseSessions.value = courseSessionsModel.data; // Update course sessions list
+      update();
     } catch (e) {
       debugPrint("Error fetching course sessions: $e");
     } finally {
@@ -48,7 +45,7 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> fetchTrainers() async {
+  Future<void> fetchTrainers(String? trainerQuery) async {
     try {
       isLoading(true);
       String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
@@ -58,19 +55,31 @@ class HomeController extends GetxController {
       };
 
       var response = await BaseClient.getRequest(
-        api: Api.trainers,
+        api: Api.trainers(trainerQuery ?? ''),  // Pass empty string if query is null
         headers: headers,
       );
 
       var responseBody = await BaseClient.handleResponse(response);
-      debugPrint(
-          "========================>Trainer Response: $responseBody <=====================");
       TrainersModel trainersModel = TrainersModel.fromJson(responseBody);
-      trainerList.value = trainersModel.data; // Update course sessions list
+      trainerList.value = trainersModel.data; // Update trainers list
+      update();
     } catch (e) {
-      debugPrint("Error fetching course sessions: $e");
+      debugPrint("Error fetching trainers: $e");
     } finally {
       isLoading(false);
     }
   }
+
+  // Call API with search query dynamically
+  void onSearchQueryChangedSession(String sessionQuery) {
+    fetchCourseSessions(sessionQuery);  // Fetch sessions based on query
+  }
+  void onSearchQueryChangedTrainer(String trainerQuery) {
+    fetchTrainers(trainerQuery); // Fetch trainers based on query
+  }
+
+  // void onSearchQueryChanged(String query) {
+  //   fetchCourseSessions(query);  // Fetch sessions based on query
+  //   fetchTrainers(query); // Fetch trainers based on query
+  // }
 }

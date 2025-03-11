@@ -173,7 +173,7 @@ class HomeView extends GetView<HomeController> {
               var session = homeController.courseSessions[index];
               return Padding(
                 padding: EdgeInsets.only(
-                  left: index == 0 ? 20 : 0,
+                  left: index == homeController.courseSessions.length*0 ? 20 : 0,
                   right: index == homeController.courseSessions.length - 1
                       ? 20
                       : 12,
@@ -226,7 +226,7 @@ class HomeView extends GetView<HomeController> {
               var trainer = homeController.trainerList[index];
               return Padding(
                 padding: EdgeInsets.only(
-                  left: index == 0 ? 20 : 0,
+                  left: index == homeController.courseSessions.length * 0 ? 20 : 0,
                   right:
                       index == homeController.trainerList.length - 1 ? 20 : 12,
                 ),

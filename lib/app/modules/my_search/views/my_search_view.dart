@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pickleball/app/modules/home/controllers/home_controller.dart';
 import 'package:pickleball/app/modules/my_search/views/session_details_view.dart';
 import 'package:pickleball/app/modules/my_search/views/trainer_profile_view.dart';
 import 'package:pickleball/common/app_images/app_images.dart';
@@ -13,179 +14,23 @@ import '../../../../common/helper_widget/profile_card_widget.dart';
 import '../../../../common/size_box/custom_sizebox.dart';
 import '../controllers/my_search_controller.dart';
 
-// class MySearchView extends GetView<MySearchController> {
-//   const MySearchView({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return DefaultTabController(
-//       length: 2,
-//       child: Scaffold(
-//         backgroundColor: AppColors.mainColor,
-//         appBar: AppBar(
-//           backgroundColor: AppColors.mainColor,
-//           scrolledUnderElevation: 0,
-//           automaticallyImplyLeading: false,
-//           toolbarHeight: 0,
-//         ),
-//         body: Column(
-//           children: [
-//             TabBar(
-//               tabs: [
-//                 Tab(text: 'Sessions'),
-//                 Tab(
-//                   text: 'Trainers',
-//                 ),
-//               ],
-//               indicatorSize: TabBarIndicatorSize.tab,
-//               indicatorColor: Colors.lightGreen,
-//               labelColor: Colors.lightGreen,
-//               unselectedLabelColor: AppColors.black,
-//               dividerColor: AppColors.transparent,
-//               padding: EdgeInsets.symmetric(horizontal: 80),
-//             ),
-//             sh16,
-//             Expanded(
-//               child: TabBarView(
-//                 children: [
-//                   Padding(
-//                     padding: const EdgeInsets.symmetric(horizontal: 20),
-//                     child: Column(
-//                       children: [
-//                         Row(
-//                           children: [
-//                             Expanded(
-//                               child: SearchFiled(
-//                                 onChanged: (value) {},
-//                               ),
-//                             ),
-//                             sw12,
-//                             Container(
-//                               height: 48,
-//                               decoration: BoxDecoration(
-//                                   borderRadius: BorderRadius.circular(12),
-//                                   border: Border.all(color: AppColors.silver)),
-//                               child: Image.asset(
-//                                 AppImages.filter,
-//                                 scale: 4,
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                         sh20,
-//                         Expanded(
-//                           child: ListView.builder(
-//                             shrinkWrap: true,
-//                             primary: false,
-//                             itemCount: 5,
-//                             itemBuilder: (context, index) {
-//                               return Padding(
-//                                 padding: EdgeInsets.only(
-//                                   bottom: index == 5 - 1 ? 116 : 12,
-//                                 ),
-//                                 child: CourseCardWidget(
-//                                   height: 350,
-//                                   width: double.infinity,
-//                                   title: "Doubles Strategy Masterclass",
-//                                   description:
-//                                       "Master the art of playing doubles in this comprehensive session designed for intermediate to advanced Pickleball players...",
-//                                   date: "25 January 2025",
-//                                   time: "2:00 PM - 3:00 PM",
-//                                   location:
-//                                       "Sunset Pickleball Club, Miami Beach",
-//                                   skillLevel: "Beginner",
-//                                   price: "25",
-//                                   onViewDetails: () {
-//                                     Get.to(()=> SessionDetailsView());
-//                                   },
-//                                 ),
-//                               );
-//                             },
-//                           ),
-//                         )
-//                       ],
-//                     ),
-//                   ),
-//                   Padding(
-//                     padding: EdgeInsets.symmetric(horizontal: 20),
-//                     child: Column(
-//                       children: [
-//                         Row(
-//                           children: [
-//                             Expanded(
-//                               child: SearchFiled(
-//                                 onChanged: (value) {},
-//                               ),
-//                             ),
-//                             sw12,
-//                             Container(
-//                               height: 48,
-//                               decoration: BoxDecoration(
-//                                   borderRadius: BorderRadius.circular(12),
-//                                   border: Border.all(color: AppColors.silver)),
-//                               child: Image.asset(
-//                                 AppImages.filter,
-//                                 scale: 4,
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                         sh20,
-//                         Expanded(
-//                           child: GridView.builder(
-//                             shrinkWrap: true,
-//                             primary: false,
-//                             padding: EdgeInsets.only(bottom: 116),
-//                             gridDelegate:
-//                                 SliverGridDelegateWithFixedCrossAxisCount(
-//                               crossAxisCount: 2,
-//                               crossAxisSpacing: 20,
-//                               mainAxisSpacing: 20,
-//                               childAspectRatio: 0.9,
-//                             ),
-//                             itemCount: 20,
-//                             itemBuilder: (context, index) {
-//                               return ProfileCardWidget(
-//                                 name: 'John Smith',
-//                                 rating: 4.5,
-//                                 experience: '10+ Years',
-//                                 hourlyRate: '50/hour',
-//                                 profileImage: AppImages.profileImageTwo,
-//                                 onTap: () {
-//                                   Get.to(()=> TrainerProfileView());
-//                                 },
-//                               );
-//                             },
-//                           ),
-//                         )
-//                       ],
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 class MySearchView extends GetView<MySearchController> {
   final int tabIndex;
   final bool showBackButton;
 
-  const MySearchView({
+  MySearchView({
     super.key,
     this.tabIndex = 0,
     this.showBackButton = false,
-  }); // Default to 'Sessions'
+  });
+
+  final HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      initialIndex: tabIndex, // Set initial tab
+      initialIndex: tabIndex,
       child: Scaffold(
         backgroundColor: AppColors.mainColor,
         appBar: AppBar(
@@ -243,23 +88,58 @@ class MySearchView extends GetView<MySearchController> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          _buildSearchBar(),
+          //_buildSearchBar(),
+          Row(
+            children: [
+              Expanded(
+                child: SearchFiled(
+                  onChanged: (value) {
+                    if (value.isEmpty) {
+                      homeController.fetchCourseSessions(
+                          null); // Fetch all course sessions
+                      //homeController.fetchTrainers(null);  // Fetch all trainers
+                    } else {
+                      // Trigger search filtering dynamically
+                      homeController.onSearchQueryChangedSession(value);
+                    }
+                  },
+                ),
+              ),
+              sw12,
+              Container(
+                height: 48,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColors.silver),
+                ),
+                child: Image.asset(
+                  AppImages.filter,
+                  scale: 4,
+                ),
+              ),
+            ],
+          ),
           sh20,
           Expanded(
             child: ListView.builder(
-              itemCount: 5,
+              itemCount: homeController.courseSessions.length,
               itemBuilder: (context, index) {
+                var session = homeController.courseSessions[index];
                 return Padding(
-                  padding: EdgeInsets.only(bottom: index == 4 ? 116 : 12),
+                  padding: EdgeInsets.only(
+                    bottom: index == homeController.courseSessions.length - 1
+                        ? 116
+                        : 12,
+                  ),
                   child: CourseCardWidget(
-                    title: "Doubles Strategy Masterclass",
-                    description: "Master the art of doubles in Pickleball...",
-                    date: "25 January 2025",
-                    startTime: "2:00 PM",
-                    endTime: "3:00 PM",
-                    location: "Sunset Pickleball Club, Miami Beach",
-                    skillLevel: "Beginner",
-                    price: 25,
+                    title: session.name ?? "No title",
+                    description: session.description ?? "No description",
+                    date: "No date",
+                    startTime: session.startTime ?? "No start time",
+                    endTime: session.endTime ?? "No end time",
+                    location: session.location ?? "No location",
+                    skillLevel: session.skillLevel ?? "No skill level",
+                    price: session.price ?? 0,
                     onViewDetails: () {
                       Get.to(() => SessionDetailsView());
                     },
@@ -278,7 +158,36 @@ class MySearchView extends GetView<MySearchController> {
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          _buildSearchBar(),
+          //_buildSearchBar(),
+          Row(
+            children: [
+              Expanded(
+                child: SearchFiled(
+                  onChanged: (value) {
+                    if (value.isEmpty) {
+                      //homeController.fetchCourseSessions(null);  // Fetch all course sessions
+                      homeController.fetchTrainers(null); // Fetch all trainers
+                    } else {
+                      // Trigger search filtering dynamically
+                      homeController.onSearchQueryChangedTrainer(value);
+                    }
+                  },
+                ),
+              ),
+              sw12,
+              Container(
+                height: 48,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColors.silver),
+                ),
+                child: Image.asset(
+                  AppImages.filter,
+                  scale: 4,
+                ),
+              ),
+            ],
+          ),
           sh20,
           Expanded(
             child: GridView.builder(
@@ -289,14 +198,16 @@ class MySearchView extends GetView<MySearchController> {
                 mainAxisSpacing: 12,
                 childAspectRatio: 0.9,
               ),
-              itemCount: 20,
+              itemCount: homeController.trainerList.length,
               itemBuilder: (context, index) {
+                var trainer = homeController.trainerList[index];
                 return ProfileCardWidget(
-                  name: 'John Smith',
-                  rating: 4,
-                  experience: '10+ Years',
-                  hourlyRate: '50/hour',
-                  profileImage: AppImages.profileImageTwo,
+                  name: trainer.user?.name ?? 'Unknown',
+                  rating: trainer.avgRating ?? 0.0,
+                  experience: (trainer.experience ?? 0).toString(),
+                  hourlyRate: (trainer.perHourRate ?? 0).toString(),
+                  profileImage:
+                      trainer.user?.photoUrl ?? AppImages.profileImageTwo,
                   onTap: () {
                     Get.to(() => TrainerProfileView());
                   },
@@ -309,27 +220,36 @@ class MySearchView extends GetView<MySearchController> {
     );
   }
 
-  Widget _buildSearchBar() {
-    return Row(
-      children: [
-        Expanded(
-          child: SearchFiled(
-            onChanged: (value) {},
-          ),
-        ),
-        sw12,
-        Container(
-          height: 48,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.silver),
-          ),
-          child: Image.asset(
-            AppImages.filter,
-            scale: 4,
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildSearchBar() {
+  //   return Row(
+  //     children: [
+  //       Expanded(
+  //         child: SearchFiled(
+  //           onChanged: (value) {
+  //             if (value.isEmpty) {
+  //               homeController
+  //                   .fetchCourseSessions(null); // Fetch all course sessions
+  //               homeController.fetchTrainers(null); // Fetch all trainers
+  //             } else {
+  //               // Trigger search filtering dynamically
+  //              // homeController.onSearchQueryChanged(value);
+  //             }
+  //           },
+  //         ),
+  //       ),
+  //       sw12,
+  //       Container(
+  //         height: 48,
+  //         decoration: BoxDecoration(
+  //           borderRadius: BorderRadius.circular(12),
+  //           border: Border.all(color: AppColors.silver),
+  //         ),
+  //         child: Image.asset(
+  //           AppImages.filter,
+  //           scale: 4,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }

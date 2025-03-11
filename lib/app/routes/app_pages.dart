@@ -56,7 +56,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.MY_SEARCH,
-      page: () => const MySearchView(),
+      page: () => MySearchView(),
       binding: MySearchBinding(),
     ),
     GetPage(
