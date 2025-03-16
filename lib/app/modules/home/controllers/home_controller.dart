@@ -35,8 +35,10 @@ class HomeController extends GetxController {
       );
 
       var responseBody = await BaseClient.handleResponse(response);
-      CourseSessionsModel courseSessionsModel = CourseSessionsModel.fromJson(responseBody);
-      courseSessions.value = courseSessionsModel.data; // Update course sessions list
+      CourseSessionsModel courseSessionsModel =
+          CourseSessionsModel.fromJson(responseBody);
+      courseSessions.value =
+          courseSessionsModel.data; // Update course sessions list
       update();
     } catch (e) {
       debugPrint("Error fetching course sessions: $e");
@@ -55,7 +57,7 @@ class HomeController extends GetxController {
       };
 
       var response = await BaseClient.getRequest(
-        api: Api.trainers(trainerQuery ?? ''),  // Pass empty string if query is null
+        api: Api.trainers(trainerQuery ?? ''),
         headers: headers,
       );
 
@@ -70,16 +72,11 @@ class HomeController extends GetxController {
     }
   }
 
-  // Call API with search query dynamically
   void onSearchQueryChangedSession(String sessionQuery) {
-    fetchCourseSessions(sessionQuery);  // Fetch sessions based on query
-  }
-  void onSearchQueryChangedTrainer(String trainerQuery) {
-    fetchTrainers(trainerQuery); // Fetch trainers based on query
+    fetchCourseSessions(sessionQuery);
   }
 
-  // void onSearchQueryChanged(String query) {
-  //   fetchCourseSessions(query);  // Fetch sessions based on query
-  //   fetchTrainers(query); // Fetch trainers based on query
-  // }
+  void onSearchQueryChangedTrainer(String trainerQuery) {
+    fetchTrainers(trainerQuery);
+  }
 }

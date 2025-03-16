@@ -91,20 +91,12 @@ class _EditProfileViewState extends State<EditProfileView> {
                         ),
                         child: CircleAvatar(
                           radius: 50,
-                          backgroundImage: profileAndSettingsController
-                                      .selectedImage.value !=
-                                  null
-                              ? FileImage(profileAndSettingsController
-                                  .selectedImage.value!)
-                              : (profileAndSettingsController
-                                              .myProfileData.value?.photoUrl !=
-                                          null &&
-                                      profileAndSettingsController.myProfileData
-                                          .value!.photoUrl!.isNotEmpty)
-                                  ? NetworkImage(profileAndSettingsController
-                                      .myProfileData.value!.photoUrl!)
-                                  : AssetImage(AppImages.profileImageCamera)
-                                      as ImageProvider,
+                          backgroundImage: profileAndSettingsController.selectedImage.value != null
+                              ? FileImage(profileAndSettingsController.selectedImage.value!)
+                              : (profileAndSettingsController.myProfileData.value?.photoUrl != null &&
+                              profileAndSettingsController.myProfileData.value!.photoUrl!.isNotEmpty)
+                                  ? NetworkImage(profileAndSettingsController.myProfileData.value!.photoUrl!)
+                                  : const AssetImage(AppImages.profileImageCamera)
                         ),
                       ),
                       Positioned(

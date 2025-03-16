@@ -10,7 +10,8 @@ class BookingCardWaitlistWidget extends StatelessWidget {
   final String coachName;
   final String sessionTitle;
   final String date;
-  final String time;
+  final String startTime;
+  final String endTime;
   final String imageUrl;
   final VoidCallback onCancel;
 
@@ -19,7 +20,8 @@ class BookingCardWaitlistWidget extends StatelessWidget {
     required this.coachName,
     required this.sessionTitle,
     required this.date,
-    required this.time,
+    required this.startTime,
+    required this.endTime,
     required this.imageUrl,
     required this.onCancel,
   });
@@ -80,7 +82,17 @@ class BookingCardWaitlistWidget extends StatelessWidget {
               ),
               sw8,
               Text(
-                time,
+                startTime,
+                style: h6.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+              ),Text(
+                ' - ',
+                style: h6.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+              ),Text(
+                endTime,
                 style: h6.copyWith(
                   fontWeight: FontWeight.w500,
                 ),

@@ -27,13 +27,14 @@ class CourseCardWidget extends StatelessWidget {
     required this.description,
     required this.date,
     required this.startTime,
+    required this.endTime,
     required this.location,
     required this.skillLevel,
     required this.price,
     this.backgroundImage,
     this.width = 300,
     this.height = 300,
-    required this.onViewDetails, required this.endTime,
+    required this.onViewDetails,
   });
 
   @override

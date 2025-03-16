@@ -26,10 +26,10 @@ class Api {
   } //done
 
   ///showBookMarked
-  static const bookMarked = "$baseUrl/bookmarks"; //
+  static const myBookings = "$baseUrl/bookings/my-bookings"; //
 
   ///Create BookMarked
-  static const addBookMark = "$baseUrl/bookmarks"; //
+  static const myWaitlist = "$baseUrl/waitLists/my-waitlist"; //
 
   static removeBookMark(String id) => "$baseUrl/college-bookmarks/$id"; //
 
