@@ -25,6 +25,9 @@ class Api {
         : "$baseUrl/trainers"; // If query is null or empty, omit searchTerm
   } //done
 
+  /// get session details by id
+  static getSingleSession(String id) => "$baseUrl/sessions/$id";
+
   ///showBookMarked
   static const myBookings = "$baseUrl/bookings/my-bookings"; //
 

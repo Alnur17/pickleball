@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pickleball/common/helper_widget/booking_card_confirm_widget.dart';
 
 import '../../../../common/app_color/app_colors.dart';
@@ -19,6 +20,16 @@ class BookingView extends StatefulWidget {
 
 class _BookingViewState extends State<BookingView> {
   final BookingController bookingController = Get.put(BookingController());
+
+  // Function to format date
+  String formatDate(String dateString) {
+    try {
+      final dateTime = DateTime.parse(dateString);
+      return DateFormat('dd MMMM yyyy').format(dateTime);
+    } catch (e) {
+      return dateString;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +159,8 @@ class _BookingViewState extends State<BookingView> {
                                     coachName: waitlistBooking.session?.coach?.user?.name ?? "Unknown",
                                     sessionTitle: waitlistBooking.session?.name ??
                                         "Unknown",
-                                    date: waitlistBooking.createdAt.toString(),
+                                    date: formatDate(
+                                        waitlistBooking.createdAt.toString()),
                                     startTime: waitlistBooking.session?.startTime ?? "",
                                     endTime: waitlistBooking.session?.endTime ?? "",
                                     imageUrl: waitlistBooking.session?.coach?.user?.photoUrl ?? AppImages.profileImageTwo,

@@ -141,7 +141,8 @@ class MySearchView extends GetView<MySearchController> {
                     skillLevel: session.skillLevel ?? "No skill level",
                     price: session.price ?? 0,
                     onViewDetails: () {
-                      Get.to(() => SessionDetailsView());
+                      Get.to(() => SessionDetailsView(id: session.id,));
+                      debugPrint('::::::::::: ${session.id} ::::::::::::');
                     },
                   ),
                 );
