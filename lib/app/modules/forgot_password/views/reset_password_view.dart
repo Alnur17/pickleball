@@ -8,6 +8,7 @@ import '../../../../common/app_images/app_images.dart';
 import '../../../../common/app_text_style/styles.dart';
 import '../../../../common/size_box/custom_sizebox.dart';
 import '../../../../common/widgets/custom_button.dart';
+import '../../../../common/widgets/custom_loader.dart';
 import '../../../../common/widgets/custom_textfield.dart';
 
 class ResetPasswordView extends GetView {
@@ -91,16 +92,20 @@ class ResetPasswordView extends GetView {
               hintText: '**********',
             ),
             sh16,
-            CustomButton(
-              text: 'Update Password',
-              onPressed: () {
-                forgotPasswordController.resetPassword(
-                  email: email.toLowerCase(),
-                  newPassword: newPasswordTEController.text,
-                  confirmPassword: confirmPasswordTEController.text,
-                );
-              },
-              gradientColors: AppColors.gradientColor,
+            Obx(
+              () => forgotPasswordController.isLoading.value == true
+                  ? CustomLoader(color: AppColors.white)
+                  : CustomButton(
+                      text: 'Update Password',
+                      onPressed: () {
+                        forgotPasswordController.resetPassword(
+                          email: email.toLowerCase(),
+                          newPassword: newPasswordTEController.text,
+                          confirmPassword: confirmPasswordTEController.text,
+                        );
+                      },
+                      gradientColors: AppColors.gradientColor,
+                    ),
             ),
           ],
         ),

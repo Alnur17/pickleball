@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pickleball/app/modules/signup/controllers/signup_controller.dart';
+import 'package:pickleball/common/widgets/custom_loader.dart';
 
 import '../../../../common/app_color/app_colors.dart';
 import '../../../../common/app_images/app_images.dart';
@@ -113,12 +114,16 @@ class _SignupViewState extends State<SignupView> {
                 ],
               ),
               sh20,
-              CustomButton(
-                text: 'Sign Up',
-                onPressed: () {
-                  signupController.registerUser();  // Trigger registration
-                },
-                gradientColors: AppColors.gradientColor,
+              Obx(
+                () => signupController.isLoading.value == true
+                    ? CustomLoader(color: AppColors.white)
+                    : CustomButton(
+                        text: 'Sign Up',
+                        onPressed: () {
+                          signupController.registerUser();
+                        },
+                        gradientColors: AppColors.gradientColor,
+                      ),
               ),
               sh10,
               GestureDetector(

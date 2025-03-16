@@ -7,15 +7,16 @@ import '../../../../common/app_images/app_images.dart';
 import '../../../../common/app_text_style/styles.dart';
 import '../../../../common/size_box/custom_sizebox.dart';
 import '../../../../common/widgets/custom_button.dart';
+import '../../../../common/widgets/custom_loader.dart';
 import '../../../../common/widgets/custom_textfield.dart';
 import '../controllers/forgot_password_controller.dart';
 
 class ForgotPasswordView extends GetView<ForgotPasswordController> {
-   ForgotPasswordView({super.key});
+  ForgotPasswordView({super.key});
 
   final TextEditingController emailTEController = TextEditingController();
   final ForgotPasswordController forgotPasswordController =
-  Get.put(ForgotPasswordController());
+      Get.put(ForgotPasswordController());
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +71,18 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
               ),
             ),
             sh30,
-            CustomButton(
-              text: 'Send',
-              onPressed: () {
-                forgotPasswordController.forgotPassword(
-                  email: emailTEController.text.toLowerCase(),
-                );
-              },
-              gradientColors: AppColors.gradientColor,
+            Obx(
+              () => forgotPasswordController.isLoading.value == true
+                  ? CustomLoader(color: AppColors.white)
+                  : CustomButton(
+                      text: 'Send',
+                      onPressed: () {
+                        forgotPasswordController.forgotPassword(
+                          email: emailTEController.text.toLowerCase(),
+                        );
+                      },
+                      gradientColors: AppColors.gradientColor,
+                    ),
             ),
           ],
         ),

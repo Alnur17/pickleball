@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pickleball/app/modules/forgot_password/controllers/forgot_password_controller.dart';
 import 'package:pickleball/app/modules/signup/controllers/signup_controller.dart';
+import 'package:pickleball/common/widgets/custom_loader.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../../common/app_color/app_colors.dart';
@@ -15,13 +16,14 @@ import '../../../../common/widgets/custom_button.dart';
 
 class VerifyYourEmailView extends GetView {
   final String email;
-   VerifyYourEmailView({super.key, required this.email});
+
+  VerifyYourEmailView({super.key, required this.email});
 
   final TextEditingController otpTEController = TextEditingController();
 
   final SignupController signupController = Get.put(SignupController());
-  final ForgotPasswordController forgotPasswordController = Get.put(ForgotPasswordController());
-
+  final ForgotPasswordController forgotPasswordController =
+      Get.put(ForgotPasswordController());
 
   @override
   Widget build(BuildContext context) {
@@ -92,12 +94,16 @@ class VerifyYourEmailView extends GetView {
               appContext: context,
             ),
             sh20,
-            CustomButton(
-              text: 'Verify',
-              onPressed: () {
-                signupController.emailVerify(otp: otpTEController.text);
-              },
-              gradientColors: AppColors.gradientColor,
+            Obx(
+              () => signupController.isLoading.value == true
+                  ? CustomLoader(color: AppColors.white)
+                  : CustomButton(
+                      text: 'Verify',
+                      onPressed: () {
+                        signupController.emailVerify(otp: otpTEController.text);
+                      },
+                      gradientColors: AppColors.gradientColor,
+                    ),
             ),
             sh30,
             Row(

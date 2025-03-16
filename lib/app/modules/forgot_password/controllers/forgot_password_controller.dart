@@ -17,7 +17,7 @@ import '../views/otp_verification_view.dart';
 class ForgotPasswordController extends GetxController {
   var isLoading = false.obs;
 
-  Rx<int> countdown = 5.obs;
+  Rx<int> countdown = 59.obs;
 
   @override
   void onInit() {

@@ -7,6 +7,7 @@ import '../../../../common/app_text_style/styles.dart';
 import '../../../../common/widgets/custom_button.dart';
 import '../../../../common/size_box/custom_sizebox.dart';
 import '../../../../common/app_images/app_images.dart';
+import '../../../../common/widgets/custom_loader.dart';
 
 class OtpVerificationView extends GetView<ForgotPasswordController> {
   final String email;
@@ -84,15 +85,19 @@ class OtpVerificationView extends GetView<ForgotPasswordController> {
               appContext: context,
             ),
             sh20,
-            CustomButton(
-              text: 'Confirm',
-              onPressed: () {
-                forgotPasswordController.verifyOtp(
-                  email: email,
-                  otp: otpTEController.text,
-                );
-              },
-              gradientColors: AppColors.gradientColor,
+            Obx(
+              () => forgotPasswordController.isLoading.value == true
+                  ? CustomLoader(color: AppColors.white)
+                  : CustomButton(
+                      text: 'Confirm',
+                      onPressed: () {
+                        forgotPasswordController.verifyOtp(
+                          email: email,
+                          otp: otpTEController.text,
+                        );
+                      },
+                      gradientColors: AppColors.gradientColor,
+                    ),
             ),
             sh30,
             Obx(() {
@@ -102,9 +107,11 @@ class OtpVerificationView extends GetView<ForgotPasswordController> {
                       style: h3,
                     )
                   : GestureDetector(
-                      onTap: forgotPasswordController.countdown.value == 0 ? () {
-                        forgotPasswordController.reSendOtp(email: email);
-                      } : null,
+                      onTap: forgotPasswordController.countdown.value == 0
+                          ? () {
+                              forgotPasswordController.reSendOtp(email: email);
+                            }
+                          : null,
                       child: Text(
                         'Resend code',
                         style: h3.copyWith(color: AppColors.textColorBlue),
