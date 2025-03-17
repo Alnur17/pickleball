@@ -28,11 +28,14 @@ class Api {
   /// get session details by id
   static getSingleSession(String id) => "$baseUrl/sessions/$id";
 
+  /// get session details by id
+  static getSingleTrainer(String id) => "$baseUrl/trainers/$id";
+
   ///showBookMarked
   static const myBookings = "$baseUrl/bookings/my-bookings"; //
 
   ///Create BookMarked
-  static const myWaitlist = "$baseUrl/waitLists/my-waitlist"; //
+  static const myWaitlist = "$baseUrl/waitLists/my-waitlist"; //done
 
   static removeBookMark(String id) => "$baseUrl/college-bookmarks/$id"; //
 
@@ -60,7 +63,7 @@ class Api {
 
   static const String deleteProfile = "$baseUrl/athletes"; //
 
-  static const String conditionsPage = "$baseUrl/settings"; //
+  static const String conditionsPage = "$baseUrl/settings"; //done
 
   static String subscription(String planType, String email) =>
       "$baseUrl/subscriptions/create-payment-session?subscription_type=$planType&email=$email"; //

@@ -37,186 +37,246 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
         toolbarHeight: 0,
       ),
       body: Obx(
-            () => mySearchController.isLoading.value
+        () => mySearchController.isLoading.value
             ? const Center(child: CircularProgressIndicator())
             : mySearchController.sessionsDetails.value == null
-            ? const Center(child: Text("No session details available"))
-            : Column(
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Positioned(
-                  child: Container(
-                    height: 250,
-                    width: double.infinity,
-                    color: AppColors.red,
-                    child: Image.asset(
-                      AppImages.containerImage,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Positioned.fill(
-                  child: Container(
-                    color: Colors.black.withOpacity(0.4),
-                  ),
-                ),
-                Positioned(
-                  left: 20,
-                  top: 20,
-                  child: GestureDetector(
-                    onTap: () => Get.back(),
-                    child: Image.asset(
-                      AppImages.back,
-                      scale: 4,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  right: 20,
-                  top: 20,
-                  child: Container(
-                    height: 35,
-                    width: 35,
-                    decoration: const ShapeDecoration(
-                      shape: CircleBorder(),
-                      color: Colors.black26,
-                    ),
-                    child: Image.asset(
-                      AppImages.star,
-                      scale: 4,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 20,
-                  bottom: 10,
-                  right: Get.width * 0.35,
-                  child: Row(
+                ? const Center(child: Text("No session details available"))
+                : Column(
                     children: [
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Positioned(
+                            child: Container(
+                              height: 250,
+                              width: double.infinity,
+                              color: AppColors.red,
+                              child: mySearchController
+                                          .sessionsDetails.value?.thumbnail !=
+                                      null
+                                  ? Image.network(
+                                      mySearchController
+                                          .sessionsDetails.value!.thumbnail!,
+                                      fit: BoxFit.cover,
+                                      scale: 4,
+                                      // errorBuilder:
+                                      //     (context, error, stackTrace) {
+                                      //   return Image.asset(
+                                      //     AppImages.containerImage,
+                                      //     fit: BoxFit.cover,
+                                      //   );
+                                      // },
+                                    )
+                                  : Image.asset(
+                                      AppImages.containerImage,
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
+                          ),
+                          Positioned.fill(
+                            child: Container(
+                              color: Colors.black.withOpacity(0.4),
+                            ),
+                          ),
+                          Positioned(
+                            left: 20,
+                            top: 20,
+                            child: GestureDetector(
+                              onTap: () => Get.back(),
+                              child: Image.asset(
+                                AppImages.back,
+                                scale: 4,
+                                color: AppColors.white,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            right: 20,
+                            top: 20,
+                            child: Container(
+                              height: 35,
+                              width: 35,
+                              decoration: const ShapeDecoration(
+                                shape: CircleBorder(),
+                                color: Colors.black26,
+                              ),
+                              child: Image.asset(
+                                AppImages.star,
+                                scale: 4,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 20,
+                            bottom: 10,
+                            right: Get.width * 0.35,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    mySearchController
+                                            .sessionsDetails.value!.name ??
+                                        'Unknown',
+                                    style: h1.copyWith(
+                                      color: AppColors.white,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Positioned(
+                            right: 20,
+                            bottom: -10,
+                            child: CustomContainer(
+                              height: 35,
+                              text: 'Book Now',
+                              imagePath: AppImages.arrowFlyWhite,
+                              onTap: () =>
+                                  Get.to(() => BookingConfirmationView()),
+                              backgroundColor: AppColors.textColorBlue,
+                            ),
+                          ),
+                        ],
+                      ),
+                      sh30,
                       Expanded(
-                        child: Text(
-                          mySearchController.sessionsDetails.value!.name ?? 'Doubles Strategy Masterclass',
-                          style: h1.copyWith(
-                            color: AppColors.white,
-                            fontSize: 20,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Program Description',
+                                    style: h3.copyWith(
+                                        fontWeight: FontWeight.w700)),
+                                sh12,
+                                Text(
+                                  mySearchController
+                                          .sessionsDetails.value!.description ??
+                                      'No description available',
+                                  style:
+                                      h6.copyWith(fontWeight: FontWeight.w500),
+                                ),
+                                sh20,
+                                Text('Location',
+                                    style: h3.copyWith(
+                                        fontWeight: FontWeight.w700)),
+                                sh12,
+                                Text(
+                                  mySearchController
+                                          .sessionsDetails.value!.location ??
+                                      '',
+                                  style:
+                                      h6.copyWith(fontWeight: FontWeight.w500),
+                                ),
+                                sh20,
+                                Text('Session Type',
+                                    style: h3.copyWith(
+                                        fontWeight: FontWeight.w700)),
+                                sh12,
+                                Text(
+                                  mySearchController
+                                          .sessionsDetails.value!.status ??
+                                      '',
+                                  style:
+                                      h6.copyWith(fontWeight: FontWeight.w500),
+                                ),
+                                sh20,
+                                Text('Skill-level',
+                                    style: h3.copyWith(
+                                        fontWeight: FontWeight.w700)),
+                                sh12,
+                                Text(
+                                  mySearchController
+                                          .sessionsDetails.value!.skillLevel ??
+                                      '',
+                                  style:
+                                      h6.copyWith(fontWeight: FontWeight.w500),
+                                ),
+                                sh20,
+                                Text('Session Pricing',
+                                    style: h3.copyWith(
+                                        fontWeight: FontWeight.w700)),
+                                sh12,
+                                Text(
+                                  '\$${mySearchController.sessionsDetails.value!.price ?? 0} per session',
+                                  style:
+                                      h6.copyWith(fontWeight: FontWeight.w500),
+                                ),
+                                sh20,
+                                Text('Trainer',
+                                    style: h3.copyWith(
+                                        fontWeight: FontWeight.w700)),
+                                sh12,
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 25,
+                                      backgroundImage: NetworkImage(
+                                        mySearchController.sessionsDetails
+                                                .value!.coach?.user?.photoUrl ??
+                                            AppImages.profileImageTwo,
+                                      ),
+                                    ),
+                                    sw12,
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          mySearchController.sessionsDetails
+                                                  .value!.coach?.user?.name ??
+                                              'John Smith',
+                                          style: h6.copyWith(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        sh8,
+                                        Text(
+                                          '${mySearchController.sessionsDetails.value!.coach?.experience ?? 10}+ Years experience',
+                                          style: h6.copyWith(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                sh20,
+                                Text('Key learning objectives:',
+                                    style: h3.copyWith(
+                                        fontWeight: FontWeight.w700)),
+                                sh12,
+                                Text(
+                                  mySearchController
+                                          .sessionsDetails.value!.description ??
+                                      '- Footwork drills\n- Advanced strategies\n- Doubles play tactics',
+                                  style:
+                                      h6.copyWith(fontWeight: FontWeight.w500),
+                                ),
+                                sh20,
+                                Text('Session Schedule:',
+                                    style: h3.copyWith(
+                                        fontWeight: FontWeight.w700)),
+                                sh12,
+                                Text(
+                                  'Duration: ${mySearchController.sessionsDetails.value!.duration ?? 60} minutes',
+                                  style:
+                                      h6.copyWith(fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  'Time: ${mySearchController.sessionsDetails.value!.startTime ?? '2:00 PM'} - ${mySearchController.sessionsDetails.value!.endTime ?? '3:00 PM'}',
+                                  style:
+                                      h6.copyWith(fontWeight: FontWeight.w500),
+                                ),
+                                sh20,
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                ),
-                Positioned(
-                  right: 20,
-                  bottom: -10,
-                  child: CustomContainer(
-                    height: 35,
-                    text: 'Book Now',
-                    imagePath: AppImages.arrowFlyWhite,
-                    onTap: () => Get.to(() => BookingConfirmationView()),
-                    backgroundColor: AppColors.textColorBlue,
-                  ),
-                ),
-              ],
-            ),
-            sh30,
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Program Description', style: h3.copyWith(fontWeight: FontWeight.w700)),
-                      sh12,
-                      Text(
-                        mySearchController.sessionsDetails.value!.description ?? 'No description available',
-                        style: h6.copyWith(fontWeight: FontWeight.w500),
-                      ),
-                      sh20,
-                      Text('Location', style: h3.copyWith(fontWeight: FontWeight.w700)),
-                      sh12,
-                      Text(
-                        mySearchController.sessionsDetails.value!.location ?? 'No location provided',
-                        style: h6.copyWith(fontWeight: FontWeight.w500),
-                      ),
-                      sh20,
-                      Text('Session Type', style: h3.copyWith(fontWeight: FontWeight.w700)),
-                      sh12,
-                      Text(
-                        mySearchController.sessionsDetails.value!.status ?? 'Open Play',
-                        style: h6.copyWith(fontWeight: FontWeight.w500),
-                      ),
-                      sh20,
-                      Text('Skill-level', style: h3.copyWith(fontWeight: FontWeight.w700)),
-                      sh12,
-                      Text(
-                        mySearchController.sessionsDetails.value!.skillLevel ?? 'Beginner',
-                        style: h6.copyWith(fontWeight: FontWeight.w500),
-                      ),
-                      sh20,
-                      Text('Session Pricing', style: h3.copyWith(fontWeight: FontWeight.w700)),
-                      sh12,
-                      Text(
-                        '\$${mySearchController.sessionsDetails.value!.price ?? 25} per session',
-                        style: h6.copyWith(fontWeight: FontWeight.w500),
-                      ),
-                      sh20,
-                      Text('Trainer', style: h3.copyWith(fontWeight: FontWeight.w700)),
-                      sh12,
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 20,
-                            backgroundImage: NetworkImage(
-                              mySearchController.sessionsDetails.value!.coach?.user?.photoUrl ?? AppImages.profileImageTwo,
-                            ),
-                          ),
-                          sw12,
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                mySearchController.sessionsDetails.value!.coach?.user?.name ?? 'John Smith',
-                                style: h6.copyWith(fontWeight: FontWeight.w500),
-                              ),
-                              sh12,
-                              Text(
-                                '${mySearchController.sessionsDetails.value!.coach?.experience ?? 10}+ Years experience',
-                                style: h6.copyWith(fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      sh20,
-                      Text('Key learning objectives:', style: h3.copyWith(fontWeight: FontWeight.w700)),
-                      sh12,
-                      Text(
-                        mySearchController.sessionsDetails.value!.description ?? '- Footwork drills\n- Advanced strategies\n- Doubles play tactics',
-                        style: h6.copyWith(fontWeight: FontWeight.w500),
-                      ),
-                      sh20,
-                      Text('Session Schedule:', style: h3.copyWith(fontWeight: FontWeight.w700)),
-                      sh12,
-                      Text(
-                        'Duration: ${mySearchController.sessionsDetails.value!.duration ?? 60} minutes',
-                        style: h6.copyWith(fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        'Time: ${mySearchController.sessionsDetails.value!.startTime ?? '2:00 PM'} - ${mySearchController.sessionsDetails.value!.endTime ?? '3:00 PM'}',
-                        style: h6.copyWith(fontWeight: FontWeight.w500),
-                      ),
-                      sh20,
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

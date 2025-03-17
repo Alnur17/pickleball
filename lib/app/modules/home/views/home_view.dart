@@ -9,6 +9,7 @@ import 'package:pickleball/common/app_color/app_colors.dart';
 import 'package:pickleball/common/app_images/app_images.dart';
 import 'package:pickleball/common/app_text_style/styles.dart';
 import 'package:pickleball/common/helper_widget/course_card_widget.dart';
+import 'package:pickleball/common/helper_widget/date_time_formation_class.dart';
 import 'package:pickleball/common/size_box/custom_sizebox.dart';
 import 'package:pickleball/common/helper_widget/header_section_widget.dart';
 import 'package:pickleball/common/helper_widget/profile_card_widget.dart';
@@ -181,14 +182,14 @@ class HomeView extends GetView<HomeController> {
                 child: CourseCardWidget(
                   title: session.name ?? "No title",
                   description: session.description ?? "No description",
-                  date: "No date",
+                  date: DateTimeFormationClass.formatDate(session.createdAt.toString()),
                   startTime: session.startTime ?? "No start time",
                   endTime: session.endTime ?? "No end time",
                   location: session.location ?? "No location",
                   skillLevel: session.skillLevel ?? "No skill level",
                   price: session.price ?? 0,
                   onViewDetails: () {
-                    Get.to(() => SessionDetailsView());
+                    Get.to(() => SessionDetailsView(id: session.id,));
                   },
                 ),
               );
@@ -198,6 +199,8 @@ class HomeView extends GetView<HomeController> {
       ],
     );
   }
+
+
 
   Widget _buildExpertSection() {
     return Column(
@@ -238,7 +241,7 @@ class HomeView extends GetView<HomeController> {
                   profileImage:
                       trainer.user?.photoUrl ?? AppImages.profileImageTwo,
                   onTap: () {
-                    Get.to(() => TrainerProfileView());
+                    Get.to(() => TrainerProfileView(id: trainer.id,));
                   },
                 ),
               );

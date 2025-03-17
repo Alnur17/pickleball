@@ -10,6 +10,7 @@ import 'package:pickleball/common/widgets/search_filed.dart';
 
 import '../../../../common/app_color/app_colors.dart';
 import '../../../../common/helper_widget/course_card_widget.dart';
+import '../../../../common/helper_widget/date_time_formation_class.dart';
 import '../../../../common/helper_widget/profile_card_widget.dart';
 import '../../../../common/size_box/custom_sizebox.dart';
 import '../controllers/my_search_controller.dart';
@@ -134,15 +135,17 @@ class MySearchView extends GetView<MySearchController> {
                   child: CourseCardWidget(
                     title: session.name ?? "No title",
                     description: session.description ?? "No description",
-                    date: "No date",
+                    date: DateTimeFormationClass.formatDate(
+                        session.createdAt.toString()),
                     startTime: session.startTime ?? "No start time",
                     endTime: session.endTime ?? "No end time",
                     location: session.location ?? "No location",
                     skillLevel: session.skillLevel ?? "No skill level",
                     price: session.price ?? 0,
                     onViewDetails: () {
-                      Get.to(() => SessionDetailsView(id: session.id,));
-                      debugPrint('::::::::::: ${session.id} ::::::::::::');
+                      Get.to(() => SessionDetailsView(
+                            id: session.id,
+                          ));
                     },
                   ),
                 );
@@ -210,7 +213,7 @@ class MySearchView extends GetView<MySearchController> {
                   profileImage:
                       trainer.user?.photoUrl ?? AppImages.profileImageTwo,
                   onTap: () {
-                    Get.to(() => TrainerProfileView());
+                    Get.to(() => TrainerProfileView(  id: trainer.id,));
                   },
                 );
               },
@@ -221,36 +224,36 @@ class MySearchView extends GetView<MySearchController> {
     );
   }
 
-  // Widget _buildSearchBar() {
-  //   return Row(
-  //     children: [
-  //       Expanded(
-  //         child: SearchFiled(
-  //           onChanged: (value) {
-  //             if (value.isEmpty) {
-  //               homeController
-  //                   .fetchCourseSessions(null); // Fetch all course sessions
-  //               homeController.fetchTrainers(null); // Fetch all trainers
-  //             } else {
-  //               // Trigger search filtering dynamically
-  //              // homeController.onSearchQueryChanged(value);
-  //             }
-  //           },
-  //         ),
-  //       ),
-  //       sw12,
-  //       Container(
-  //         height: 48,
-  //         decoration: BoxDecoration(
-  //           borderRadius: BorderRadius.circular(12),
-  //           border: Border.all(color: AppColors.silver),
-  //         ),
-  //         child: Image.asset(
-  //           AppImages.filter,
-  //           scale: 4,
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
+// Widget _buildSearchBar() {
+//   return Row(
+//     children: [
+//       Expanded(
+//         child: SearchFiled(
+//           onChanged: (value) {
+//             if (value.isEmpty) {
+//               homeController
+//                   .fetchCourseSessions(null); // Fetch all course sessions
+//               homeController.fetchTrainers(null); // Fetch all trainers
+//             } else {
+//               // Trigger search filtering dynamically
+//              // homeController.onSearchQueryChanged(value);
+//             }
+//           },
+//         ),
+//       ),
+//       sw12,
+//       Container(
+//         height: 48,
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(12),
+//           border: Border.all(color: AppColors.silver),
+//         ),
+//         child: Image.asset(
+//           AppImages.filter,
+//           scale: 4,
+//         ),
+//       ),
+//     ],
+//   );
+// }
 }
