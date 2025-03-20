@@ -89,37 +89,28 @@ class MySearchView extends GetView<MySearchController> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          //_buildSearchBar(),
-          Row(
-            children: [
-              Expanded(
-                child: SearchFiled(
-                  onChanged: (value) {
-                    if (value.isEmpty) {
-                      homeController.fetchCourseSessions(
-                          null); // Fetch all course sessions
-                      //homeController.fetchTrainers(null);  // Fetch all trainers
-                    } else {
-                      // Trigger search filtering dynamically
-                      homeController.onSearchQueryChangedSession(value);
-                    }
-                  },
-                ),
-              ),
-              sw12,
-              Container(
-                height: 48,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.silver),
-                ),
-                child: Image.asset(
-                  AppImages.filter,
-                  scale: 4,
-                ),
-              ),
-            ],
+          SearchFiled(
+            onChanged: (value) {
+              if (value.isEmpty) {
+                homeController.fetchCourseSessions(
+                    null);
+              } else {
+                homeController.onSearchQueryChangedSession(value);
+              }
+            },
           ),
+          // sw12,
+          // Container(
+          //   height: 48,
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(12),
+          //     border: Border.all(color: AppColors.silver),
+          //   ),
+          //   child: Image.asset(
+          //     AppImages.filter,
+          //     scale: 4,
+          //   ),
+          // ),
           sh20,
           Expanded(
             child: ListView.builder(
@@ -133,12 +124,13 @@ class MySearchView extends GetView<MySearchController> {
                         : 12,
                   ),
                   child: CourseCardWidget(
+                    backgroundImage: session.thumbnail,
                     title: session.name ?? "No title",
                     description: session.description ?? "No description",
-                    date: DateTimeFormationClass.formatDate(
-                        session.createdAt.toString()),
-                    startTime: session.startTime ?? "No start time",
-                    endTime: session.endTime ?? "No end time",
+                    startDate: DateTimeFormationClass.formatDate(session.startDate),
+                    duration: session.duration.toString(),
+                    // startTime: session.startTime ?? "No start time",
+                    // endTime: session.endTime ?? "No end time",
                     location: session.location ?? "No location",
                     skillLevel: session.skillLevel ?? "No skill level",
                     price: session.price ?? 0,
@@ -163,35 +155,30 @@ class MySearchView extends GetView<MySearchController> {
       child: Column(
         children: [
           //_buildSearchBar(),
-          Row(
-            children: [
-              Expanded(
-                child: SearchFiled(
-                  onChanged: (value) {
-                    if (value.isEmpty) {
-                      //homeController.fetchCourseSessions(null);  // Fetch all course sessions
-                      homeController.fetchTrainers(null); // Fetch all trainers
-                    } else {
-                      // Trigger search filtering dynamically
-                      homeController.onSearchQueryChangedTrainer(value);
-                    }
-                  },
-                ),
-              ),
-              sw12,
-              Container(
-                height: 48,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.silver),
-                ),
-                child: Image.asset(
-                  AppImages.filter,
-                  scale: 4,
-                ),
-              ),
-            ],
+          SearchFiled(
+            onChanged: (value) {
+              if (value.isEmpty) {
+                homeController.fetchCourseSessions(
+                    null); // Fetch all course sessions
+                //homeController.fetchTrainers(null);  // Fetch all trainers
+              } else {
+                // Trigger search filtering dynamically
+                homeController.onSearchQueryChangedSession(value);
+              }
+            },
           ),
+          // sw12,
+          // Container(
+          //   height: 48,
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(12),
+          //     border: Border.all(color: AppColors.silver),
+          //   ),
+          //   child: Image.asset(
+          //     AppImages.filter,
+          //     scale: 4,
+          //   ),
+          // ),
           sh20,
           Expanded(
             child: GridView.builder(
@@ -200,7 +187,7 @@ class MySearchView extends GetView<MySearchController> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: 0.9,
+                mainAxisExtent: 220,
               ),
               itemCount: homeController.trainerList.length,
               itemBuilder: (context, index) {

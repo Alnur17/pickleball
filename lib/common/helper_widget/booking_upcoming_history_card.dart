@@ -12,7 +12,6 @@ class BookingUpcomingHistoryCard extends StatelessWidget {
   final String amountPaid;
   final String time;
   final String imageUrl;
-  final VoidCallback onReschedule;
   final VoidCallback onCancel;
 
   const BookingUpcomingHistoryCard({
@@ -23,7 +22,6 @@ class BookingUpcomingHistoryCard extends StatelessWidget {
     required this.amountPaid,
     required this.time,
     required this.imageUrl,
-    required this.onReschedule,
     required this.onCancel,
   });
 
@@ -35,12 +33,11 @@ class BookingUpcomingHistoryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.silver),
       ),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.only(bottom: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Profile and Status Badge
           Row(
             children: [
               CircleAvatar(radius: 22, backgroundImage: NetworkImage(imageUrl)),
@@ -59,10 +56,8 @@ class BookingUpcomingHistoryCard extends StatelessWidget {
             ],
           ),
           sh8,
-          // Session Title
           Text(sessionTitle, style: h5.copyWith(fontWeight: FontWeight.w700)),
           sh8,
-          // Amount Paid
           Row(
             children: [
               Text('Amount Paid', style: h6.copyWith(fontWeight: FontWeight.w500)),
@@ -71,7 +66,6 @@ class BookingUpcomingHistoryCard extends StatelessWidget {
             ],
           ),
           sh8,
-          // Date and Time
           Row(
             children: [
               Image.asset(AppImages.calendar, scale: 4, color: AppColors.black),
@@ -84,33 +78,14 @@ class BookingUpcomingHistoryCard extends StatelessWidget {
             ],
           ),
           sh12,
-          // Buttons
-          Row(
-            children: [
-              Expanded(
-                child: CustomButton(
-                  height: 40,
-                  text: 'Reschedule',
-                  onPressed: onReschedule,
-                  borderColor: AppColors.textColorBlue,
-                  borderRadius: 12,
-                  textColor: AppColors.textColorBlue,
-                  backgroundColor: Colors.blue.withOpacity(0.1),
-                ),
-              ),
-              sw8,
-              Expanded(
-                child: CustomButton(
-                  height: 40,
-                  text: 'Cancel Booking',
-                  onPressed: onCancel,
-                  borderColor: AppColors.red,
-                  borderRadius: 12,
-                  textColor: AppColors.red,
-                  backgroundColor: Colors.red.withOpacity(0.1),
-                ),
-              ),
-            ],
+          CustomButton(
+            height: 40,
+            text: 'Cancel Booking',
+            onPressed: onCancel,
+            borderColor: AppColors.red,
+            borderRadius: 12,
+            textColor: AppColors.red,
+            backgroundColor: Colors.red.withOpacity(0.1),
           ),
         ],
       ),

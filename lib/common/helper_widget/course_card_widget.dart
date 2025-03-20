@@ -10,9 +10,10 @@ import '../widgets/custom_container.dart';
 class CourseCardWidget extends StatelessWidget {
   final String title;
   final String description;
-  final String date;
-  final String startTime;
-  final String endTime;
+  final String startDate;
+  final String duration;
+  // final String startTime;
+  // final String endTime;
   final String location;
   final String skillLevel;
   final int price;
@@ -25,9 +26,10 @@ class CourseCardWidget extends StatelessWidget {
     super.key,
     required this.title,
     required this.description,
-    required this.date,
-    required this.startTime,
-    required this.endTime,
+    required this.startDate,
+    required this.duration,
+    // required this.startTime,
+    // required this.endTime,
     required this.location,
     required this.skillLevel,
     required this.price,
@@ -45,8 +47,14 @@ class CourseCardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         image: DecorationImage(
-          image: AssetImage(backgroundImage ?? AppImages.containerImage),
+          image: backgroundImage != null && backgroundImage!.isNotEmpty
+              ? NetworkImage(backgroundImage!)
+              : AssetImage(AppImages.containerImage),
           fit: BoxFit.cover,
+          onError: (exception, stackTrace) {
+            // Fallback to asset image if network image fails
+            debugPrint("Error loading network image: $exception");
+          },
         ),
       ),
       child: Stack(
@@ -105,7 +113,7 @@ class CourseCardWidget extends StatelessWidget {
                         ),
                         sw5,
                         Text(
-                          date,
+                          startDate,
                           style: h6.copyWith(
                             color: AppColors.white,
                             fontWeight: FontWeight.w500,
@@ -114,29 +122,25 @@ class CourseCardWidget extends StatelessWidget {
                       ],
                     ),
                     sw12,
-                    Row(
-                      children: [
-                        Image.asset(
-                          AppImages.clock,
-                          scale: 4,
-                        ),
-                        sw5,
-                        Text(
-                          startTime,
-                          style: h6.copyWith(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w500,
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            AppImages.clock,
+                            scale: 4,
                           ),
-                        ),
-                        Text(' - ',style: TextStyle(color: AppColors.white),),
-                        Text(
-                          endTime,
-                          style: h6.copyWith(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w500,
+                          sw5,
+                          Expanded(
+                            child: Text(
+                              "$duration days",
+                              style: h6.copyWith(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),

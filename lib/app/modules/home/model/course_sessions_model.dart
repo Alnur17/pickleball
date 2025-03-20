@@ -31,15 +31,15 @@ class Datum {
     required this.name,
     required this.thumbnail,
     required this.description,
-    required this.startTime,
-    required this.endTime,
-    required this.duration,
     required this.location,
     required this.locationLink,
     required this.skillLevel,
     required this.coach,
+    required this.startDate,
+    required this.duration,
     required this.maxParticipants,
     required this.price,
+    required this.maxWaitlist,
     required this.enableWaitlist,
     required this.status,
     required this.avgRating,
@@ -47,22 +47,21 @@ class Datum {
     required this.datumId,
     required this.createdAt,
     required this.updatedAt,
-    required this.maxWaitlist,
   });
 
   final String? id;
   final String? name;
   final String? thumbnail;
   final String? description;
-  final String? startTime;
-  final String? endTime;
-  final int? duration;
   final String? location;
-  final String? locationLink;
+  final dynamic locationLink;
   final String? skillLevel;
   final Coach? coach;
+  final DateTime? startDate;
+  final int? duration;
   final int? maxParticipants;
   final int? price;
+  final int? maxWaitlist;
   final bool? enableWaitlist;
   final String? status;
   final int? avgRating;
@@ -70,7 +69,6 @@ class Datum {
   final String? datumId;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final int? maxWaitlist;
 
   factory Datum.fromJson(Map<String, dynamic> json){
     return Datum(
@@ -78,15 +76,15 @@ class Datum {
       name: json["name"],
       thumbnail: json["thumbnail"],
       description: json["description"],
-      startTime: json["start_time"],
-      endTime: json["end_time"],
-      duration: json["duration"],
       location: json["location"],
       locationLink: json["locationLink"],
       skillLevel: json["skill_level"],
       coach: json["coach"] == null ? null : Coach.fromJson(json["coach"]),
+      startDate: DateTime.tryParse(json["startDate"] ?? ""),
+      duration: json["duration"],
       maxParticipants: json["max_participants"],
       price: json["price"],
+      maxWaitlist: json["max_waitlist"],
       enableWaitlist: json["enable_waitlist"],
       status: json["status"],
       avgRating: json["avgRating"],
@@ -94,7 +92,6 @@ class Datum {
       datumId: json["id"],
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
-      maxWaitlist: json["max_waitlist"],
     );
   }
 

@@ -12,7 +12,7 @@ class BookingCardConfirmWidget extends StatelessWidget {
   final String date;
   final String time;
   final String imageUrl;
-  final VoidCallback onReschedule;
+  //final VoidCallback onReschedule;
   final VoidCallback onCancel;
 
   const BookingCardConfirmWidget({
@@ -22,7 +22,7 @@ class BookingCardConfirmWidget extends StatelessWidget {
     required this.date,
     required this.time,
     required this.imageUrl,
-    required this.onReschedule,
+    //required this.onReschedule,
     required this.onCancel,
   });
 
@@ -90,34 +90,43 @@ class BookingCardConfirmWidget extends StatelessWidget {
             ],
           ),
           sh12,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: CustomButton(
-                  height: 40,
-                  text: 'Reschedule',
-                  onPressed: () {},
-                  borderColor: AppColors.blue,
-                  borderRadius: 12,
-                  textColor: AppColors.blue,
-                  backgroundColor: AppColors.textColorBlueLight,
-                ),
-              ),
-              sw20,
-              Expanded(
-                child: CustomButton(
-                  height: 40,
-                  text: 'Cancel',
-                  onPressed: () {},
-                  borderColor: AppColors.red,
-                  borderRadius: 12,
-                  textColor: AppColors.red,
-                  backgroundColor: AppColors.redLight,
-                ),
-              ),
-            ],
+          CustomButton(
+            height: 40,
+            text: 'Cancel',
+            onPressed: () {},
+            borderColor: AppColors.red,
+            borderRadius: 12,
+            textColor: AppColors.red,
+            backgroundColor: AppColors.redLight,
           ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Expanded(
+          //       child: CustomButton(
+          //         height: 40,
+          //         text: 'Reschedule',
+          //         onPressed: () {},
+          //         borderColor: AppColors.blue,
+          //         borderRadius: 12,
+          //         textColor: AppColors.blue,
+          //         backgroundColor: AppColors.textColorBlueLight,
+          //       ),
+          //     ),
+          //     sw20,
+          //     Expanded(
+          //       child: CustomButton(
+          //         height: 40,
+          //         text: 'Cancel',
+          //         onPressed: () {},
+          //         borderColor: AppColors.red,
+          //         borderRadius: 12,
+          //         textColor: AppColors.red,
+          //         backgroundColor: AppColors.redLight,
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );

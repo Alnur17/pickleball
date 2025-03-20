@@ -45,7 +45,7 @@ class _BookingViewState extends State<BookingView> {
               labelColor: Colors.lightGreen,
               unselectedLabelColor: AppColors.black,
               dividerColor: AppColors.transparent,
-              padding: EdgeInsets.symmetric(horizontal: 80),
+              padding: EdgeInsets.symmetric(horizontal: 45),
             ),
             sh16,
             Expanded(
@@ -55,25 +55,8 @@ class _BookingViewState extends State<BookingView> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: SearchFiled(
-                                onChanged: (value) {},
-                              ),
-                            ),
-                            sw12,
-                            Container(
-                              height: 48,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(color: AppColors.silver)),
-                              child: Image.asset(
-                                AppImages.filter,
-                                scale: 4,
-                              ),
-                            ),
-                          ],
+                        SearchFiled(
+                          onChanged: (value) {},
                         ),
                         sh20,
                         Expanded(
@@ -92,10 +75,6 @@ class _BookingViewState extends State<BookingView> {
                                   date: "25 January 2025",
                                   time: "2:00 PM - 3:00 PM",
                                   imageUrl: AppImages.profileImageTwo,
-                                  // Replace with actual URL
-                                  onReschedule: () {
-                                    // Handle reschedule action
-                                  },
                                   onCancel: () {
                                     // Handle cancel action
                                   },
@@ -111,25 +90,8 @@ class _BookingViewState extends State<BookingView> {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: SearchFiled(
-                                onChanged: (value) {},
-                              ),
-                            ),
-                            sw12,
-                            Container(
-                              height: 48,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(color: AppColors.silver)),
-                              child: Image.asset(
-                                AppImages.filter,
-                                scale: 4,
-                              ),
-                            ),
-                          ],
+                        SearchFiled(
+                          onChanged: (value) {},
                         ),
                         sh20,
                         Obx(
@@ -150,9 +112,7 @@ class _BookingViewState extends State<BookingView> {
                                     sessionTitle: waitlistBooking.session?.name ??
                                         "Unknown",
                                     date: DateTimeFormationClass.formatDate(
-                                        waitlistBooking.createdAt.toString()),
-                                    startTime: waitlistBooking.session?.startTime ?? "",
-                                    endTime: waitlistBooking.session?.endTime ?? "",
+                                        waitlistBooking.createdAt),
                                     imageUrl: waitlistBooking.session?.coach?.user?.photoUrl ?? AppImages.profileImageTwo,
                                     onCancel: () {
                                       // Handle cancel action

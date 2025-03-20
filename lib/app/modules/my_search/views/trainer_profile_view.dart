@@ -6,6 +6,7 @@ import 'package:pickleball/common/size_box/custom_sizebox.dart';
 import 'package:pickleball/common/widgets/custom_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../common/app_images/app_images.dart';
+import '../../../../common/helper_widget/date_time_formation_class.dart';
 import '../controllers/my_search_controller.dart';
 
 class TrainerProfileView extends StatefulWidget {
@@ -111,10 +112,14 @@ class _TrainerProfileViewState extends State<TrainerProfileView> {
             children: [
               Expanded(
                 child: CustomButton(
+                  height: 40,
                   borderRadius: 12,
                   backgroundColor: AppColors.transparent,
                   borderColor: AppColors.blue,
-                  textColor: AppColors.blue,
+                  textStyle: h5.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.blue,
+                  ),
                   text: 'Email',
                   onPressed: trainer.user?.email != null
                       ? () {
@@ -128,11 +133,15 @@ class _TrainerProfileViewState extends State<TrainerProfileView> {
               sw16,
               Expanded(
                 child: CustomButton(
+                  height: 40,
                   borderRadius: 12,
                   backgroundColor: AppColors.transparent,
                   borderColor: AppColors.blue,
-                  textColor: AppColors.blue,
                   text: 'Call Trainer',
+                  textStyle: h5.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.blue,
+                  ),
                   onPressed: trainer.user?.contactNumber != null
                       ? () => _launchPhone(trainer.user!.contactNumber!)
                       : () {},
@@ -211,7 +220,7 @@ class _TrainerProfileViewState extends State<TrainerProfileView> {
                           ),
                           Text(
                             trainer.startTime != null && trainer.endTime != null
-                                ? 'Time: ${trainer.startTime} - ${trainer.endTime}'
+                                ? 'Time: ${DateTimeFormationClass.formatTime(trainer.startTime ?? '',trainer.endTime ?? '')}'
                                 : 'Time: N/A',
                             style: h6.copyWith(fontWeight: FontWeight.w500),
                           ),

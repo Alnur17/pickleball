@@ -7,6 +7,7 @@ import 'package:pickleball/common/size_box/custom_sizebox.dart';
 import 'package:pickleball/common/widgets/custom_container.dart';
 import '../../../../common/app_color/app_colors.dart';
 import '../../../../common/app_text_style/styles.dart';
+import '../../../../common/helper_widget/date_time_formation_class.dart';
 
 class SessionDetailsView extends StatefulWidget {
   final String? id;
@@ -114,8 +115,7 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    mySearchController
-                                            .sessionsDetails.value!.name ??
+                                    mySearchController.sessionsDetails.value!.name ??
                                         'Unknown',
                                     style: h1.copyWith(
                                       color: AppColors.white,
@@ -234,7 +234,7 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                                         ),
                                         sh8,
                                         Text(
-                                          '${mySearchController.sessionsDetails.value!.coach?.experience ?? 10}+ Years experience',
+                                          '${mySearchController.sessionsDetails.value!.coach?.experience ?? 0}+ Years experience',
                                           style: h6.copyWith(
                                               fontWeight: FontWeight.w500),
                                         ),
@@ -260,12 +260,12 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                                         fontWeight: FontWeight.w700)),
                                 sh12,
                                 Text(
-                                  'Duration: ${mySearchController.sessionsDetails.value!.duration ?? 60} minutes',
+                                  'Duration: ${mySearchController.sessionsDetails.value!.duration ?? 0} days',
                                   style:
                                       h6.copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  'Time: ${mySearchController.sessionsDetails.value!.startTime ?? '2:00 PM'} - ${mySearchController.sessionsDetails.value!.endTime ?? '3:00 PM'}',
+                                  'Start Date: ${DateTimeFormationClass.formatDate(mySearchController.sessionsDetails.value!.startDate)}',
                                   style:
                                       h6.copyWith(fontWeight: FontWeight.w500),
                                 ),

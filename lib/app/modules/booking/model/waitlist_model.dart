@@ -95,27 +95,21 @@ class Session {
   Session({
     required this.id,
     required this.name,
-    required this.startTime,
-    required this.endTime,
-    required this.duration,
     required this.coach,
+    required this.createdAt,
   });
 
   final String? id;
   final String? name;
-  final String? startTime;
-  final String? endTime;
-  final int? duration;
   final Coach? coach;
+  final DateTime? createdAt;
 
   factory Session.fromJson(Map<String, dynamic> json){
     return Session(
       id: json["_id"],
       name: json["name"],
-      startTime: json["start_time"],
-      endTime: json["end_time"],
-      duration: json["duration"],
       coach: json["coach"] == null ? null : Coach.fromJson(json["coach"]),
+      createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
     );
   }
 

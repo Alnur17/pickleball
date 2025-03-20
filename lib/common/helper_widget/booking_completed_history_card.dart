@@ -27,7 +27,8 @@ class BookingCompletedHistoryCard extends StatelessWidget {
     required this.status,
     required this.onRebook,
     this.onLeaveReview,
-    this.onViewRefund, required this.amountPaid,
+    this.onViewRefund,
+    required this.amountPaid,
   });
 
   Color getStatusColor() {
@@ -42,26 +43,29 @@ class BookingCompletedHistoryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.silver),
       ),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.only(bottom: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Profile and Status Badge
           Row(
             children: [
               CircleAvatar(radius: 22, backgroundImage: NetworkImage(imageUrl)),
               sw12,
               Expanded(
-                child: Text(coachName, style: h6.copyWith(fontWeight: FontWeight.w500)),
+                child: Text(coachName,
+                    style: h6.copyWith(fontWeight: FontWeight.w500)),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: getStatusColor().withOpacity(0.15),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Text(status, style: h6.copyWith(color: getStatusColor(), fontWeight: FontWeight.bold)),
+                child: Text(status,
+                    style: h6.copyWith(
+                        color: getStatusColor(), fontWeight: FontWeight.bold)),
               ),
             ],
           ),
@@ -71,9 +75,11 @@ class BookingCompletedHistoryCard extends StatelessWidget {
           sh8,
           Row(
             children: [
-              Text('Amount Paid',style: h6.copyWith(fontWeight: FontWeight.w500)),
+              Text('Amount Paid',
+                  style: h6.copyWith(fontWeight: FontWeight.w500)),
               sw12,
-              Text('\$$amountPaid',style: h6.copyWith(fontWeight: FontWeight.bold)),
+              Text('\$$amountPaid',
+                  style: h6.copyWith(fontWeight: FontWeight.bold)),
             ],
           ),
           sh8,
@@ -89,50 +95,19 @@ class BookingCompletedHistoryCard extends StatelessWidget {
               Text(time, style: h6.copyWith(fontWeight: FontWeight.w500)),
             ],
           ),
-          sh12,
-          // Buttons
-          Row(
-            children: [
-              Expanded(
-                child: CustomButton(
-                  height: 40,
-                  text: 'Rebook',
-                  onPressed: onRebook,
-                  borderRadius: 12,
-                  textColor: Colors.white,
-                  backgroundColor: AppColors.textColorBlue,
-                ),
-              ),
-              if (status == "Complete" && onLeaveReview != null) ...[
-                sw8,
-                Expanded(
-                  child: CustomButton(
-                    height: 40,
-                    text: 'Leave a Review',
-                    onPressed: onLeaveReview!,
-                    borderColor: AppColors.textColorBlue,
-                    borderRadius: 12,
-                    textColor: AppColors.textColorBlue,
-                    backgroundColor: Colors.blue.withOpacity(0.1),
-                  ),
-                ),
-              ],
-              if (status == "Canceled" && onViewRefund != null) ...[
-                sw8,
-                Expanded(
-                  child: CustomButton(
-                    height: 40,
-                    text: 'View Refund',
-                    onPressed: onViewRefund!,
-                    borderColor: AppColors.red,
-                    borderRadius: 12,
-                    textColor: AppColors.red,
-                    backgroundColor: Colors.red.withOpacity(0.1),
-                  ),
-                ),
-              ],
-            ],
-          ),
+          // Show Refund button only when status is "Canceled"
+          if (status == "Canceled" && onViewRefund != null) ...[
+            sh12,
+            CustomButton(
+              height: 40,
+              text: 'View Refund',
+              onPressed: onViewRefund!,
+              borderColor: AppColors.red,
+              borderRadius: 12,
+              textColor: AppColors.red,
+              backgroundColor: Colors.red.withOpacity(0.1),
+            ),
+          ],
         ],
       ),
     );

@@ -14,7 +14,7 @@ class CustomButton extends StatelessWidget {
   final double? width;
   final String? imageAssetPath;
   final double? borderRadius;
-  final List<Color>? gradientColors; // Accept a list of colors
+  final List<Color>? gradientColors;
 
   const CustomButton({
     super.key,
@@ -66,14 +66,11 @@ class CustomButton extends StatelessWidget {
                       color: textColor ?? AppColors.white,
                     ),
               ),
-              sw12,
+              sw8,
               if (imageAssetPath != null) ...[
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Image.asset(
-                    imageAssetPath!,
-                    scale: 4,
-                  ),
+                Image.asset(
+                  imageAssetPath!,
+                  scale: 4,
                 ),
               ],
             ],

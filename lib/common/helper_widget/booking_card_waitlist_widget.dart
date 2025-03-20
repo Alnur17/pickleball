@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pickleball/common/app_images/app_images.dart';
 import 'package:pickleball/common/widgets/custom_button.dart';
 
 import '../app_color/app_colors.dart';
@@ -10,8 +9,6 @@ class BookingCardWaitlistWidget extends StatelessWidget {
   final String coachName;
   final String sessionTitle;
   final String date;
-  final String startTime;
-  final String endTime;
   final String imageUrl;
   final VoidCallback onCancel;
 
@@ -20,8 +17,6 @@ class BookingCardWaitlistWidget extends StatelessWidget {
     required this.coachName,
     required this.sessionTitle,
     required this.date,
-    required this.startTime,
-    required this.endTime,
     required this.imageUrl,
     required this.onCancel,
   });
@@ -58,46 +53,6 @@ class BookingCardWaitlistWidget extends StatelessWidget {
             style: h5.copyWith(
               fontWeight: FontWeight.w700,
             ),
-          ),
-          sh8,
-          Row(
-            children: [
-              Image.asset(
-                AppImages.calendar,
-                scale: 4,
-                color: AppColors.black,
-              ),
-              sw8,
-              Text(
-                date,
-                style: h6.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              sw30,
-              Image.asset(
-                AppImages.clock,
-                scale: 4,
-                color: AppColors.black,
-              ),
-              sw8,
-              Text(
-                startTime,
-                style: h6.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-              ),Text(
-                ' - ',
-                style: h6.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-              ),Text(
-                endTime,
-                style: h6.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
           ),
           sh12,
           CustomButton(

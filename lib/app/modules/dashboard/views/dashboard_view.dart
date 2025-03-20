@@ -42,9 +42,9 @@ class DashboardView extends GetView<DashboardController> {
 
           // Positioned bottom navigation bar
           Positioned(
-            bottom: 16, // Adjust as needed for space
-            left: 24,
-            right: 24,
+            bottom: 16,
+            left: 20,
+            right: 20,
             child: Obx(() {
               return Container(
                 decoration: BoxDecoration(
@@ -56,8 +56,8 @@ class DashboardView extends GetView<DashboardController> {
                 child: GNav(
                   backgroundColor: AppColors.transparent,
                   activeColor: Colors.white,
-                  gap: 6,
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                  gap: 0,
+                  padding: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
                   onTabChange: dashboardController.onItemTapped,
                   selectedIndex: dashboardController.selectedIndex.value,
                   tabs: [

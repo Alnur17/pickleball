@@ -52,7 +52,7 @@ class HistoryView extends GetView {
               labelColor: Colors.lightGreen,
               unselectedLabelColor: AppColors.black,
               dividerColor: AppColors.transparent,
-              padding: EdgeInsets.symmetric(horizontal: 80),
+              padding: EdgeInsets.symmetric(horizontal: 45),
             ),
             sh16,
             Expanded(
@@ -62,25 +62,8 @@ class HistoryView extends GetView {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: SearchFiled(
-                                onChanged: (value) {},
-                              ),
-                            ),
-                            sw12,
-                            Container(
-                              height: 48,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(color: AppColors.silver)),
-                              child: Image.asset(
-                                AppImages.filter,
-                                scale: 4,
-                              ),
-                            ),
-                          ],
+                        SearchFiled(
+                          onChanged: (value) {},
                         ),
                         sh20,
                         Expanded(
@@ -129,25 +112,8 @@ class HistoryView extends GetView {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: SearchFiled(
-                                onChanged: (value) {},
-                              ),
-                            ),
-                            sw12,
-                            Container(
-                              height: 48,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(color: AppColors.silver)),
-                              child: Image.asset(
-                                AppImages.filter,
-                                scale: 4,
-                              ),
-                            ),
-                          ],
+                        SearchFiled(
+                          onChanged: (value) {},
                         ),
                         sh20,
                         Expanded(
@@ -164,7 +130,6 @@ class HistoryView extends GetView {
                                 amountPaid: "50",
                                 time: "2:00 PM - 3:00 PM",
                                 imageUrl: AppImages.profileImageTwo,
-                                onReschedule: () => print("Reschedule pressed"),
                                 onCancel: () => print("Cancel Booking pressed"),
                               );
                             },
