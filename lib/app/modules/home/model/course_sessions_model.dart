@@ -13,16 +13,17 @@ class CourseSessionsModel {
   final Meta? meta;
   final List<Datum> data;
 
-  factory CourseSessionsModel.fromJson(Map<String, dynamic> json){
+  factory CourseSessionsModel.fromJson(Map<String, dynamic> json) {
     return CourseSessionsModel(
-      success: json["success"],
-      statusCode: json["statusCode"],
-      message: json["message"],
+      success: json["success"] as bool?,
+      statusCode: json["statusCode"] as int?,
+      message: json["message"] as String?,
       meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
-      data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+      data: json["data"] == null
+          ? []
+          : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
     );
   }
-
 }
 
 class Datum {
@@ -64,37 +65,36 @@ class Datum {
   final int? maxWaitlist;
   final bool? enableWaitlist;
   final String? status;
-  final int? avgRating;
+  final double? avgRating; // Changed to double? to handle both int and double
   final bool? isDeleted;
   final String? datumId;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  factory Datum.fromJson(Map<String, dynamic> json){
+  factory Datum.fromJson(Map<String, dynamic> json) {
     return Datum(
-      id: json["_id"],
-      name: json["name"],
-      thumbnail: json["thumbnail"],
-      description: json["description"],
-      location: json["location"],
+      id: json["_id"] as String?,
+      name: json["name"] as String?,
+      thumbnail: json["thumbnail"] as String?,
+      description: json["description"] as String?,
+      location: json["location"] as String?,
       locationLink: json["locationLink"],
-      skillLevel: json["skill_level"],
+      skillLevel: json["skill_level"] as String?,
       coach: json["coach"] == null ? null : Coach.fromJson(json["coach"]),
       startDate: DateTime.tryParse(json["startDate"] ?? ""),
-      duration: json["duration"],
-      maxParticipants: json["max_participants"],
-      price: json["price"],
-      maxWaitlist: json["max_waitlist"],
-      enableWaitlist: json["enable_waitlist"],
-      status: json["status"],
-      avgRating: json["avgRating"],
-      isDeleted: json["isDeleted"],
-      datumId: json["id"],
+      duration: json["duration"] as int?,
+      maxParticipants: json["max_participants"] as int?,
+      price: json["price"] as int?,
+      maxWaitlist: json["max_waitlist"] as int?,
+      enableWaitlist: json["enable_waitlist"] as bool?,
+      status: json["status"] as String?,
+      avgRating: (json["avgRating"] as num?)?.toDouble(), // Safely cast to double
+      isDeleted: json["isDeleted"] as bool?,
+      datumId: json["id"] as String?,
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
     );
   }
-
 }
 
 class Coach {
@@ -132,35 +132,38 @@ class Coach {
   final String? endTime;
   final String? duration;
   final int? perHourRate;
-  final double? avgRating;
+  final double? avgRating; // Already double?, but we'll ensure proper casting
   final bool? isDeleted;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? v;
 
-  factory Coach.fromJson(Map<String, dynamic> json){
+  factory Coach.fromJson(Map<String, dynamic> json) {
     return Coach(
-      id: json["_id"],
-      coachId: json["id"],
+      id: json["_id"] as String?,
+      coachId: json["id"] as String?,
       user: json["user"] == null ? null : User.fromJson(json["user"]),
-      experience: json["experience"],
-      bio: json["bio"],
-      achievement: json["achievement"],
-      coachingExpertise: json["coaching_expertise"] == null ? [] : List<String>.from(json["coaching_expertise"]!.map((x) => x)),
-      skillExpertise: json["skill_expertise"],
-      availability: json["availability"] == null ? [] : List<String>.from(json["availability"]!.map((x) => x)),
-      startTime: json["start_time"],
-      endTime: json["end_time"],
-      duration: json["duration"],
-      perHourRate: json["per_hour_rate"],
-      avgRating: json["avgRating"],
-      isDeleted: json["isDeleted"],
+      experience: json["experience"] as int?,
+      bio: json["bio"] as String?,
+      achievement: json["achievement"] as String?,
+      coachingExpertise: json["coaching_expertise"] == null
+          ? []
+          : List<String>.from(json["coaching_expertise"]!.map((x) => x as String)),
+      skillExpertise: json["skill_expertise"] as String?,
+      availability: json["availability"] == null
+          ? []
+          : List<String>.from(json["availability"]!.map((x) => x as String)),
+      startTime: json["start_time"] as String?,
+      endTime: json["end_time"] as String?,
+      duration: json["duration"] as String?,
+      perHourRate: json["per_hour_rate"] as int?,
+      avgRating: (json["avgRating"] as num?)?.toDouble(), // Safely cast to double
+      isDeleted: json["isDeleted"] as bool?,
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
-      v: json["__v"],
+      v: json["__v"] as int?,
     );
   }
-
 }
 
 class User {
@@ -178,16 +181,15 @@ class User {
   final String? contactNumber;
   final String? photoUrl;
 
-  factory User.fromJson(Map<String, dynamic> json){
+  factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json["_id"],
-      name: json["name"],
-      email: json["email"],
-      contactNumber: json["contactNumber"],
-      photoUrl: json["photoUrl"],
+      id: json["_id"] as String?,
+      name: json["name"] as String?,
+      email: json["email"] as String?,
+      contactNumber: json["contactNumber"] as String?,
+      photoUrl: json["photoUrl"] as String?,
     );
   }
-
 }
 
 class Meta {
@@ -203,13 +205,12 @@ class Meta {
   final int? total;
   final int? totalPage;
 
-  factory Meta.fromJson(Map<String, dynamic> json){
+  factory Meta.fromJson(Map<String, dynamic> json) {
     return Meta(
-      page: json["page"],
-      limit: json["limit"],
-      total: json["total"],
-      totalPage: json["totalPage"],
+      page: json["page"] as int?,
+      limit: json["limit"] as int?,
+      total: json["total"] as int?,
+      totalPage: json["totalPage"] as int?,
     );
   }
-
 }

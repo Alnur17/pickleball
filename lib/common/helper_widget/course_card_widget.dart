@@ -52,7 +52,6 @@ class CourseCardWidget extends StatelessWidget {
               : AssetImage(AppImages.containerImage),
           fit: BoxFit.cover,
           onError: (exception, stackTrace) {
-            // Fallback to asset image if network image fails
             debugPrint("Error loading network image: $exception");
           },
         ),
@@ -80,18 +79,18 @@ class CourseCardWidget extends StatelessWidget {
                             h1.copyWith(fontSize: 15, color: AppColors.white),
                       ),
                     ),
-                    Container(
-                      height: 35,
-                      width: 35,
-                      decoration: ShapeDecoration(
-                        shape: CircleBorder(),
-                        color: Colors.black12,
-                      ),
-                      child: Image.asset(
-                        AppImages.star,
-                        scale: 4,
-                      ),
-                    ),
+                    // Container(
+                    //   height: 35,
+                    //   width: 35,
+                    //   decoration: ShapeDecoration(
+                    //     shape: CircleBorder(),
+                    //     color: Colors.black12,
+                    //   ),
+                    //   child: Image.asset(
+                    //     AppImages.star,
+                    //     scale: 4,
+                    //   ),
+                    // ),
                   ],
                 ),
                 sh10,
@@ -169,6 +168,7 @@ class CourseCardWidget extends StatelessWidget {
                         ),
                       ),
                     ),
+                    sw8,
                     CustomContainer(
                       borderRadius: BorderRadius.circular(30),
                       backgroundColor: Colors.black38,

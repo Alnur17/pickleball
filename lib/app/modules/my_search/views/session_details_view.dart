@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pickleball/app/modules/my_search/controllers/my_search_controller.dart';
 import 'package:pickleball/app/modules/my_search/views/booking_confirmation_view.dart';
+import 'package:pickleball/app/modules/profile_and_settings/controllers/profile_and_settings_controller.dart';
 import 'package:pickleball/common/app_images/app_images.dart';
+import 'package:pickleball/common/helper_widget/time_slot_widget.dart';
 import 'package:pickleball/common/size_box/custom_sizebox.dart';
 import 'package:pickleball/common/widgets/custom_container.dart';
 import '../../../../common/app_color/app_colors.dart';
@@ -20,11 +22,13 @@ class SessionDetailsView extends StatefulWidget {
 
 class _SessionDetailsViewState extends State<SessionDetailsView> {
   final MySearchController mySearchController = Get.put(MySearchController());
+  final ProfileAndSettingsController profileAndSettingsController = Get.find();
 
   @override
   void initState() {
     super.initState();
     mySearchController.fetchSessionsDetails(widget.id!);
+    mySearchController.getTimeSlot(widget.id!);
   }
 
   @override
@@ -94,16 +98,23 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                           Positioned(
                             right: 20,
                             top: 20,
-                            child: Container(
-                              height: 35,
-                              width: 35,
-                              decoration: const ShapeDecoration(
-                                shape: CircleBorder(),
-                                color: Colors.black26,
-                              ),
-                              child: Image.asset(
-                                AppImages.star,
-                                scale: 4,
+                            child: GestureDetector(
+                              onTap: () => mySearchController.addWaitlist(
+                                  profileAndSettingsController
+                                          .myProfileData.value?.id ??
+                                      '',
+                                  widget.id!),
+                              child: Container(
+                                height: 35,
+                                width: 35,
+                                decoration: const ShapeDecoration(
+                                  shape: CircleBorder(),
+                                  color: Colors.black26,
+                                ),
+                                child: Image.asset(
+                                  AppImages.star,
+                                  scale: 4,
+                                ),
                               ),
                             ),
                           ),
@@ -115,7 +126,8 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    mySearchController.sessionsDetails.value!.name ??
+                                    mySearchController
+                                            .sessionsDetails.value!.name ??
                                         'Unknown',
                                     style: h1.copyWith(
                                       color: AppColors.white,
@@ -260,14 +272,35 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                                         fontWeight: FontWeight.w700)),
                                 sh12,
                                 Text(
-                                  'Duration: ${mySearchController.sessionsDetails.value!.duration ?? 0} days',
+                                  'Start Date: ${DateTimeFormationClass.formatDate(mySearchController.sessionsDetails.value!.startDate)}',
                                   style:
                                       h6.copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  'Start Date: ${DateTimeFormationClass.formatDate(mySearchController.sessionsDetails.value!.startDate)}',
+                                  'Duration: ${mySearchController.sessionsDetails.value!.duration ?? 0} days',
                                   style:
                                       h6.copyWith(fontWeight: FontWeight.w500),
+                                ),
+                                sh20,
+                                Text(
+                                  'Select Time Slot:',
+                                  style:
+                                      h3.copyWith(fontWeight: FontWeight.w700),
+                                ),
+                                sh12,
+                                ListView.builder(
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  itemCount: mySearchController.timeSlotList.length,
+                                  itemBuilder: (context, index) {
+                                    var time = mySearchController.timeSlotList[index];
+                                   return TimeSlotWidget(
+                                      startTime: time.startTime ?? '',
+                                      endTime: time.endTime ?? '',
+                                      onTap: () {},
+                                    );
+                                  }
+
                                 ),
                                 sh20,
                               ],

@@ -58,7 +58,7 @@ class BookingCardWaitlistWidget extends StatelessWidget {
           CustomButton(
             height: 40,
             text: 'Cancel',
-            onPressed: () {},
+            onPressed: onCancel,
             borderColor: AppColors.red,
             borderRadius: 12,
             textColor: AppColors.red,

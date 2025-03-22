@@ -1,5 +1,5 @@
-class WaitlistModel {
-  WaitlistModel({
+class MyWaitlistModel {
+  MyWaitlistModel({
     required this.success,
     required this.statusCode,
     required this.message,
@@ -11,8 +11,8 @@ class WaitlistModel {
   final String? message;
   final Data? data;
 
-  factory WaitlistModel.fromJson(Map<String, dynamic> json){
-    return WaitlistModel(
+  factory MyWaitlistModel.fromJson(Map<String, dynamic> json){
+    return MyWaitlistModel(
       success: json["success"],
       statusCode: json["statusCode"],
       message: json["message"],

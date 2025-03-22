@@ -28,16 +28,21 @@ class Api {
   /// get session details by id
   static getSingleSession(String id) => "$baseUrl/sessions/$id";
 
-  /// get session details by id
+  /// get trainer details by id
   static getSingleTrainer(String id) => "$baseUrl/trainers/$id";
 
   ///showBookMarked
   static const myBookings = "$baseUrl/bookings/my-bookings"; //
 
-  ///Create BookMarked
-  static const myWaitlist = "$baseUrl/waitLists/my-waitlist"; //done
+  /// WaitList
+  static const addMyWaitlist = "$baseUrl/waitLists"; //
 
-  static removeBookMark(String id) => "$baseUrl/college-bookmarks/$id"; //
+  static const getMyWaitlist = "$baseUrl/waitLists/my-waitlist"; //done
+
+  static removeWaitlist(String id) => "$baseUrl/waitLists/$id"; //done
+
+  /// All slot
+  static timeSlot(String id) => "$baseUrl/session-slots/session/$id"; //
 
   /// upload video
   static const uploadVideo = "$baseUrl/videos"; //

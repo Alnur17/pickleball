@@ -115,7 +115,8 @@ class _BookingViewState extends State<BookingView> {
                                         waitlistBooking.createdAt),
                                     imageUrl: waitlistBooking.session?.coach?.user?.photoUrl ?? AppImages.profileImageTwo,
                                     onCancel: () {
-                                      // Handle cancel action
+                                      bookingController.removeWaitlist(waitlistBooking.id!);
+                                      print('::::::::::::: ${waitlistBooking.id} :::::::::::');
                                     },
                                   ),
                                 );

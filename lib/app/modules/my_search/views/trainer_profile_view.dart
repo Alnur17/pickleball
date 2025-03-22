@@ -6,7 +6,6 @@ import 'package:pickleball/common/size_box/custom_sizebox.dart';
 import 'package:pickleball/common/widgets/custom_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../common/app_images/app_images.dart';
-import '../../../../common/helper_widget/date_time_formation_class.dart';
 import '../controllers/my_search_controller.dart';
 
 class TrainerProfileView extends StatefulWidget {
@@ -124,7 +123,8 @@ class _TrainerProfileViewState extends State<TrainerProfileView> {
                   onPressed: trainer.user?.email != null
                       ? () {
                           _launchEmail(trainer.user!.email!);
-                          print(':::::::::::: ${trainer.user!.email!} :::::::::::::::');
+                          print(
+                              ':::::::::::: ${trainer.user!.email!} :::::::::::::::');
                         }
                       : () {},
                   imageAssetPath: AppImages.email,
@@ -156,80 +156,84 @@ class _TrainerProfileViewState extends State<TrainerProfileView> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Bio', style: h3.copyWith(fontWeight: FontWeight.w700)),
-                  sh12,
-                  Text(
-                    trainer.bio ?? 'No bio available',
-                    style: h6.copyWith(fontWeight: FontWeight.w500),
-                  ),
-                  sh20,
-                  Text('Achievements',
-                      style: h3.copyWith(fontWeight: FontWeight.w700)),
-                  sh12,
-                  Text(
-                    trainer.achievement ?? 'No achievements listed',
-                    style: h6.copyWith(fontWeight: FontWeight.w500),
-                  ),
-                  sh20,
-                  Text('Coaching Expertise',
-                      style: h3.copyWith(fontWeight: FontWeight.w700)),
-                  sh12,
-                  ...trainer.coachingExpertise.map((expertise) => Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: Text(
-                          expertise,
-                          style: h6.copyWith(fontWeight: FontWeight.w700),
-                        ),
-                      )),
-                  sh20,
-                  Text('Availability',
-                      style: h3.copyWith(fontWeight: FontWeight.w700)),
-                  sh12,
-                  Text(
-                    trainer.availability.isNotEmpty
-                        ? trainer.availability.join(', ')
-                        : 'Not specified',
-                    style: h6.copyWith(fontWeight: FontWeight.w500),
-                  ),
-                  sh20,
-                  Text('Skill Level',
-                      style: h3.copyWith(fontWeight: FontWeight.w700)),
-                  sh12,
-                  Text(
-                    trainer.skillExpertise ?? 'Not specified',
-                    style: h6.copyWith(fontWeight: FontWeight.w500),
-                  ),
-                  sh20,
-                  Text('Time slots',
-                      style: h3.copyWith(fontWeight: FontWeight.w700)),
-                  sh12,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            trainer.duration != null
-                                ? 'Duration: ${trainer.duration}'
-                                : 'Duration: N/A',
-                            style: h6.copyWith(fontWeight: FontWeight.w500),
+              child: Align(
+                alignment: AlignmentDirectional.bottomStart,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Bio',
+                        style: h3.copyWith(fontWeight: FontWeight.w700)),
+                    sh12,
+                    Text(
+                      trainer.bio ?? 'No bio available',
+                      style: h6.copyWith(fontWeight: FontWeight.w500),
+                    ),
+                    sh20,
+                    Text('Achievements',
+                        style: h3.copyWith(fontWeight: FontWeight.w700)),
+                    sh12,
+                    Text(
+                      trainer.achievement ?? 'No achievements listed',
+                      style: h6.copyWith(fontWeight: FontWeight.w500),
+                    ),
+                    sh20,
+                    Text('Coaching Expertise',
+                        style: h3.copyWith(fontWeight: FontWeight.w700)),
+                    sh12,
+                    ...trainer.coachingExpertise.map((expertise) => Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: Text(
+                            expertise,
+                            style: h6.copyWith(fontWeight: FontWeight.w700),
                           ),
-                          Text(
-                            trainer.startTime != null && trainer.endTime != null
-                                ? 'Time: ${DateTimeFormationClass.formatTime(trainer.startTime ?? '',trainer.endTime ?? '')}'
-                                : 'Time: N/A',
-                            style: h6.copyWith(fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  sh20,
-                ],
+                        )),
+                    sh20,
+                    Text('Availability',
+                        style: h3.copyWith(fontWeight: FontWeight.w700)),
+                    sh12,
+                    Text(
+                      trainer.availability.isNotEmpty
+                          ? trainer.availability.join(', ')
+                          : 'Not specified',
+                      style: h6.copyWith(fontWeight: FontWeight.w500),
+                    ),
+                    sh20,
+                    Text('Skill Level',
+                        style: h3.copyWith(fontWeight: FontWeight.w700)),
+                    sh12,
+                    Text(
+                      trainer.skillExpertise ?? 'Not specified',
+                      style: h6.copyWith(fontWeight: FontWeight.w500),
+                    ),
+                    sh20,
+                    // Text('Time slots',
+                    //     style: h3.copyWith(fontWeight: FontWeight.w700)),
+                    // sh12,
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Column(
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       children: [
+                    //         Text(
+                    //           trainer.duration != null
+                    //               ? 'Duration: ${trainer.duration}'
+                    //               : 'Duration: N/A',
+                    //           style: h6.copyWith(fontWeight: FontWeight.w500),
+                    //         ),
+                    //         Text(
+                    //           trainer.startTime != null && trainer.endTime != null
+                    //               ? 'Time: ${DateTimeFormationClass.formatTime(trainer.startTime ?? '',trainer.endTime ?? '')}'
+                    //               : 'Time: N/A',
+                    //           style: h6.copyWith(fontWeight: FontWeight.w500),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ],
+                    // ),
+                    // sh20,
+                  ],
+                ),
               ),
             ),
           ),
