@@ -5,10 +5,14 @@ import '../../../../common/app_constant/app_constant.dart';
 import '../../../../common/helper_widget/local_store.dart';
 import '../../../data/api.dart';
 import '../../../data/base_client.dart';
+import '../model/my_all_booking_model.dart';
 
 class BookingController extends GetxController {
   var isLoading = true.obs;
   var waitListList = <Result>[].obs;
+  var allBookingList = <Datum>[].obs;
+  var completedBookings = <Datum>[].obs;
+  var upcomingBookings = <Datum>[].obs;
 
   @override
   void onInit() {
@@ -64,31 +68,39 @@ class BookingController extends GetxController {
       isLoading(false);
     }
   }
+
+  ///
+  Future<void> fetchAllBooking() async {
+    try {
+      isLoading(true);
+      String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
+      var headers = {
+        'Authorization': accessToken,
+        'Content-Type': 'application/json',
+      };
+
+      var response = await BaseClient.getRequest(
+        api: Api.myBookings,
+        headers: headers,
+      );
+
+      var responseBody = await BaseClient.handleResponse(response);
+      MyAllBookingModel confirmedModel = MyAllBookingModel.fromJson(responseBody);
+      allBookingList.value = confirmedModel.data; // Update confirmedList
+
+      // Filter bookings
+      upcomingBookings.value = allBookingList.where((booking) => booking.status == "pending").toList();
+      completedBookings.value = allBookingList.where((booking) => booking.status != "pending").toList();
+
+      update();
+    } catch (e) {
+      debugPrint("Error fetching my booking: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+
 }
 
-//
-// ///
-// Future<void> fetchConfirmedBooking() async {
-//   try {
-//     isLoading(true);
-//     String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
-//     var headers = {
-//       'Authorization': accessToken,
-//       'Content-Type': 'application/json',
-//     };
-//
-//     var response = await BaseClient.getRequest(
-//       api: Api.myBookings,
-//       headers: headers,
-//     );
-//
-//     var responseBody = await BaseClient.handleResponse(response);
-//     ConfirmedBookingModel confirmedModel = ConfirmedBookingModel.fromJson(responseBody);
-//     confirmedList.value = confirmedModel.data; // Update confirmedList
-//     update();
-//   } catch (e) {
-//     debugPrint("Error fetching confirmed booking: $e");
-//   } finally {
-//     isLoading(false);
-//   }
-// }
+
+

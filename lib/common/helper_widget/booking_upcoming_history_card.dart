@@ -10,7 +10,8 @@ class BookingUpcomingHistoryCard extends StatelessWidget {
   final String sessionTitle;
   final String date;
   final String amountPaid;
-  final String time;
+  final String startTime;
+  final String endTime;
   final String imageUrl;
   final VoidCallback onCancel;
 
@@ -20,7 +21,8 @@ class BookingUpcomingHistoryCard extends StatelessWidget {
     required this.sessionTitle,
     required this.date,
     required this.amountPaid,
-    required this.time,
+    required this.startTime,
+    required this.endTime,
     required this.imageUrl,
     required this.onCancel,
   });
@@ -74,7 +76,8 @@ class BookingUpcomingHistoryCard extends StatelessWidget {
               sw30,
               Image.asset(AppImages.clock, scale: 4, color: AppColors.black),
               sw8,
-              Text(time, style: h6.copyWith(fontWeight: FontWeight.w500)),
+              Text('$startTime - $endTime',
+                  style: h6.copyWith(fontWeight: FontWeight.w500)),
             ],
           ),
           sh12,

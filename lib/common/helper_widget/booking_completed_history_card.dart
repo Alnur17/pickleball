@@ -6,33 +6,42 @@ import '../app_text_style/styles.dart';
 import '../size_box/custom_sizebox.dart';
 
 class BookingCompletedHistoryCard extends StatelessWidget {
-  final String coachName;
-  final String sessionTitle;
-  final String date;
-  final String amountPaid;
-  final String time;
-  final String imageUrl;
-  final String status; // "Complete" or "Canceled"
-  final VoidCallback onRebook;
+  final String? coachName;
+  final String? sessionTitle;
+  final String? date;
+  final String? amountPaid;
+  final String? startTime;
+  final String? endTime;
+  final String? imageUrl;
+  final String? status;
+  final VoidCallback? onRebook;
   final VoidCallback? onLeaveReview;
   final VoidCallback? onViewRefund;
 
   const BookingCompletedHistoryCard({
     super.key,
-    required this.coachName,
-    required this.sessionTitle,
-    required this.date,
-    required this.time,
-    required this.imageUrl,
-    required this.status,
-    required this.onRebook,
+    this.coachName,
+    this.sessionTitle,
+    this.date,
+    this.amountPaid,
+    this.startTime,
+    this.endTime,
+    this.imageUrl,
+    this.status,
+    this.onRebook,
     this.onLeaveReview,
     this.onViewRefund,
-    required this.amountPaid,
   });
 
   Color getStatusColor() {
-    return status == "Complete" ? AppColors.lightGreenTwo : AppColors.red;
+    switch (status?.toLowerCase()) {
+      case "complete":
+        return AppColors.lightGreenTwo;
+      case "canceled":
+        return AppColors.red;
+      default:
+        return AppColors.grey; // Fallback for unexpected statuses
+    }
   }
 
   @override
@@ -50,64 +59,109 @@ class BookingCompletedHistoryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              CircleAvatar(radius: 22, backgroundImage: NetworkImage(imageUrl)),
+              CircleAvatar(
+                radius: 22,
+                backgroundImage: NetworkImage(imageUrl ?? AppImages.profileImageTwo),
+              ),
               sw12,
               Expanded(
-                child: Text(coachName,
-                    style: h6.copyWith(fontWeight: FontWeight.w500)),
+                child: Text(
+                  coachName ?? "Unknown Coach",
+                  style: h6.copyWith(fontWeight: FontWeight.w500),
+                ),
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: getStatusColor().withOpacity(0.15),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Text(status,
-                    style: h6.copyWith(
-                        color: getStatusColor(), fontWeight: FontWeight.bold)),
+                child: Text(
+                  status ?? "Unknown",
+                  style: h6.copyWith(
+                    color: getStatusColor(),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ],
           ),
           sh8,
-          // Session Title
-          Text(sessionTitle, style: h5.copyWith(fontWeight: FontWeight.w700)),
+          Text(
+            sessionTitle ?? "Untitled Session",
+            style: h5.copyWith(fontWeight: FontWeight.w700),
+          ),
           sh8,
           Row(
             children: [
-              Text('Amount Paid',
-                  style: h6.copyWith(fontWeight: FontWeight.w500)),
+              Text('Amount Paid', style: h6.copyWith(fontWeight: FontWeight.w500)),
               sw12,
-              Text('\$$amountPaid',
-                  style: h6.copyWith(fontWeight: FontWeight.bold)),
+              Text(
+                '\$${amountPaid ?? "0"}',
+                style: h6.copyWith(fontWeight: FontWeight.bold),
+              ),
             ],
           ),
           sh8,
-          // Date and Time
           Row(
             children: [
               Image.asset(AppImages.calendar, scale: 4, color: AppColors.black),
               sw8,
-              Text(date, style: h6.copyWith(fontWeight: FontWeight.w500)),
+              Text(
+                date ?? "N/A",
+                style: h6.copyWith(fontWeight: FontWeight.w500),
+              ),
               sw30,
               Image.asset(AppImages.clock, scale: 4, color: AppColors.black),
               sw8,
-              Text(time, style: h6.copyWith(fontWeight: FontWeight.w500)),
+              Text(
+                '${startTime ?? "N/A"} - ${endTime ?? "N/A"}',
+                style: h6.copyWith(fontWeight: FontWeight.w500),
+              ),
             ],
           ),
-          // Show Refund button only when status is "Canceled"
-          if (status == "Canceled" && onViewRefund != null) ...[
-            sh12,
-            CustomButton(
-              height: 40,
-              text: 'View Refund',
-              onPressed: onViewRefund!,
-              borderColor: AppColors.red,
-              borderRadius: 12,
-              textColor: AppColors.red,
-              backgroundColor: Colors.red.withOpacity(0.1),
-            ),
-          ],
+          sh12,
+          Row(
+            children: [
+              if (status?.toLowerCase() == "complete" && onRebook != null)
+                Expanded(
+                  child: CustomButton(
+                    height: 40,
+                    text: 'Rebook',
+                    onPressed: onRebook!,
+                    borderColor: AppColors.lightGreenTwo,
+                    borderRadius: 12,
+                    textColor: AppColors.lightGreenTwo,
+                    backgroundColor: AppColors.lightGreenTwo.withOpacity(0.1),
+                  ),
+                ),
+              if (status?.toLowerCase() == "complete" && onRebook != null && onLeaveReview != null) sw12,
+              if (status?.toLowerCase() == "complete" && onLeaveReview != null)
+                Expanded(
+                  child: CustomButton(
+                    height: 40,
+                    text: 'Leave Review',
+                    onPressed: onLeaveReview!,
+                    borderColor: AppColors.lightGreenTwo,
+                    borderRadius: 12,
+                    textColor: AppColors.lightGreenTwo,
+                    backgroundColor: AppColors.lightGreenTwo.withOpacity(0.1),
+                  ),
+                ),
+              if (status?.toLowerCase() == "canceled" && onViewRefund != null)
+                Expanded(
+                  child: CustomButton(
+                    height: 40,
+                    text: 'View Refund',
+                    onPressed: onViewRefund!,
+                    borderColor: AppColors.red,
+                    borderRadius: 12,
+                    textColor: AppColors.red,
+                    backgroundColor: AppColors.red.withOpacity(0.1),
+                  ),
+                ),
+            ],
+          ),
         ],
       ),
     );

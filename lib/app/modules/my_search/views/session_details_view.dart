@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pickleball/app/modules/my_search/controllers/my_search_controller.dart';
-import 'package:pickleball/app/modules/my_search/views/booking_confirmation_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/controllers/profile_and_settings_controller.dart';
 import 'package:pickleball/common/app_images/app_images.dart';
 import 'package:pickleball/common/helper_widget/time_slot_widget.dart';
@@ -145,8 +144,36 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                               height: 35,
                               text: 'Book Now',
                               imagePath: AppImages.arrowFlyWhite,
-                              onTap: () =>
-                                  Get.to(() => BookingConfirmationView()),
+                              onTap: () async {
+                                if (mySearchController.selectedTimeSlotIndex.value != -1) {
+                                  final selectedSlot = mySearchController
+                                      .timeSlotList[mySearchController.selectedTimeSlotIndex.value];
+                                  final userId = profileAndSettingsController.myProfileData.value?.id ?? '';
+                                  final sessionId = widget.id!;
+                                  final slotId = selectedSlot.id ?? ''; // Assuming DatumSlot has an 'id' field
+
+                                  // Call the addBooking API
+                                  bool success = await mySearchController.addBooking(userId, sessionId, slotId);
+
+                                  if (success) {
+                                    // Navigation is already handled in addBooking, so no need to call Get.to() here
+                                    debugPrint("Booking successful, navigated to confirmation.");
+                                  } else {
+                                    Get.snackbar(
+                                      'Error',
+                                      'Failed to create booking. Please try again.',
+                                      snackPosition: SnackPosition.BOTTOM,
+                                    );
+                                  }
+                                } else {
+                                  // Show a snackbar if no time slot is selected
+                                  Get.snackbar(
+                                    'Error',
+                                    'Please select a time slot before booking.',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                  );
+                                }
+                              },
                               backgroundColor: AppColors.textColorBlue,
                             ),
                           ),
@@ -160,40 +187,50 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Program Description',
-                                    style: h3.copyWith(
-                                        fontWeight: FontWeight.w700)),
+                                Text(
+                                  'Program Description',
+                                  style: h3.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
                                 sh12,
                                 Text(
                                   mySearchController
                                           .sessionsDetails.value!.description ??
                                       'No description available',
-                                  style:
-                                      h6.copyWith(fontWeight: FontWeight.w500),
+                                  style: h6.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                                 sh20,
-                                Text('Location',
-                                    style: h3.copyWith(
-                                        fontWeight: FontWeight.w700)),
+                                Text(
+                                  'Location',
+                                  style:
+                                      h3.copyWith(fontWeight: FontWeight.w700),
+                                ),
                                 sh12,
                                 Text(
                                   mySearchController
                                           .sessionsDetails.value!.location ??
                                       '',
-                                  style:
-                                      h6.copyWith(fontWeight: FontWeight.w500),
+                                  style: h6.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                                 sh20,
-                                Text('Session Type',
-                                    style: h3.copyWith(
-                                        fontWeight: FontWeight.w700)),
+                                Text(
+                                  'Session Type',
+                                  style:
+                                      h3.copyWith(fontWeight: FontWeight.w700),
+                                ),
                                 sh12,
                                 Text(
                                   mySearchController
                                           .sessionsDetails.value!.status ??
                                       '',
-                                  style:
-                                      h6.copyWith(fontWeight: FontWeight.w500),
+                                  style: h6.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                                 sh20,
                                 Text('Skill-level',
@@ -242,22 +279,27 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                                                   .value!.coach?.user?.name ??
                                               'John Smith',
                                           style: h6.copyWith(
-                                              fontWeight: FontWeight.w500),
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
                                         sh8,
                                         Text(
                                           '${mySearchController.sessionsDetails.value!.coach?.experience ?? 0}+ Years experience',
                                           style: h6.copyWith(
-                                              fontWeight: FontWeight.w500),
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ],
                                 ),
                                 sh20,
-                                Text('Key learning objectives:',
-                                    style: h3.copyWith(
-                                        fontWeight: FontWeight.w700)),
+                                Text(
+                                  'Key learning objectives:',
+                                  style: h3.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
                                 sh12,
                                 Text(
                                   mySearchController
@@ -267,12 +309,18 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                                       h6.copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 sh20,
-                                Text('Session Schedule:',
-                                    style: h3.copyWith(
-                                        fontWeight: FontWeight.w700)),
+                                Text(
+                                  'Session Schedule:',
+                                  style: h3.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
                                 sh12,
                                 Text(
-                                  'Start Date: ${DateTimeFormationClass.formatDate(mySearchController.sessionsDetails.value!.startDate)}',
+                                  'Start Date: ${DateTimeFormationClass.formatDate(
+                                    mySearchController
+                                        .sessionsDetails.value!.startDate,
+                                  )}',
                                   style:
                                       h6.copyWith(fontWeight: FontWeight.w500),
                                 ),
@@ -291,16 +339,25 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                                 ListView.builder(
                                   primary: false,
                                   shrinkWrap: true,
-                                  itemCount: mySearchController.timeSlotList.length,
+                                  itemCount:
+                                      mySearchController.timeSlotList.length,
                                   itemBuilder: (context, index) {
-                                    var time = mySearchController.timeSlotList[index];
-                                   return TimeSlotWidget(
-                                      startTime: time.startTime ?? '',
-                                      endTime: time.endTime ?? '',
-                                      onTap: () {},
+                                    var time =
+                                        mySearchController.timeSlotList[index];
+                                    return Obx(
+                                      () => TimeSlotWidget(
+                                        startTime: time.startTime ?? '',
+                                        endTime: time.endTime ?? '',
+                                        isSelected: mySearchController
+                                                .selectedTimeSlotIndex.value ==
+                                            index,
+                                        onTap: () {
+                                          mySearchController
+                                              .selectTimeSlot(index);
+                                        },
+                                      ),
                                     );
-                                  }
-
+                                  },
                                 ),
                                 sh20,
                               ],

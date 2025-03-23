@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:pickleball/app/modules/login/views/login_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/about_us_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/history_view.dart';
-import 'package:pickleball/app/modules/profile_and_settings/views/notifications_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/password_management_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/privacy_and_security_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/views/term_and_conditios_view.dart';
@@ -101,15 +100,15 @@ class ProfileAndSettingsView extends GetView<ProfileAndSettingsController> {
               title: 'Password Management',
               trailingImage: AppImages.arrowRightSmall,
             ),
-            Divider(),
-            CustomListTile(
-              onTap: () {
-                Get.to(() => NotificationsView());
-              },
-              leadingImage: AppImages.notificationTwo,
-              title: 'Notifications',
-              trailingImage: AppImages.arrowRightSmall,
-            ),
+            //Divider(),
+            // CustomListTile(
+            //   onTap: () {
+            //     Get.to(() => NotificationsView());
+            //   },
+            //   leadingImage: AppImages.notificationTwo,
+            //   title: 'Notifications',
+            //   trailingImage: AppImages.arrowRightSmall,
+            // ),
             Divider(),
             CustomListTile(
               onTap: () {
