@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:pickleball/app/modules/booking/controllers/booking_controller.dart';
 import 'package:pickleball/app/modules/my_search/model/single_booking_model.dart';
+import 'package:pickleball/common/app_color/app_colors.dart';
+import 'package:pickleball/common/widgets/custom_snackbar.dart';
 import '../../../../common/app_constant/app_constant.dart';
 import '../../../../common/helper_widget/local_store.dart';
 import '../../../data/api.dart';
@@ -22,11 +24,6 @@ class MySearchController extends GetxController {
   var selectedTimeSlotIndex = (-1).obs;
   var bookingController = Get.find<BookingController>();
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   getSingleBooking()
-  // }
 
   Future<void> fetchSessionsDetails(String id) async {
     try {
@@ -155,18 +152,21 @@ class MySearchController extends GetxController {
 
       var responseBody = await BaseClient.handleResponse(response);
 
-      if (responseBody['success'] == true &&
+      if (responseBody['success'] == true ||
           responseBody['statusCode'] == 201) {
         debugPrint("Waitlist created successfully: ${responseBody['message']}");
+        kSnackBar(message: "${responseBody['message']}", bgColor: AppColors.green);
         // Optionally, refresh the waitlist after creating
         await bookingController.fetchWaitlist();
         return true;
       } else {
         debugPrint("Failed to create waitlist: ${responseBody['message']}");
+        kSnackBar(message: "${responseBody['message']}", bgColor: AppColors.red);
         return false;
       }
     } catch (e) {
       debugPrint("Error creating waitlist: $e");
+      kSnackBar(message: "Error creating waitlist", bgColor: AppColors.red);
       return false;
     } finally {
       isLoading(false);
@@ -195,11 +195,10 @@ class MySearchController extends GetxController {
 
       var responseBody = await BaseClient.handleResponse(response);
 
-      if (responseBody['success'] == true &&
-          responseBody['statusCode'] == 201) {
+      if (responseBody['success'] == true) {
         debugPrint("Bookings created successfully: ${responseBody['message']}");
-        String bookingId = responseBody['data']['_id'].toString();
-        print(':::::: $bookingId :::::::::');
+        String bookingId = responseBody['data']['_id'];
+        debugPrint(':::::: $bookingId :::::::::');
 
         await getSingleBooking(bookingId);
         Get.to(() => BookingConfirmationView(
@@ -209,7 +208,9 @@ class MySearchController extends GetxController {
         return true;
       } else {
         debugPrint("Failed to create bookings: ${responseBody['message']}");
+        isLoading(false);
         return false;
+
       }
     } catch (e) {
       debugPrint("Error creating bookings: $e");
@@ -237,8 +238,7 @@ class MySearchController extends GetxController {
 
       var responseBody = await BaseClient.handleResponse(response);
 
-      if (responseBody['success'] == true &&
-          responseBody['statusCode'] == 200) {
+      if (responseBody['success'] == true ) {
         debugPrint("Bookings created successfully: ${responseBody['message']}");
 
         SingleBookingModel singleBookingModel =
@@ -249,6 +249,7 @@ class MySearchController extends GetxController {
         return true;
       } else {
         debugPrint("Failed to create bookings: ${responseBody['message']}");
+        isLoading(false);
         return false;
       }
     } catch (e) {

@@ -243,13 +243,13 @@ class _HistoryViewState extends State<HistoryView> {
                               itemBuilder: (context, index) {
                                 final booking = bookingController.completedBookings[index];
                                 return BookingCompletedHistoryCard(
-                                  coachName: booking.session?.description ?? "Coach John Smith",
-                                  sessionTitle: booking.session?.name ?? "Doubles Strategy Masterclass",
+                                  coachName: booking.session?.coach?.user?.name ?? "Unknown",
+                                  sessionTitle: booking.session?.name ?? "Unknown",
                                   date: DateTimeFormationClass.formatDate(booking.session?.startDate),
                                   amountPaid: booking.session?.price.toString() ?? '',
                                   startTime: booking.slot?.startTime ?? '',
                                   endTime: booking.slot?.endTime ?? '',
-                                  imageUrl: booking.session?.thumbnail ?? AppImages.profileImageTwo,
+                                  imageUrl: booking.session?.coach?.user?.photoUrl ?? AppImages.profileImageTwo,
                                   status: booking.status,
                                   // onRebook: () => print("Rebook Pressed"),
                                   // onLeaveReview: booking.status == "Complete"
@@ -284,13 +284,13 @@ class _HistoryViewState extends State<HistoryView> {
                               itemBuilder: (context, index) {
                                 final booking = bookingController.upcomingBookings[index];
                                 return BookingUpcomingHistoryCard(
-                                  coachName: booking.session?.description ?? "Coach John Smith",
-                                  sessionTitle: booking.session?.name ?? "Doubles Strategy Masterclass",
+                                  coachName: booking.session?.coach?.user?.name ?? "Unknown",
+                                  sessionTitle: booking.session?.name ?? "Unknown",
                                   date: DateTimeFormationClass.formatDate(booking.session?.startDate),
                                   amountPaid: booking.session?.price.toString() ?? '',
                                   startTime: booking.slot?.startTime ?? '',
                                   endTime: booking.slot?.endTime ?? '',
-                                  imageUrl: booking.session?.thumbnail ?? AppImages.profileImageTwo,
+                                  imageUrl: booking.session?.coach?.user?.photoUrl ?? AppImages.profileImageTwo,
                                   onCancel: () => print("Cancel ${booking.session?.name}"),
                                 );
                               },

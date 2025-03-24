@@ -43,7 +43,7 @@ class _AboutUsViewState extends State<AboutUsView> {
           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
           child: Obx(() {
             if (controller.isLoading.value) {
-              return Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator(color: AppColors.textColorBlue,));
             } else if (controller.errorMessage.isNotEmpty) {
               return Center(
                 child: Text(

@@ -18,7 +18,7 @@ class SignupController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  final isLoading = false.obs;
+  var isLoading = false.obs;
 
   @override
   void onClose() {
@@ -42,6 +42,7 @@ class SignupController extends GetxController {
     });
 
     try {
+      isLoading(true);
       // Send the request and get the response
       final response = await request.send();
 
@@ -61,15 +62,19 @@ class SignupController extends GetxController {
             '=======> OTP Token saved: ${LocalStorage.getData(key: AppConstant.otpToken)} <====');
 
         Get.offAll(() => VerifyYourEmailView(email: emailController.text,));
+
       } else {
         debugPrint(
             '===========================> Failed to register. Status code: ${response.statusCode} <===========================');
         Get.snackbar('Error', 'Registration failed. Please try again.');
       }
+      isLoading(false);
     } catch (e) {
       debugPrint(
           '=====================> Error: $e <===========================');
       Get.snackbar('Error', 'An error occurred. Please try again.');
+    }finally{
+      isLoading(false);
     }
   }
 

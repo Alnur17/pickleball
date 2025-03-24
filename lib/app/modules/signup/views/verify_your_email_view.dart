@@ -70,8 +70,8 @@ class VerifyYourEmailView extends GetView {
               pinTheme: PinTheme(
                 shape: PinCodeFieldShape.box,
                 borderRadius: BorderRadius.circular(8),
-                fieldHeight: 70,
-                fieldWidth: 60,
+                fieldHeight: 55,
+                fieldWidth: 50,
                 // Reduce the width slightly for the gap
                 activeColor: AppColors.borderColor,
                 activeFillColor: AppColors.white,

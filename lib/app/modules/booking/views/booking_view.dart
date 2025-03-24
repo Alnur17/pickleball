@@ -6,6 +6,7 @@ import 'package:pickleball/common/helper_widget/date_time_formation_class.dart';
 
 import '../../../../common/app_color/app_colors.dart';
 import '../../../../common/app_images/app_images.dart';
+import '../../../../common/app_text_style/styles.dart';
 import '../../../../common/helper_widget/booking_card_waitlist_widget.dart';
 import '../../../../common/size_box/custom_sizebox.dart';
 import '../../../../common/widgets/search_filed.dart';
@@ -20,6 +21,12 @@ class BookingView extends StatefulWidget {
 
 class _BookingViewState extends State<BookingView> {
   final BookingController bookingController = Get.put(BookingController());
+
+  @override
+  void initState() {
+    super.initState();
+    bookingController.fetchAllBooking();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,28 +67,33 @@ class _BookingViewState extends State<BookingView> {
                         ),
                         sh20,
                         Expanded(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            primary: false,
-                            itemCount: 5,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                  bottom: index == 5 - 1 ? 116 : 8,
-                                ),
-                                child: BookingCardConfirmWidget(
-                                  coachName: "Coach John Smith",
-                                  sessionTitle: "Doubles Strategy Masterclass",
-                                  date: "25 January 2025",
-                                  time: "2:00 PM - 3:00 PM",
-                                  imageUrl: AppImages.profileImageTwo,
-                                  onCancel: () {
-                                    // Handle cancel action
+                          child: bookingController.confirmBooking.isEmpty
+                              ? const Center(
+                                  child: Text("No confirmed bookings"))
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  primary: false,
+                                  itemCount: bookingController.confirmBooking.length,
+                                  itemBuilder: (context, index) {
+                                    var confirmData = bookingController.confirmBooking[index];
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                          bottom: index == bookingController.confirmBooking.length - 1 ? 116 : 8),
+                                      child: BookingCardConfirmWidget(
+                                        coachName: confirmData.session?.coach?.user?.name ?? "Unknown",
+                                        sessionTitle: confirmData.session?.name ?? "Unknown",
+                                        date: DateTimeFormationClass.formatDate(confirmData.session?.startDate),
+                                        startTime: confirmData.slot?.startTime ?? '',
+                                        endTime: confirmData.slot?.endTime ?? '',
+                                        imageUrl: confirmData.session?.coach?.user?.photoUrl ?? AppImages.profileImageTwo,
+                                        onCancel: () {
+                                          _showCancelPopup();
+                                           //bookingController.cancelBooking(confirmData.id!);
+                                        },
+                                      ),
+                                    );
                                   },
                                 ),
-                              );
-                            },
-                          ),
                         )
                       ],
                     ),
@@ -106,17 +118,29 @@ class _BookingViewState extends State<BookingView> {
                                     bookingController.waitListList[index];
                                 return Padding(
                                   padding: EdgeInsets.only(
-                                      bottom: index == bookingController.waitListList.length - 1 ? 116 : 12),
+                                      bottom: index ==
+                                              bookingController
+                                                      .waitListList.length -
+                                                  1
+                                          ? 116
+                                          : 12),
                                   child: BookingCardWaitlistWidget(
-                                    coachName: waitlistBooking.session?.coach?.user?.name ?? "Unknown",
-                                    sessionTitle: waitlistBooking.session?.name ??
+                                    coachName: waitlistBooking
+                                            .session?.coach?.user?.name ??
                                         "Unknown",
+                                    sessionTitle:
+                                        waitlistBooking.session?.name ??
+                                            "Unknown",
                                     date: DateTimeFormationClass.formatDate(
                                         waitlistBooking.createdAt),
-                                    imageUrl: waitlistBooking.session?.coach?.user?.photoUrl ?? AppImages.profileImageTwo,
+                                    imageUrl: waitlistBooking
+                                            .session?.coach?.user?.photoUrl ??
+                                        AppImages.profileImageTwo,
                                     onCancel: () {
-                                      bookingController.removeWaitlist(waitlistBooking.id!);
-                                      print('::::::::::::: ${waitlistBooking.id} :::::::::::');
+                                      bookingController
+                                          .removeWaitlist(waitlistBooking.id!);
+                                      print(
+                                          '::::::::::::: ${waitlistBooking.id} :::::::::::');
                                     },
                                   ),
                                 );
@@ -132,6 +156,84 @@ class _BookingViewState extends State<BookingView> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showCancelPopup() {
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: AppColors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text('You really want to cancel the course?',
+            style: h3, textAlign: TextAlign.center),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              OutlinedButton(
+                onPressed: () {
+                  //bookingController.cancelBooking();
+                  _showRefundPopup();
+                },
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: AppColors.red, width: 1.5),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  minimumSize: Size(100, 40),
+                ),
+                child: Text(
+                  'Yes',
+                  style: h3.copyWith(fontSize: 14, color: AppColors.red),
+                ),
+              ),
+              SizedBox(width: 16),
+              ElevatedButton(
+                onPressed: () => Get.back(),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.red,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  minimumSize: Size(100, 40),
+                ),
+                child: Text(
+                  'No',
+                  style: h3.copyWith(fontSize: 14, color: AppColors.mainColor),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showRefundPopup() {
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: AppColors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text('Click to refund',
+            style: h3, textAlign: TextAlign.center),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          OutlinedButton(
+            onPressed: () {
+          Get.back();
+            },
+            style: OutlinedButton.styleFrom(
+             backgroundColor: AppColors.red,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
+              minimumSize: Size(100, 40),
+            ),
+            child: Text(
+              'Refund',
+              style: h3.copyWith(fontSize: 14, color: AppColors.mainColor),
+            ),
+          ),
+        ],
       ),
     );
   }

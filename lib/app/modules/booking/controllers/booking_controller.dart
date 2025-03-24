@@ -12,6 +12,7 @@ class BookingController extends GetxController {
   var waitListList = <Result>[].obs;
   var allBookingList = <Datum>[].obs;
   var completedBookings = <Datum>[].obs;
+  var confirmBooking = <Datum>[].obs;
   var upcomingBookings = <Datum>[].obs;
 
   @override
@@ -55,12 +56,12 @@ class BookingController extends GetxController {
 
       var responseBody = await BaseClient.handleResponse(response);
 
-      if (responseBody['success'] == true &&
+      if (responseBody['success'] == true ||
           responseBody['statusCode'] == 200) {
-        debugPrint("Waitlist created successfully: ${responseBody['message']}");
+        debugPrint("Waitlist remove successfully: ${responseBody['message']}");
         await fetchWaitlist();
       } else {
-        debugPrint("Failed to create waitlist: ${responseBody['message']}");
+        debugPrint("Failed to remove waitlist: ${responseBody['message']}");
       }
     } catch (e) {
       debugPrint('Failed to remove waitlist $e');
@@ -85,22 +86,63 @@ class BookingController extends GetxController {
       );
 
       var responseBody = await BaseClient.handleResponse(response);
-      MyAllBookingModel confirmedModel = MyAllBookingModel.fromJson(responseBody);
-      allBookingList.value = confirmedModel.data; // Update confirmedList
+      MyAllBookingModel myAllBookingModel =
+          MyAllBookingModel.fromJson(responseBody);
+      allBookingList.value = myAllBookingModel.data; // Update confirmedList
 
-      // Filter bookings
-      upcomingBookings.value = allBookingList.where((booking) => booking.status == "pending").toList();
-      completedBookings.value = allBookingList.where((booking) => booking.status != "pending").toList();
+      DateTime currentDate = DateTime.now();
 
+      confirmBooking.value = allBookingList
+          .where((booking) => booking.status?.toLowerCase() == "confirmed")
+          .toList();
+
+      // Completed bookings
+      completedBookings.value = allBookingList;
+      // .where((booking) =>
+      //     booking.session!.startDate != null &&
+      //         booking.session!.startDate!.isBefore(currentDate)).toList();
+
+      // && booking.status?.toLowerCase() == "confirmed")
+
+      // Upcoming bookings: future date
+      upcomingBookings.value = allBookingList
+          .where((booking) =>
+              booking.session?.startDate != null &&
+              booking.session!.startDate!.isAfter(currentDate))
+          .toList();
       update();
+      isLoading(false);
     } catch (e) {
       debugPrint("Error fetching my booking: $e");
+      isLoading(false);
     } finally {
       isLoading(false);
     }
   }
 
+  Future<bool> cancelBooking(String id) async {
+    try {
+      isLoading(true);
+
+      var response = await BaseClient.patchRequest(
+        api: Api.cancelBooking(id),
+      );
+
+      var responseBody = await BaseClient.handleResponse(response);
+
+      if (responseBody['success'] == true) {
+        debugPrint("Bookings cancel successfully: ${responseBody['message']}");
+        await fetchAllBooking();
+        return true;
+      } else {
+        debugPrint("Failed to cancel bookings: ${responseBody['message']}");
+        return false;
+      }
+    } catch (e) {
+      debugPrint("Error cancel bookings: $e");
+      return false;
+    } finally {
+      isLoading(false);
+    }
+  }
 }
-
-
-

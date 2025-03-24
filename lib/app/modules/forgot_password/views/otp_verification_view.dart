@@ -63,8 +63,8 @@ class OtpVerificationView extends GetView<ForgotPasswordController> {
               pinTheme: PinTheme(
                 shape: PinCodeFieldShape.box,
                 borderRadius: BorderRadius.circular(8),
-                fieldHeight: 70,
-                fieldWidth: 60,
+                fieldHeight: 55,
+                fieldWidth: 50,
                 activeColor: AppColors.borderColor,
                 activeFillColor: AppColors.white,
                 inactiveColor: AppColors.borderColor,
@@ -101,7 +101,9 @@ class OtpVerificationView extends GetView<ForgotPasswordController> {
             ),
             sh30,
             Obx(() {
-              return forgotPasswordController.countdown.value > 0
+              return forgotPasswordController.isResendLoading.value == true
+                  ? CircularProgressIndicator(color: AppColors.textColorBlue,)
+                  : forgotPasswordController.countdown.value > 0
                   ? Text(
                       'Resend code in ${forgotPasswordController.countdown.value}s',
                       style: h3,
@@ -112,7 +114,7 @@ class OtpVerificationView extends GetView<ForgotPasswordController> {
                               forgotPasswordController.reSendOtp(email: email);
                             }
                           : null,
-                      child: Text(
+                      child:  Text(
                         'Resend code',
                         style: h3.copyWith(color: AppColors.textColorBlue),
                       ),

@@ -32,11 +32,13 @@ class Api {
   static getSingleTrainer(String id) => "$baseUrl/trainers/$id"; //done
 
   ///showBookMarked
-  static const myBookings = "$baseUrl/bookings/my-bookings"; //
+  static const myBookings = "$baseUrl/bookings/my-bookings"; //done
 
   static const addBookings = "$baseUrl/bookings"; // done
 
   static  getSingleBookingById(String id) => "$baseUrl/bookings/$id"; // done
+
+  static  cancelBooking(String id) => "$baseUrl/bookings/canceled/$id"; // done
 
   /// WaitList
   static const addMyWaitlist = "$baseUrl/waitLists"; // done

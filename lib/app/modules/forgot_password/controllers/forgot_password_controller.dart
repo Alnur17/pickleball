@@ -16,6 +16,7 @@ import '../views/otp_verification_view.dart';
 
 class ForgotPasswordController extends GetxController {
   var isLoading = false.obs;
+  var isResendLoading = false.obs;
 
   Rx<int> countdown = 59.obs;
 
@@ -134,7 +135,7 @@ class ForgotPasswordController extends GetxController {
     required String email,
   }) async {
     try {
-      isLoading(true);
+      isResendLoading(true);
       var map = <String, dynamic>{};
       map['email'] = email;
 
@@ -155,14 +156,14 @@ class ForgotPasswordController extends GetxController {
 
         LocalStorage.saveData(key: AppConstant.accessToken, data: accessToken);
 
-        isLoading(false);
+        isResendLoading(false);
       } else {
         throw 'Fail to resend Otp';
       }
     } catch (e) {
       debugPrint("Catch Error:::::: $e");
     } finally {
-      isLoading(false);
+      isResendLoading(false);
     }
   }
 

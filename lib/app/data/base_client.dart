@@ -44,7 +44,7 @@ class BaseClient {
     String token = LocalStorage.getData(key: AppConstant.accessToken);
     var headers = {
       'Content-Type': "application/json",
-      "Authorization": "Bearer, $token"
+      "Authorization": token
     };
     debugPrint("API Hit: $api");
     debugPrint("body: $body");

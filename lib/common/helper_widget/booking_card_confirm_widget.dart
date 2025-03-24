@@ -10,8 +10,10 @@ class BookingCardConfirmWidget extends StatelessWidget {
   final String coachName;
   final String sessionTitle;
   final String date;
-  final String time;
+  final String? startTime;
+  final String? endTime;
   final String imageUrl;
+
   //final VoidCallback onReschedule;
   final VoidCallback onCancel;
 
@@ -20,7 +22,8 @@ class BookingCardConfirmWidget extends StatelessWidget {
     required this.coachName,
     required this.sessionTitle,
     required this.date,
-    required this.time,
+    this.startTime,
+    this.endTime,
     required this.imageUrl,
     //required this.onReschedule,
     required this.onCancel,
@@ -82,10 +85,8 @@ class BookingCardConfirmWidget extends StatelessWidget {
               ),
               sw8,
               Text(
-                time,
-                style: h6.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
+                '${startTime ?? "N/A"} - ${endTime ?? "N/A"}',
+                style: h6.copyWith(fontWeight: FontWeight.w500),
               ),
             ],
           ),
@@ -93,7 +94,7 @@ class BookingCardConfirmWidget extends StatelessWidget {
           CustomButton(
             height: 40,
             text: 'Cancel',
-            onPressed: () {},
+            onPressed: onCancel,
             borderColor: AppColors.red,
             borderRadius: 12,
             textColor: AppColors.red,

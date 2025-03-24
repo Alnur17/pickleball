@@ -1,25 +1,22 @@
 class MyAllBookingModel {
   MyAllBookingModel({
     required this.success,
-    required this.statusCode,
     required this.message,
-    required this.meta,
     required this.data,
+    required this.meta,
   });
 
   final bool? success;
-  final int? statusCode;
   final String? message;
-  final Meta? meta;
   final List<Datum> data;
+  final Meta? meta;
 
   factory MyAllBookingModel.fromJson(Map<String, dynamic> json){
     return MyAllBookingModel(
       success: json["success"],
-      statusCode: json["statusCode"],
       message: json["message"],
-      meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
       data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+      meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
     );
   }
 
@@ -81,7 +78,6 @@ class Session {
     required this.duration,
     required this.maxParticipants,
     required this.price,
-    required this.maxWaitlist,
     required this.enableWaitlist,
     required this.status,
     required this.avgRating,
@@ -99,12 +95,11 @@ class Session {
   final String? location;
   final dynamic locationLink;
   final String? skillLevel;
-  final String? coach;
+  final Coach? coach;
   final DateTime? startDate;
   final int? duration;
   final int? maxParticipants;
   final int? price;
-  final int? maxWaitlist;
   final bool? enableWaitlist;
   final String? status;
   final double? avgRating;
@@ -123,12 +118,11 @@ class Session {
       location: json["location"],
       locationLink: json["locationLink"],
       skillLevel: json["skill_level"],
-      coach: json["coach"],
+      coach: json["coach"] == null ? null : Coach.fromJson(json["coach"]),
       startDate: DateTime.tryParse(json["startDate"] ?? ""),
       duration: json["duration"],
       maxParticipants: json["max_participants"],
       price: json["price"],
-      maxWaitlist: json["max_waitlist"],
       enableWaitlist: json["enable_waitlist"],
       status: json["status"],
       avgRating: (json["avgRating"] as num?)?.toDouble(),
@@ -137,6 +131,48 @@ class Session {
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       v: json["__v"],
+    );
+  }
+
+}
+
+class Coach {
+  Coach({
+    required this.id,
+    required this.user,
+  });
+
+  final String? id;
+  final User? user;
+
+  factory Coach.fromJson(Map<String, dynamic> json){
+    return Coach(
+      id: json["_id"],
+      user: json["user"] == null ? null : User.fromJson(json["user"]),
+    );
+  }
+
+}
+
+class User {
+  User({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.photoUrl,
+  });
+
+  final String? id;
+  final String? name;
+  final String? email;
+  final String? photoUrl;
+
+  factory User.fromJson(Map<String, dynamic> json){
+    return User(
+      id: json["_id"],
+      name: json["name"],
+      email: json["email"],
+      photoUrl: json["photoUrl"],
     );
   }
 
