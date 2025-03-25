@@ -26,6 +26,8 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController emailTEController = TextEditingController();
   TextEditingController passwordTEController = TextEditingController();
 
+  final RxBool isChecked = false.obs;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,12 +88,12 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          //Get.to(() => const ForgotPasswordView());
+                          isChecked.value = !isChecked.value; // Toggle using GetX
                         },
-                        child: Image.asset(
-                          AppImages.checkBoxCircle,
+                        child: Obx(() => Image.asset(
+                          isChecked.value ? AppImages.checkBoxCircleFilled : AppImages.checkBoxCircle,
                           scale: 4,
-                        ),
+                        )),
                       ),
                       sw16,
                       Text(

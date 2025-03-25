@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pickleball/app/modules/booking/model/my_waitlist_model.dart';
@@ -15,11 +17,11 @@ class BookingController extends GetxController {
   var confirmBooking = <Datum>[].obs;
   var upcomingBookings = <Datum>[].obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    fetchWaitlist();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   fetchWaitlist();
+  // }
 
   Future<void> fetchWaitlist() async {
     try {
@@ -37,7 +39,7 @@ class BookingController extends GetxController {
 
       var responseBody = await BaseClient.handleResponse(response);
       MyWaitlistModel waitlistModel = MyWaitlistModel.fromJson(responseBody);
-      waitListList.value = waitlistModel.data!.result; // Update waitlist
+      waitListList.value = waitlistModel.data!.data; // Update waitlist
       update();
     } catch (e) {
       debugPrint("Error fetching waitlist: $e");
@@ -56,8 +58,7 @@ class BookingController extends GetxController {
 
       var responseBody = await BaseClient.handleResponse(response);
 
-      if (responseBody['success'] == true ||
-          responseBody['statusCode'] == 200) {
+      if (responseBody['success'] == true) {
         debugPrint("Waitlist remove successfully: ${responseBody['message']}");
         await fetchWaitlist();
       } else {
@@ -92,24 +93,40 @@ class BookingController extends GetxController {
 
       DateTime currentDate = DateTime.now();
 
+      //Confirm booking: all date future, past and present
       confirmBooking.value = allBookingList
           .where((booking) => booking.status?.toLowerCase() == "confirmed")
           .toList();
-
-      // Completed bookings
-      completedBookings.value = allBookingList;
-      // .where((booking) =>
-      //     booking.session!.startDate != null &&
-      //         booking.session!.startDate!.isBefore(currentDate)).toList();
-
-      // && booking.status?.toLowerCase() == "confirmed")
 
       // Upcoming bookings: future date
       upcomingBookings.value = allBookingList
           .where((booking) =>
               booking.session?.startDate != null &&
-              booking.session!.startDate!.isAfter(currentDate))
+              booking.session!.startDate!.isAfter(currentDate) &&
+              booking.status?.toLowerCase() == 'confirmed')
           .toList();
+
+      // Completed bookings: includes both canceled and past confirmed bookings
+      completedBookings.value = allBookingList.where((booking) {
+        // Include canceled bookings
+        if (booking.status?.toLowerCase() == "canceled") {
+          return true;
+        }
+
+        // Check for completed confirmed bookings
+        if (booking.status?.toLowerCase() != "confirmed" ||
+            booking.session?.startDate == null ||
+            booking.session?.duration == null) {
+          return false;
+        }
+
+        // Calculate end date by adding duration to start date
+        DateTime endDate = booking.session!.startDate!
+            .add(Duration(minutes: booking.session!.duration!));
+
+        return endDate.isBefore(currentDate);
+      }).toList();
+
       update();
       isLoading(false);
     } catch (e) {
@@ -140,6 +157,38 @@ class BookingController extends GetxController {
       }
     } catch (e) {
       debugPrint("Error cancel bookings: $e");
+      return false;
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<bool> refundBooking() async {
+    try {
+      isLoading(true);
+
+      var body = <String,dynamic>{
+        "intendId": 'sda',
+        "amount": 120
+      };
+
+      var response = await BaseClient.patchRequest(
+        api: Api.refundPayment,
+        body: jsonEncode(body),
+      );
+
+      var responseBody = await BaseClient.handleResponse(response);
+
+      if (responseBody['success'] == true) {
+        debugPrint("Refund successfully: ${responseBody['message']}");
+        //await fetchAllBooking();
+        return true;
+      } else {
+        debugPrint("Failed to Refund: ${responseBody['message']}");
+        return false;
+      }
+    } catch (e) {
+      debugPrint("Error Refund: $e");
       return false;
     } finally {
       isLoading(false);

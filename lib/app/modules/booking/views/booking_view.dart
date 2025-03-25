@@ -25,6 +25,7 @@ class _BookingViewState extends State<BookingView> {
   @override
   void initState() {
     super.initState();
+    bookingController.fetchWaitlist();
     bookingController.fetchAllBooking();
   }
 
@@ -73,22 +74,39 @@ class _BookingViewState extends State<BookingView> {
                               : ListView.builder(
                                   shrinkWrap: true,
                                   primary: false,
-                                  itemCount: bookingController.confirmBooking.length,
+                                  itemCount:
+                                      bookingController.confirmBooking.length,
                                   itemBuilder: (context, index) {
-                                    var confirmData = bookingController.confirmBooking[index];
+                                    var confirmData =
+                                        bookingController.confirmBooking[index];
                                     return Padding(
                                       padding: EdgeInsets.only(
-                                          bottom: index == bookingController.confirmBooking.length - 1 ? 116 : 8),
+                                          bottom: index ==
+                                                  bookingController
+                                                          .confirmBooking
+                                                          .length -
+                                                      1
+                                              ? 116
+                                              : 8),
                                       child: BookingCardConfirmWidget(
-                                        coachName: confirmData.session?.coach?.user?.name ?? "Unknown",
-                                        sessionTitle: confirmData.session?.name ?? "Unknown",
-                                        date: DateTimeFormationClass.formatDate(confirmData.session?.startDate),
-                                        startTime: confirmData.slot?.startTime ?? '',
-                                        endTime: confirmData.slot?.endTime ?? '',
-                                        imageUrl: confirmData.session?.coach?.user?.photoUrl ?? AppImages.profileImageTwo,
+                                        coachName: confirmData
+                                                .session?.coach?.user?.name ??
+                                            "Unknown",
+                                        sessionTitle:
+                                            confirmData.session?.name ??
+                                                "Unknown",
+                                        date: DateTimeFormationClass.formatDate(
+                                            confirmData.session?.startDate),
+                                        startTime:
+                                            confirmData.slot?.startTime ?? '',
+                                        endTime:
+                                            confirmData.slot?.endTime ?? '',
+                                        imageUrl: confirmData.session?.coach
+                                                ?.user?.photoUrl ??
+                                            AppImages.profileImageTwo,
                                         onCancel: () {
                                           _showCancelPopup();
-                                           //bookingController.cancelBooking(confirmData.id!);
+                                          //bookingController.cancelBooking(confirmData.id!);
                                         },
                                       ),
                                     );
@@ -175,6 +193,7 @@ class _BookingViewState extends State<BookingView> {
               OutlinedButton(
                 onPressed: () {
                   //bookingController.cancelBooking();
+                  Get.back();
                   _showRefundPopup();
                 },
                 style: OutlinedButton.styleFrom(
@@ -211,29 +230,34 @@ class _BookingViewState extends State<BookingView> {
 
   void _showRefundPopup() {
     Get.dialog(
-      AlertDialog(
-        backgroundColor: AppColors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text('Click to refund',
-            style: h3, textAlign: TextAlign.center),
-        actionsAlignment: MainAxisAlignment.center,
-        actions: [
-          OutlinedButton(
-            onPressed: () {
-          Get.back();
-            },
-            style: OutlinedButton.styleFrom(
-             backgroundColor: AppColors.red,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
-              minimumSize: Size(100, 40),
+      barrierDismissible: false,
+      PopScope(
+        canPop: false,
+        child: AlertDialog(
+          backgroundColor: AppColors.white,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title:
+              Text('Click to refund', style: h3, textAlign: TextAlign.center),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            OutlinedButton(
+              onPressed: () {
+                Get.back();
+              },
+              style: OutlinedButton.styleFrom(
+                backgroundColor: AppColors.red,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                minimumSize: Size(100, 40),
+              ),
+              child: Text(
+                'Refund',
+                style: h3.copyWith(fontSize: 14, color: AppColors.mainColor),
+              ),
             ),
-            child: Text(
-              'Refund',
-              style: h3.copyWith(fontSize: 14, color: AppColors.mainColor),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

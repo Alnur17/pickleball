@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:pickleball/app/modules/my_search/controllers/my_search_controller.dart';
-import 'package:pickleball/app/modules/payment/views/payment_confirmation_view.dart';
+import 'package:pickleball/app/modules/payment/controllers/payment_controller.dart';
 import 'package:pickleball/common/app_color/app_colors.dart';
 import 'package:pickleball/common/app_images/app_images.dart';
 import 'package:pickleball/common/helper_widget/date_time_formation_class.dart';
@@ -26,6 +26,7 @@ class BookingConfirmationView extends StatefulWidget {
 
 class _BookingConfirmationViewState extends State<BookingConfirmationView> {
   final MySearchController mySearchController = Get.find();
+  final PaymentController paymentController = Get.put(PaymentController());
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +171,7 @@ class _BookingConfirmationViewState extends State<BookingConfirmationView> {
                     text: 'Proceed to Pay',
                     imagePath: AppImages.arrowFlyWhite,
                     onTap: () {
-                      Get.to(() => PaymentConfirmationView());
+                     paymentController.createPaymentSession(reference: mySearchController.singleBookingList.value?.session?.id ?? 'null');
                     },
                     height: 35,
                     width: 170,

@@ -57,7 +57,7 @@ class DashboardView extends GetView<DashboardController> {
                   backgroundColor: AppColors.transparent,
                   activeColor: Colors.white,
                   gap: 0,
-                  padding: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                  padding: EdgeInsets.symmetric(horizontal: 4, vertical: 6),
                   onTabChange: dashboardController.onItemTapped,
                   selectedIndex: dashboardController.selectedIndex.value,
                   tabs: [

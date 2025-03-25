@@ -246,7 +246,7 @@ class _HistoryViewState extends State<HistoryView> {
                                   coachName: booking.session?.coach?.user?.name ?? "Unknown",
                                   sessionTitle: booking.session?.name ?? "Unknown",
                                   date: DateTimeFormationClass.formatDate(booking.session?.startDate),
-                                  amountPaid: booking.session?.price.toString() ?? '',
+                                  amountPaid: booking.amount.toString(),
                                   startTime: booking.slot?.startTime ?? '',
                                   endTime: booking.slot?.endTime ?? '',
                                   imageUrl: booking.session?.coach?.user?.photoUrl ?? AppImages.profileImageTwo,
@@ -256,7 +256,7 @@ class _HistoryViewState extends State<HistoryView> {
                                   //     ? () => Get.to(() => WriteReviewView())
                                   //     : null,
                                   onViewRefund: booking.status == "Canceled"
-                                      ? () => print("View Refund Pressed")
+                                      ? () => debugPrint("View Refund Pressed")
                                       : null,
                                 );
                               },
@@ -287,11 +287,11 @@ class _HistoryViewState extends State<HistoryView> {
                                   coachName: booking.session?.coach?.user?.name ?? "Unknown",
                                   sessionTitle: booking.session?.name ?? "Unknown",
                                   date: DateTimeFormationClass.formatDate(booking.session?.startDate),
-                                  amountPaid: booking.session?.price.toString() ?? '',
+                                  amountPaid: booking.amount.toString(),
                                   startTime: booking.slot?.startTime ?? '',
                                   endTime: booking.slot?.endTime ?? '',
                                   imageUrl: booking.session?.coach?.user?.photoUrl ?? AppImages.profileImageTwo,
-                                  onCancel: () => print("Cancel ${booking.session?.name}"),
+                                  onCancel: () => debugPrint("Cancel ${booking.session?.name}"),
                                 );
                               },
                             ),

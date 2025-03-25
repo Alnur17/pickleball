@@ -57,6 +57,10 @@ class Api {
 
   static const String conditionsPage = "$baseUrl/settings"; //done
 
-  static String subscription(String planType, String email) =>
-      "$baseUrl/subscriptions/create-payment-session?subscription_type=$planType&email=$email"; //
+  static String confirmPayment(String sessionsId, String paymentId) =>
+      "$baseUrl/payments/confirm-payment?sessionId=$sessionsId&paymentId=$paymentId"; //
+
+  static const String createPayment = "$baseUrl/payments/checkout"; //
+
+  static const String refundPayment = "$baseUrl/payments/refound-payment"; //
 }

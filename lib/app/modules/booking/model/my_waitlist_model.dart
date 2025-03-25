@@ -1,20 +1,17 @@
 class MyWaitlistModel {
   MyWaitlistModel({
     required this.success,
-    required this.statusCode,
     required this.message,
     required this.data,
   });
 
   final bool? success;
-  final int? statusCode;
   final String? message;
   final Data? data;
 
   factory MyWaitlistModel.fromJson(Map<String, dynamic> json){
     return MyWaitlistModel(
       success: json["success"],
-      statusCode: json["statusCode"],
       message: json["message"],
       data: json["data"] == null ? null : Data.fromJson(json["data"]),
     );
@@ -24,41 +21,17 @@ class MyWaitlistModel {
 
 class Data {
   Data({
+    required this.data,
     required this.meta,
-    required this.result,
   });
 
+  final List<Result> data;
   final Meta? meta;
-  final List<Result> result;
 
   factory Data.fromJson(Map<String, dynamic> json){
     return Data(
+      data: json["data"] == null ? [] : List<Result>.from(json["data"]!.map((x) => Result.fromJson(x))),
       meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
-      result: json["result"] == null ? [] : List<Result>.from(json["result"]!.map((x) => Result.fromJson(x))),
-    );
-  }
-
-}
-
-class Meta {
-  Meta({
-    required this.page,
-    required this.limit,
-    required this.total,
-    required this.totalPage,
-  });
-
-  final int? page;
-  final int? limit;
-  final int? total;
-  final int? totalPage;
-
-  factory Meta.fromJson(Map<String, dynamic> json){
-    return Meta(
-      page: json["page"],
-      limit: json["limit"],
-      total: json["total"],
-      totalPage: json["totalPage"],
     );
   }
 
@@ -96,20 +69,23 @@ class Session {
     required this.id,
     required this.name,
     required this.coach,
-    required this.createdAt,
+    required this.startDate,
+    required this.duration,
   });
 
   final String? id;
   final String? name;
   final Coach? coach;
-  final DateTime? createdAt;
+  final DateTime? startDate;
+  final int? duration;
 
   factory Session.fromJson(Map<String, dynamic> json){
     return Session(
       id: json["_id"],
       name: json["name"],
       coach: json["coach"] == null ? null : Coach.fromJson(json["coach"]),
-      createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
+      startDate: DateTime.tryParse(json["startDate"] ?? ""),
+      duration: json["duration"],
     );
   }
 
@@ -152,6 +128,30 @@ class User {
       name: json["name"],
       email: json["email"],
       photoUrl: json["photoUrl"],
+    );
+  }
+
+}
+
+class Meta {
+  Meta({
+    required this.page,
+    required this.limit,
+    required this.total,
+    required this.totalPage,
+  });
+
+  final int? page;
+  final int? limit;
+  final int? total;
+  final int? totalPage;
+
+  factory Meta.fromJson(Map<String, dynamic> json){
+    return Meta(
+      page: json["page"],
+      limit: json["limit"],
+      total: json["total"],
+      totalPage: json["totalPage"],
     );
   }
 

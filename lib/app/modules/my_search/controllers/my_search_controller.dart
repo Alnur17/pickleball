@@ -152,8 +152,7 @@ class MySearchController extends GetxController {
 
       var responseBody = await BaseClient.handleResponse(response);
 
-      if (responseBody['success'] == true ||
-          responseBody['statusCode'] == 201) {
+      if (responseBody['success'] == true) {
         debugPrint("Waitlist created successfully: ${responseBody['message']}");
         kSnackBar(message: "${responseBody['message']}", bgColor: AppColors.green);
         // Optionally, refresh the waitlist after creating
