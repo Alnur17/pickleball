@@ -63,7 +63,7 @@ class BaseClient {
       "Authorization": "Bearer, $token"
     };
     debugPrint("API Hit: $api");
-    //debugPrint("body: $body");
+    debugPrint("body: $body");
     http.Response response = await http.put(
       Uri.parse(api),
       body: body,
