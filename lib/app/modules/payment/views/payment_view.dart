@@ -45,8 +45,9 @@ class _PaymentViewState extends State<PaymentView> {
         },
         onPageFinished: (String url) {
           debugPrint('Page finished loading: $url');
-          if (url.contains("check-payment-session")) {
+          if (url.contains("confirm-payment")) {
             paymentController.paymentResults(paymentLink: url);
+            debugPrint('::::::::::::: if condition ::::::::::::::::');
           }
         },
       ),

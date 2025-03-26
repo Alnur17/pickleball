@@ -70,13 +70,13 @@ class NotificationView extends GetView {
             SearchFiled(
               onChanged: (value) {},
             ),
-            sh20,
-            Text(
-              'New',
-              style: h4.copyWith(
-                color: AppColors.textColorBlue,
-              ),
-            ),
+            // sh20,
+            // Text(
+            //   'New',
+            //   style: h4.copyWith(
+            //     color: AppColors.textColorBlue,
+            //   ),
+            // ),
             sh20,
             Expanded(
               child: ListView.builder(

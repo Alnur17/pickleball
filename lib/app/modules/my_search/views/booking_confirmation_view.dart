@@ -9,7 +9,8 @@ import 'package:pickleball/common/helper_widget/date_time_formation_class.dart';
 import 'package:pickleball/common/size_box/custom_sizebox.dart';
 
 import '../../../../common/app_text_style/styles.dart';
-import '../../../../common/widgets/custom_container.dart';
+import '../../../../common/widgets/custom_button.dart';
+import '../../../../common/widgets/custom_loader.dart';
 
 
 class BookingConfirmationView extends StatefulWidget {
@@ -166,18 +167,18 @@ class _BookingConfirmationViewState extends State<BookingConfirmationView> {
                   ],
                 ),
                 sh60,
-                Center(
-                  child: CustomContainer(
+                Obx(
+                      () => paymentController.isLoading.value == true
+                      ? CustomLoader(color: AppColors.white)
+                      : CustomButton(
                     text: 'Proceed to Pay',
-                    imagePath: AppImages.arrowFlyWhite,
-                    onTap: () {
-                     paymentController.createPaymentSession(reference: mySearchController.singleBookingList.value?.session?.id ?? 'null');
+                    onPressed: () {
+                      paymentController.createPaymentSession(reference: widget.bookingId);
                     },
-                    height: 35,
-                    width: 170,
-                    backgroundColor: AppColors.textColorBlue,
+                    gradientColors: AppColors.gradientColor,
                   ),
                 ),
+
               ],
             );
           },

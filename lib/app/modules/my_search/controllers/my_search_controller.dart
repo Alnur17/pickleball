@@ -197,7 +197,9 @@ class MySearchController extends GetxController {
       if (responseBody['success'] == true) {
         debugPrint("Bookings created successfully: ${responseBody['message']}");
         String bookingId = responseBody['data']['_id'];
-        debugPrint(':::::: $bookingId :::::::::');
+        LocalStorage.saveData(key: AppConstant.bookingId, data: bookingId);
+        String id = LocalStorage.getData(key: AppConstant.bookingId);
+        debugPrint(':::::: $id :::::::::');
 
         await getSingleBooking(bookingId);
         Get.to(() => BookingConfirmationView(
@@ -243,7 +245,7 @@ class MySearchController extends GetxController {
         SingleBookingModel singleBookingModel =
             SingleBookingModel.fromJson(responseBody);
         singleBookingList.value =
-            singleBookingModel.data; // Update timeSlot list
+            singleBookingModel.data; // Update data
 
         return true;
       } else {

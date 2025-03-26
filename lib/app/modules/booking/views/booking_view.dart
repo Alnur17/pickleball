@@ -22,6 +22,8 @@ class BookingView extends StatefulWidget {
 class _BookingViewState extends State<BookingView> {
   final BookingController bookingController = Get.put(BookingController());
 
+  //final PaymentController paymentController = Get.put(PaymentController());
+
   @override
   void initState() {
     super.initState();
@@ -105,7 +107,7 @@ class _BookingViewState extends State<BookingView> {
                                                 ?.user?.photoUrl ??
                                             AppImages.profileImageTwo,
                                         onCancel: () {
-                                          _showCancelPopup();
+                                          _showCancelPopup(confirmData);
                                           //bookingController.cancelBooking(confirmData.id!);
                                         },
                                       ),
@@ -157,7 +159,7 @@ class _BookingViewState extends State<BookingView> {
                                     onCancel: () {
                                       bookingController
                                           .removeWaitlist(waitlistBooking.id!);
-                                      print(
+                                      debugPrint(
                                           '::::::::::::: ${waitlistBooking.id} :::::::::::');
                                     },
                                   ),
@@ -178,7 +180,7 @@ class _BookingViewState extends State<BookingView> {
     );
   }
 
-  void _showCancelPopup() {
+  void _showCancelPopup(dynamic confirmData) {
     Get.dialog(
       AlertDialog(
         backgroundColor: AppColors.white,
@@ -194,7 +196,7 @@ class _BookingViewState extends State<BookingView> {
                 onPressed: () {
                   //bookingController.cancelBooking();
                   Get.back();
-                  _showRefundPopup();
+                  _showRefundPopup(confirmData);
                 },
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(color: AppColors.red, width: 1.5),
@@ -228,7 +230,7 @@ class _BookingViewState extends State<BookingView> {
     );
   }
 
-  void _showRefundPopup() {
+  void _showRefundPopup(dynamic confirmData) {
     Get.dialog(
       barrierDismissible: false,
       PopScope(
@@ -244,6 +246,7 @@ class _BookingViewState extends State<BookingView> {
             OutlinedButton(
               onPressed: () {
                 Get.back();
+                bookingController.cancelBooking(confirmData.id!);
               },
               style: OutlinedButton.styleFrom(
                 backgroundColor: AppColors.red,

@@ -1,5 +1,5 @@
-class PaymentConfirmModel {
-  PaymentConfirmModel({
+class SinglePaymentDetailsModel {
+  SinglePaymentDetailsModel({
     required this.success,
     required this.message,
     required this.data,
@@ -7,20 +7,20 @@ class PaymentConfirmModel {
 
   final bool? success;
   final String? message;
-  final Data? data;
+  final SPMData? data;
 
-  factory PaymentConfirmModel.fromJson(Map<String, dynamic> json){
-    return PaymentConfirmModel(
+  factory SinglePaymentDetailsModel.fromJson(Map<String, dynamic> json){
+    return SinglePaymentDetailsModel(
       success: json["success"],
       message: json["message"],
-      data: json["data"] == null ? null : Data.fromJson(json["data"]),
+      data: json["data"] == null ? null : SPMData.fromJson(json["data"]),
     );
   }
 
 }
 
-class Data {
-  Data({
+class SPMData {
+  SPMData({
     required this.id,
     required this.modelType,
     required this.account,
@@ -39,8 +39,8 @@ class Data {
 
   final String? id;
   final String? modelType;
-  final String? account;
-  final String? reference;
+  final Account? account;
+  final dynamic reference;
   final String? transactionId;
   final int? amount;
   final String? status;
@@ -52,11 +52,11 @@ class Data {
   final DateTime? updatedAt;
   final int? v;
 
-  factory Data.fromJson(Map<String, dynamic> json){
-    return Data(
+  factory SPMData.fromJson(Map<String, dynamic> json){
+    return SPMData(
       id: json["_id"],
       modelType: json["modelType"],
-      account: json["account"],
+      account: json["account"] == null ? null : Account.fromJson(json["account"]),
       reference: json["reference"],
       transactionId: json["transaction_id"],
       amount: json["amount"],
@@ -68,6 +68,36 @@ class Data {
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       v: json["__v"],
+    );
+  }
+
+}
+
+class Account {
+  Account({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.contactNumber,
+    required this.photoUrl,
+    required this.age,
+  });
+
+  final String? id;
+  final String? name;
+  final String? email;
+  final String? contactNumber;
+  final dynamic photoUrl;
+  final dynamic age;
+
+  factory Account.fromJson(Map<String, dynamic> json){
+    return Account(
+      id: json["_id"],
+      name: json["name"],
+      email: json["email"],
+      contactNumber: json["contactNumber"],
+      photoUrl: json["photoUrl"],
+      age: json["age"],
     );
   }
 

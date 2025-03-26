@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:pickleball/app/modules/my_search/controllers/my_search_controller.dart';
+import 'package:pickleball/app/modules/payment/model/payment_details_model.dart';
 import 'package:pickleball/app/modules/payment/views/payment_confirmation_view.dart';
 
 import '../../../../common/app_color/app_colors.dart';
@@ -12,14 +13,13 @@ import '../../../../common/helper_widget/local_store.dart';
 import '../../../../common/widgets/custom_snackbar.dart';
 import '../../../data/api.dart';
 import '../../../data/base_client.dart';
-import '../model/payment_confirm_model.dart';
 import '../views/payment_view.dart';
 
 class PaymentController extends GetxController {
   var isLoading = false.obs;
-  var confirmPaymentData = <Data>[].obs;
+  var paymentDetailsData = Rxn<Data>();
 
-  final MySearchController mySearchController = Get.find();
+  final MySearchController mySearchController = Get.put(MySearchController());
 
   Future<void> createPaymentSession({
     required String reference,
@@ -71,7 +71,12 @@ class PaymentController extends GetxController {
       var responseBody = await BaseClient.handleResponse(response);
 
       if (responseBody['success'] = true) {
-       await confirmPayment(sessionsId: mySearchController.sessionsDetails.value?.id ?? '', paymentId: '');
+        var paymentId = responseBody['data']['_id'].toString();
+
+        LocalStorage.saveData(key: AppConstant.paymentId, data: paymentId);
+        String id = LocalStorage.getData(key: AppConstant.paymentId);
+        debugPrint('::::::::::::::::: $id :::::::::::::::::');
+        Get.to(() => PaymentConfirmationView());
       } else {
         debugPrint("Error on Payment Result: $responseBody['message'] ");
       }
@@ -86,13 +91,12 @@ class PaymentController extends GetxController {
     }
   }
 
-  Future<void> confirmPayment(
-      {required String sessionsId, required String paymentId})
-  async {
+  Future<void> paymentDetails() async {
     try {
       isLoading.value = true;
 
       String token = LocalStorage.getData(key: AppConstant.accessToken);
+      String paymentId = LocalStorage.getData(key: AppConstant.paymentId);
 
       var headers = {
         'Authorization': token,
@@ -101,18 +105,18 @@ class PaymentController extends GetxController {
 
       dynamic responseBody = await BaseClient.handleResponse(
         await BaseClient.getRequest(
-          api: Api.confirmPayment(sessionsId, paymentId),
+          api: Api.paymentDetails(paymentId),
           headers: headers,
         ),
       );
-
-      PaymentConfirmModel paymentConfirmModel =
-          PaymentConfirmModel.fromJson(responseBody);
-      if (paymentConfirmModel.data != null) {
-        confirmPaymentData.value = [paymentConfirmModel.data!];
+      if (responseBody['success'] = true) {
+        String message = responseBody['message'];
+        PaymentDetailsModel paymentDetailsModel =
+            PaymentDetailsModel.fromJson(responseBody);
+        paymentDetailsData.value = paymentDetailsModel.data;
+        debugPrint(':::::::::::::: $message ::::::::::::::::::');
+        debugPrint(':::::::::::::: $responseBody ::::::::::::::::::');
       }
-      Get.to(() => PaymentConfirmationView());
-      //Get.to(() => PaymentView(paymentUrl: responseBody["data"]));
       isLoading.value = false;
     } catch (e) {
       Get.snackbar("Error", "Failed to create payment session $e");

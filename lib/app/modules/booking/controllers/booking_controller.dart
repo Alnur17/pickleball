@@ -8,10 +8,12 @@ import '../../../../common/helper_widget/local_store.dart';
 import '../../../data/api.dart';
 import '../../../data/base_client.dart';
 import '../model/my_all_booking_model.dart';
+import '../model/signle_payment_details_model.dart';
 
 class BookingController extends GetxController {
   var isLoading = true.obs;
   var waitListList = <Result>[].obs;
+  var singlePaymentDetails = Rxn<SPMData>();
   var allBookingList = <Datum>[].obs;
   var completedBookings = <Datum>[].obs;
   var confirmBooking = <Datum>[].obs;
@@ -40,6 +42,31 @@ class BookingController extends GetxController {
       var responseBody = await BaseClient.handleResponse(response);
       MyWaitlistModel waitlistModel = MyWaitlistModel.fromJson(responseBody);
       waitListList.value = waitlistModel.data!.data; // Update waitlist
+      update();
+    } catch (e) {
+      debugPrint("Error fetching waitlist: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> getSinglePaymentByBookingId(String bookingId) async {
+    try {
+      isLoading(true);
+      String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
+      var headers = {
+        'Authorization': accessToken,
+        'Content-Type': 'application/json',
+      };
+
+      var response = await BaseClient.getRequest(
+        api: Api.singlePaymentByBookingId(bookingId),
+        headers: headers,
+      );
+
+      var responseBody = await BaseClient.handleResponse(response);
+      SinglePaymentDetailsModel singlePaymentDetailsModel = SinglePaymentDetailsModel.fromJson(responseBody);
+      singlePaymentDetails.value = singlePaymentDetailsModel.data; // Update
       update();
     } catch (e) {
       debugPrint("Error fetching waitlist: $e");
@@ -149,7 +176,20 @@ class BookingController extends GetxController {
 
       if (responseBody['success'] == true) {
         debugPrint("Bookings cancel successfully: ${responseBody['message']}");
-        await fetchAllBooking();
+        String bookingId = LocalStorage.getData(key: AppConstant.bookingId);
+        await getSinglePaymentByBookingId(bookingId);
+        print(singlePaymentDetails.value?.amount
+            .toString());
+        refundBooking(
+          paymentIntendId: singlePaymentDetails.value?.paymentIntentId
+              .toString() ??
+              '',
+          amount: singlePaymentDetails.value?.amount
+              .toString() ??
+              '',
+        );
+
+        isLoading(false);
         return true;
       } else {
         debugPrint("Failed to cancel bookings: ${responseBody['message']}");
@@ -163,13 +203,15 @@ class BookingController extends GetxController {
     }
   }
 
-  Future<bool> refundBooking() async {
+
+
+  Future<bool> refundBooking({required String paymentIntendId, required String amount}) async {
     try {
       isLoading(true);
 
-      var body = <String,dynamic>{
-        "intendId": 'sda',
-        "amount": 120
+      var body = {
+        "intendId": paymentIntendId,
+        "amount": amount
       };
 
       var response = await BaseClient.patchRequest(
@@ -181,7 +223,7 @@ class BookingController extends GetxController {
 
       if (responseBody['success'] == true) {
         debugPrint("Refund successfully: ${responseBody['message']}");
-        //await fetchAllBooking();
+        await fetchAllBooking();
         return true;
       } else {
         debugPrint("Failed to Refund: ${responseBody['message']}");

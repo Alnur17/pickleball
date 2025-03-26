@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pickleball/app/modules/payment/views/payment_details_view.dart';
 import 'package:pickleball/common/app_text_style/styles.dart';
 
 import '../../../../common/app_color/app_colors.dart';
@@ -8,7 +9,8 @@ import '../../../../common/app_images/app_images.dart';
 import '../../../../common/size_box/custom_sizebox.dart';
 
 class PaymentConfirmationView extends StatefulWidget {
-  const PaymentConfirmationView({super.key});
+
+  const PaymentConfirmationView({super.key,});
 
   @override
   State<PaymentConfirmationView> createState() =>
@@ -19,9 +21,9 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
   @override
   void initState() {
     super.initState();
-    // Future.delayed(const Duration(seconds: 3), () {
-    //   return Get.off(() => PaymentDetailsView());
-    // });
+    Future.delayed(const Duration(seconds: 2), () {
+      return Get.off(() => PaymentDetailsView());
+    });
   }
 
   @override
