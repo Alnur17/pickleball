@@ -177,6 +177,9 @@ class MySearchController extends GetxController {
       isLoading(true);
 
       String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
+      LocalStorage.saveData(key: AppConstant.sessionId, data: sessionId);
+      String sId = LocalStorage.getData(key: AppConstant.sessionId,);
+      debugPrint(':::::::: $sId ::::::::');
 
       var headers = {
         'Authorization': accessToken,

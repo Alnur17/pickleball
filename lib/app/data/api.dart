@@ -46,6 +46,7 @@ class Api {
   static const getMyWaitlist = "$baseUrl/waitLists/my-waitlist"; //done
 
   static removeWaitlist(String id) => "$baseUrl/waitLists/$id"; //done
+  static removeWaitlistBySessionId(String sessionId) => "$baseUrl/waitLists/session/$sessionId"; //done
 
   /// All slot
   static timeSlot(String id) => "$baseUrl/session-slots/session/$id"; // done

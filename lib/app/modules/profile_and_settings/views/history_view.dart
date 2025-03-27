@@ -291,7 +291,9 @@ class _HistoryViewState extends State<HistoryView> {
                                   startTime: booking.slot?.startTime ?? '',
                                   endTime: booking.slot?.endTime ?? '',
                                   imageUrl: booking.session?.coach?.user?.photoUrl ?? AppImages.profileImageTwo,
-                                  onCancel: () => debugPrint("Cancel ${booking.session?.name}"),
+                                  onCancel: (){
+                                    _showCancelPopup(booking);
+                                  },
                                 );
                               },
                             ),
@@ -304,6 +306,89 @@ class _HistoryViewState extends State<HistoryView> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+  void _showCancelPopup(dynamic booking) {
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: AppColors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text('You really want to cancel the course?',
+            style: h3, textAlign: TextAlign.center),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              OutlinedButton(
+                onPressed: () {
+                  Get.back();
+                  _showRefundPopup(booking);
+                },
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: AppColors.red, width: 1.5),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  minimumSize: Size(100, 40),
+                ),
+                child: Text(
+                  'Yes',
+                  style: h3.copyWith(fontSize: 14, color: AppColors.red),
+                ),
+              ),
+              SizedBox(width: 16),
+              ElevatedButton(
+                onPressed: () => Get.back(),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.red,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  minimumSize: Size(100, 40),
+                ),
+                child: Text(
+                  'No',
+                  style: h3.copyWith(fontSize: 14, color: AppColors.mainColor),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showRefundPopup(dynamic confirmData) {
+    Get.dialog(
+      barrierDismissible: false,
+      PopScope(
+        canPop: false,
+        child: AlertDialog(
+          backgroundColor: AppColors.white,
+          shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title:
+          Text('Click to refund', style: h3, textAlign: TextAlign.center),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            OutlinedButton(
+              onPressed: () {
+                Get.back();
+                bookingController.cancelBooking(confirmData.id!);
+              },
+              style: OutlinedButton.styleFrom(
+                backgroundColor: AppColors.red,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                minimumSize: Size(100, 40),
+              ),
+              child: Text(
+                'Refund',
+                style: h3.copyWith(fontSize: 14, color: AppColors.mainColor),
+              ),
+            ),
+          ],
         ),
       ),
     );

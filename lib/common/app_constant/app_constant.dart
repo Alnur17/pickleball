@@ -4,6 +4,7 @@ class AppConstant {
   static const verifyToken = 'verifyToken';
   static const paymentId = 'paymentId';
   static const bookingId = 'bookingId';
+  static const sessionId = 'sessionId';
 
   static const refCode = 'refCode';
   static const createRouteId = 'createRouteId';

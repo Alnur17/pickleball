@@ -133,7 +133,7 @@ class BaseClient {
         }
         throw msg;
       } else if (response.statusCode == 404) {
-        kSnackBar(message: json.decode(response.body)['message'].toString(), bgColor: AppColors.orange);
+        //kSnackBar(message: json.decode(response.body)['message'].toString(), bgColor: AppColors.orange);
         print(response.body);
       }
       else if (response.statusCode == 400) {

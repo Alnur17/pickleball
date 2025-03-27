@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:pickleball/app/modules/booking/controllers/booking_controller.dart';
 import 'package:pickleball/app/modules/my_search/controllers/my_search_controller.dart';
 import 'package:pickleball/app/modules/payment/model/payment_details_model.dart';
 import 'package:pickleball/app/modules/payment/views/payment_confirmation_view.dart';
@@ -20,6 +21,7 @@ class PaymentController extends GetxController {
   var paymentDetailsData = Rxn<Data>();
 
   final MySearchController mySearchController = Get.put(MySearchController());
+  final BookingController bookingController = Get.put(BookingController());
 
   Future<void> createPaymentSession({
     required String reference,
@@ -115,10 +117,38 @@ class PaymentController extends GetxController {
             PaymentDetailsModel.fromJson(responseBody);
         paymentDetailsData.value = paymentDetailsModel.data;
         debugPrint(':::::::::::::: $message ::::::::::::::::::');
+
+        String sessionId = LocalStorage.getData(key: AppConstant.sessionId);
+        debugPrint(':::::::: $sessionId ::::::::');
+
+        await cancelWaitlistBySessionId(sessionId);
       }
       isLoading.value = false;
     } catch (e) {
-      Get.snackbar("Error", "Failed to create payment session $e");
+      //Get.snackbar("Error", "Failed to create payment session $e");
     }
   }
+
+
+  Future<void>cancelWaitlistBySessionId(String id) async {
+    try {
+      isLoading(true);
+      var response = await BaseClient.deleteRequest(
+        api: Api.removeWaitlistBySessionId(id),
+      );
+
+      var responseBody = await BaseClient.handleResponse(response);
+
+      if (responseBody['success'] == true) {
+        debugPrint("Waitlist remove successfully: ${responseBody['message']}");
+        await bookingController.fetchWaitlist();
+      }
+    } catch (e) {
+      debugPrint("Error remove waitlist: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+
+
 }
