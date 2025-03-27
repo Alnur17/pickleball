@@ -59,119 +59,149 @@ class _BookingViewState extends State<BookingView> {
             ),
             sh16,
             Expanded(
-              child: TabBarView(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        SearchFiled(
-                          onChanged: (value) {},
-                        ),
-                        sh20,
-                        Expanded(
-                          child: bookingController.confirmBooking.isEmpty
-                              ? const Center(
-                                  child: Text("No confirmed bookings"))
-                              : ListView.builder(
-                                  shrinkWrap: true,
-                                  primary: false,
-                                  itemCount:
-                                      bookingController.confirmBooking.length,
-                                  itemBuilder: (context, index) {
-                                    var confirmData =
-                                        bookingController.confirmBooking[index];
-                                    return Padding(
-                                      padding: EdgeInsets.only(
-                                          bottom: index ==
-                                                  bookingController
-                                                          .confirmBooking
-                                                          .length -
-                                                      1
-                                              ? 116
-                                              : 8),
-                                      child: BookingCardConfirmWidget(
-                                        coachName: confirmData
-                                                .session?.coach?.user?.name ??
-                                            "Unknown",
-                                        sessionTitle:
-                                            confirmData.session?.name ??
-                                                "Unknown",
-                                        date: DateTimeFormationClass.formatDate(
-                                            confirmData.session?.startDate),
-                                        startTime:
-                                            confirmData.slot?.startTime ?? '',
-                                        endTime:
-                                            confirmData.slot?.endTime ?? '',
-                                        imageUrl: confirmData.session?.coach
-                                                ?.user?.photoUrl ??
-                                            AppImages.profileImageTwo,
-                                        onCancel: () {
-                                          _showCancelPopup(confirmData);
-                                          //bookingController.cancelBooking(confirmData.id!);
-                                        },
-                                      ),
-                                    );
-                                  },
+              child: Obx(
+                () => bookingController.isLoading.value
+                    ? const Center(child: CircularProgressIndicator())
+                    : TabBarView(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              children: [
+                                SearchFiled(
+                                  onChanged: (value) {},
                                 ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        SearchFiled(
-                          onChanged: (value) {},
-                        ),
-                        sh20,
-                        Obx(
-                          () => Expanded(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              primary: false,
-                              // padding: EdgeInsets.only(bottom: 116),
-                              itemCount: bookingController.waitListList.length,
-                              itemBuilder: (context, index) {
-                                var waitlistBooking =
-                                    bookingController.waitListList[index];
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                      bottom: index ==
-                                              bookingController
-                                                      .waitListList.length -
-                                                  1
-                                          ? 116
-                                          : 12),
-                                  child: BookingCardWaitlistWidget(
-                                    coachName: waitlistBooking
-                                            .session?.coach?.user?.name ??
-                                        "Unknown",
-                                    sessionTitle:
-                                        waitlistBooking.session?.name ??
-                                            "Unknown",
-                                    date: DateTimeFormationClass.formatDate(
-                                        waitlistBooking.createdAt),
-                                    imageUrl: waitlistBooking
-                                            .session?.coach?.user?.photoUrl ??
-                                        AppImages.profileImageTwo,
-                                    onCancel: () {
-                                      bookingController
-                                          .removeWaitlist(waitlistBooking.id!);
-                                      debugPrint(
-                                          '::::::::::::: ${waitlistBooking.id} :::::::::::');
-                                    },
-                                  ),
-                                );
-                              },
+                                sh20,
+                                Expanded(
+                                  child: bookingController
+                                          .confirmBooking.isEmpty
+                                      ? const Center(
+                                          child: Text("No confirmed bookings"))
+                                      : ListView.builder(
+                                          shrinkWrap: true,
+                                          primary: false,
+                                          itemCount: bookingController
+                                              .confirmBooking.length,
+                                          itemBuilder: (context, index) {
+                                            var confirmData = bookingController
+                                                .confirmBooking[index];
+                                            return Padding(
+                                              padding: EdgeInsets.only(
+                                                  bottom: index ==
+                                                          bookingController
+                                                                  .confirmBooking
+                                                                  .length -
+                                                              1
+                                                      ? 116
+                                                      : 8),
+                                              child: BookingCardConfirmWidget(
+                                                coachName: confirmData.session
+                                                        ?.coach?.user?.name ??
+                                                    "Unknown",
+                                                sessionTitle:
+                                                    confirmData.session?.name ??
+                                                        "Unknown",
+                                                date: DateTimeFormationClass
+                                                    .formatDate(confirmData
+                                                        .session?.startDate),
+                                                startTime: confirmData
+                                                        .slot?.startTime ??
+                                                    '',
+                                                endTime:
+                                                    confirmData.slot?.endTime ??
+                                                        '',
+                                                imageUrl: confirmData
+                                                        .session
+                                                        ?.coach
+                                                        ?.user
+                                                        ?.photoUrl ??
+                                                    AppImages.profileImageTwo,
+                                                onCancel: ()  {
+                                                  _showCancelPopup(confirmData);
+                                                   // bookingController
+                                                   //    .cancelBooking(
+                                                   //        confirmData.id!);
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                )
+                              ],
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              children: [
+                                SearchFiled(
+                                  onChanged: (value) {},
+                                ),
+                                sh20,
+                                Obx(
+                                  () => bookingController.waitListList.isEmpty
+                                      ? const Center(
+                                          child: Text("No waitlist bookings"))
+                                      : Expanded(
+                                          child: ListView.builder(
+                                            shrinkWrap: true,
+                                            primary: false,
+                                            // padding: EdgeInsets.only(bottom: 116),
+                                            itemCount: bookingController
+                                                .waitListList.length,
+                                            itemBuilder: (context, index) {
+                                              var waitlistBooking =
+                                                  bookingController
+                                                      .waitListList[index];
+                                              return Padding(
+                                                padding: EdgeInsets.only(
+                                                    bottom: index ==
+                                                            bookingController
+                                                                    .waitListList
+                                                                    .length -
+                                                                1
+                                                        ? 116
+                                                        : 12),
+                                                child:
+                                                    BookingCardWaitlistWidget(
+                                                  coachName: waitlistBooking
+                                                          .session
+                                                          ?.coach
+                                                          ?.user
+                                                          ?.name ??
+                                                      "Unknown",
+                                                  sessionTitle: waitlistBooking
+                                                          .session?.name ??
+                                                      "Unknown",
+                                                  date: DateTimeFormationClass
+                                                      .formatDate(
+                                                          waitlistBooking
+                                                              .createdAt),
+                                                  imageUrl: waitlistBooking
+                                                          .session
+                                                          ?.coach
+                                                          ?.user
+                                                          ?.photoUrl ??
+                                                      AppImages.profileImageTwo,
+                                                  onCancel: () {
+                                                    bookingController
+                                                        .removeWaitlist(
+                                                            waitlistBooking
+                                                                .id!);
+                                                    debugPrint(
+                                                        '::::::::::::: ${waitlistBooking.id} :::::::::::');
+                                                  },
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
               ),
             ),
           ],
@@ -194,7 +224,6 @@ class _BookingViewState extends State<BookingView> {
             children: [
               OutlinedButton(
                 onPressed: () {
-                  //bookingController.cancelBooking();
                   Get.back();
                   _showRefundPopup(confirmData);
                 },

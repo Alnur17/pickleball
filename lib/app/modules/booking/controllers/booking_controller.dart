@@ -65,7 +65,8 @@ class BookingController extends GetxController {
       );
 
       var responseBody = await BaseClient.handleResponse(response);
-      SinglePaymentDetailsModel singlePaymentDetailsModel = SinglePaymentDetailsModel.fromJson(responseBody);
+      SinglePaymentDetailsModel singlePaymentDetailsModel =
+          SinglePaymentDetailsModel.fromJson(responseBody);
       singlePaymentDetails.value = singlePaymentDetailsModel.data; // Update
       update();
     } catch (e) {
@@ -153,12 +154,9 @@ class BookingController extends GetxController {
 
         return endDate.isBefore(currentDate);
       }).toList();
-
       update();
-      isLoading(false);
     } catch (e) {
       debugPrint("Error fetching my booking: $e");
-      isLoading(false);
     } finally {
       isLoading(false);
     }
@@ -167,7 +165,6 @@ class BookingController extends GetxController {
   Future<bool> cancelBooking(String id) async {
     try {
       isLoading(true);
-
       var response = await BaseClient.patchRequest(
         api: Api.cancelBooking(id),
       );
@@ -178,17 +175,11 @@ class BookingController extends GetxController {
         debugPrint("Bookings cancel successfully: ${responseBody['message']}");
         String bookingId = LocalStorage.getData(key: AppConstant.bookingId);
         await getSinglePaymentByBookingId(bookingId);
-        print(singlePaymentDetails.value?.amount
-            .toString());
-        refundBooking(
-          paymentIntendId: singlePaymentDetails.value?.paymentIntentId
-              .toString() ??
-              '',
-          amount: singlePaymentDetails.value?.amount
-              .toString() ??
-              '',
+        await refundBooking(
+          paymentIntendId:
+              singlePaymentDetails.value?.paymentIntentId.toString() ?? '',
+          amount: singlePaymentDetails.value?.amount.toString() ?? '',
         );
-
         isLoading(false);
         return true;
       } else {
@@ -203,16 +194,12 @@ class BookingController extends GetxController {
     }
   }
 
-
-
-  Future<bool> refundBooking({required String paymentIntendId, required String amount}) async {
+  Future<bool> refundBooking(
+      {required String paymentIntendId, required String amount}) async {
     try {
       isLoading(true);
 
-      var body = {
-        "intendId": paymentIntendId,
-        "amount": amount
-      };
+      var body = {"intendId": paymentIntendId, "amount": amount};
 
       var response = await BaseClient.patchRequest(
         api: Api.refundPayment,

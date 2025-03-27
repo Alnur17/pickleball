@@ -33,22 +33,23 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         backgroundColor: AppColors.white,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Container(
-            margin: EdgeInsets.only(left: 20),
-            decoration: ShapeDecoration(
-              shape: CircleBorder(),
-              color: AppColors.silver,
-            ),
-            child: Image.asset(
-              AppImages.back,
-              scale: 4,
-            ),
-          ),
-        ),
+        automaticallyImplyLeading: false,
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Get.back();
+        //   },
+        //   child: Container(
+        //     margin: EdgeInsets.only(left: 20),
+        //     decoration: ShapeDecoration(
+        //       shape: CircleBorder(),
+        //       color: AppColors.silver,
+        //     ),
+        //     child: Image.asset(
+        //       AppImages.back,
+        //       scale: 4,
+        //     ),
+        //   ),
+        // ),
         title: Text('Payment Confirmation', style: appBarStyle),
       ),
       body: Center(

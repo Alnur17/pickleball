@@ -76,7 +76,7 @@ class PaymentController extends GetxController {
         LocalStorage.saveData(key: AppConstant.paymentId, data: paymentId);
         String id = LocalStorage.getData(key: AppConstant.paymentId);
         debugPrint('::::::::::::::::: $id :::::::::::::::::');
-        Get.to(() => PaymentConfirmationView());
+        Get.offAll(() => PaymentConfirmationView());
       } else {
         debugPrint("Error on Payment Result: $responseBody['message'] ");
       }
@@ -115,7 +115,6 @@ class PaymentController extends GetxController {
             PaymentDetailsModel.fromJson(responseBody);
         paymentDetailsData.value = paymentDetailsModel.data;
         debugPrint(':::::::::::::: $message ::::::::::::::::::');
-        debugPrint(':::::::::::::: $responseBody ::::::::::::::::::');
       }
       isLoading.value = false;
     } catch (e) {

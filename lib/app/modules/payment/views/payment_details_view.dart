@@ -159,6 +159,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pickleball/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:pickleball/app/modules/payment/controllers/payment_controller.dart';
 import 'package:pickleball/app/modules/payment/controllers/pdf_controller.dart';
 import 'package:pickleball/common/app_text_style/styles.dart';
@@ -177,7 +178,7 @@ class PaymentDetailsView extends StatefulWidget {
 }
 
 class _PaymentDetailsViewState extends State<PaymentDetailsView> {
-  final PaymentController paymentController = Get.find();
+  final PaymentController paymentController = Get.put(PaymentController());
   final PdfController pdfController = Get.put(PdfController());
 
   @override
@@ -195,22 +196,23 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         backgroundColor: AppColors.white,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Container(
-            margin: EdgeInsets.only(left: 20),
-            decoration: ShapeDecoration(
-              shape: CircleBorder(),
-              color: AppColors.silver,
-            ),
-            child: Image.asset(
-              AppImages.close,
-              scale: 4,
-            ),
-          ),
-        ),
+        automaticallyImplyLeading: false,
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Get.back();
+        //   },
+        //   child: Container(
+        //     margin: EdgeInsets.only(left: 20),
+        //     decoration: ShapeDecoration(
+        //       shape: CircleBorder(),
+        //       color: AppColors.silver,
+        //     ),
+        //     child: Image.asset(
+        //       AppImages.close,
+        //       scale: 4,
+        //     ),
+        //   ),
+        // ),
         title: Text(
           'Payment Details',
           style: appBarStyle,
@@ -331,7 +333,9 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
             sh10,
             CustomButton(
               text: 'Back to Homepage',
-              onPressed: () {},
+              onPressed: () {
+                Get.offAll(()=> DashboardView());
+              },
               textColor: AppColors.textColorBlue,
               imageAssetPath: AppImages.arrowLeft,
             ),

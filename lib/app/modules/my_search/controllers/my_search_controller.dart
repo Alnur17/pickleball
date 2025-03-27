@@ -22,7 +22,7 @@ class MySearchController extends GetxController {
   var singleBookingList = Rxn<Data>();
   var isLoading = true.obs;
   var selectedTimeSlotIndex = (-1).obs;
-  var bookingController = Get.find<BookingController>();
+  var bookingController = Get.put(BookingController());
 
 
   Future<void> fetchSessionsDetails(String id) async {
