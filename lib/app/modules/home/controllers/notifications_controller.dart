@@ -13,6 +13,12 @@ class NotificationsController extends GetxController {
   final isLoading = false.obs;
   final notificationList = <Datum>[].obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    getAllMyNotification();
+  }
+
   Future getAllMyNotification() async {
     try {
       isLoading(true);
@@ -29,7 +35,8 @@ class NotificationsController extends GetxController {
 
       if (responseBody['success'] = true) {
         String message = responseBody['message'].toString();
-        NotificationModel notificationModel = NotificationModel.fromJson(responseBody);
+        NotificationModel notificationModel =
+            NotificationModel.fromJson(responseBody);
         notificationList.value = notificationModel.data;
 
         kSnackBar(message: message, bgColor: AppColors.green);

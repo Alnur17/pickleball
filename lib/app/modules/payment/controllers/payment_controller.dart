@@ -141,7 +141,7 @@ class PaymentController extends GetxController {
 
       if (responseBody['success'] == true) {
         debugPrint("Waitlist remove successfully: ${responseBody['message']}");
-        await bookingController.fetchWaitlist();
+        await bookingController.fetchWaitlist('');
       }
     } catch (e) {
       debugPrint("Error remove waitlist: $e");

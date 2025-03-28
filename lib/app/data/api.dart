@@ -32,21 +32,26 @@ class Api {
   static getSingleTrainer(String id) => "$baseUrl/trainers/$id"; //done
 
   ///showBookMarked
-  static const myBookings = "$baseUrl/bookings/my-bookings"; //done
+  static myBookings(String? query) => query?.isNotEmpty ?? false
+      ? "$baseUrl/bookings/my-bookings?searchTerm=$query"
+      : "$baseUrl/bookings/my-bookings"; //done
 
   static const addBookings = "$baseUrl/bookings"; // done
 
-  static  getSingleBookingById(String id) => "$baseUrl/bookings/$id"; // done
+  static getSingleBookingById(String id) => "$baseUrl/bookings/$id"; // done
 
-  static  cancelBooking(String id) => "$baseUrl/bookings/canceled/$id"; // done
+  static cancelBooking(String id) => "$baseUrl/bookings/canceled/$id"; // done
 
   /// WaitList
   static const addMyWaitlist = "$baseUrl/waitLists"; // done
 
-  static const getMyWaitlist = "$baseUrl/waitLists/my-waitlist"; //done
+  static getMyWaitlist(String? query) => query?.isNotEmpty ?? false
+      ? "$baseUrl/waitLists/my-waitlist?searchTerm=$query"
+      : "$baseUrl/waitLists/my-waitlist"; //done
 
   static removeWaitlist(String id) => "$baseUrl/waitLists/$id"; //done
-  static removeWaitlistBySessionId(String sessionId) => "$baseUrl/waitLists/session/$sessionId"; //done
+  static removeWaitlistBySessionId(String sessionId) =>
+      "$baseUrl/waitLists/session/$sessionId"; //done
 
   /// All slot
   static timeSlot(String id) => "$baseUrl/session-slots/session/$id"; // done
@@ -65,9 +70,12 @@ class Api {
 
   static String paymentDetails(String id) => "$baseUrl/payments/$id"; //done
 
-  static  String singlePaymentByBookingId(String id) => "$baseUrl/payments/reference/$id"; //done
+  static String singlePaymentByBookingId(String id) =>
+      "$baseUrl/payments/reference/$id"; //done
 
-  static const String refundPayment = "$baseUrl/payments/refound-payment"; //done
+  static const String refundPayment =
+      "$baseUrl/payments/refound-payment"; //done
 
-  static const String notifications = "$baseUrl/notification"; //
+  static const String notifications =
+      "$baseUrl/notification/my-notification"; //
 }

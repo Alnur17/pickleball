@@ -156,7 +156,7 @@ class MySearchController extends GetxController {
         debugPrint("Waitlist created successfully: ${responseBody['message']}");
         kSnackBar(message: "${responseBody['message']}", bgColor: AppColors.green);
         // Optionally, refresh the waitlist after creating
-        await bookingController.fetchWaitlist();
+        await bookingController.fetchWaitlist('');
         return true;
       } else {
         debugPrint("Failed to create waitlist: ${responseBody['message']}");

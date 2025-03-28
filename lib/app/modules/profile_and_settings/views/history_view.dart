@@ -148,7 +148,6 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pickleball/common/app_text_style/styles.dart';
@@ -170,12 +169,6 @@ class HistoryView extends StatefulWidget {
 
 class _HistoryViewState extends State<HistoryView> {
   final BookingController bookingController = Get.put(BookingController());
-
-  @override
-  void initState() {
-    super.initState();
-    bookingController.fetchAllBooking();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -203,113 +196,155 @@ class _HistoryViewState extends State<HistoryView> {
             ),
           ),
         ),
-        body: Obx(
-              () => bookingController.isLoading.value
-              ? const Center(child: CircularProgressIndicator())
-              : Column(
-            children: [
-              TabBar(
-                tabs: const [
-                  Tab(text: 'Completed'),
-                  Tab(text: 'Upcoming'),
+        body:
+            // Obx(
+            //       () => bookingController.isLoading.value
+            //       ? const Center(child: CircularProgressIndicator())
+            //       :
+            Column(
+          children: [
+            TabBar(
+              tabs: const [
+                Tab(text: 'Completed'),
+                Tab(text: 'Upcoming'),
+              ],
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorColor: Colors.lightGreen,
+              labelColor: Colors.lightGreen,
+              unselectedLabelColor: AppColors.black,
+              dividerColor: AppColors.transparent,
+              padding: const EdgeInsets.symmetric(horizontal: 45),
+            ),
+            sh16,
+            Expanded(
+              child: TabBarView(
+                children: [
+                  // Completed Tab
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        SearchFiled(
+                          onChanged: (value) {
+                            if (value.isEmpty) {
+                              bookingController.fetchAllBooking(null);
+                            } else {
+                              bookingController
+                                  .onSearchQueryChangedAllMyBooking(value);
+                            }
+                          },
+                        ),
+                        sh20,
+                        Expanded(
+                          child: Obx(
+                            () => bookingController.completedBookings.isEmpty
+                                ? const Center(
+                                    child: Text("No completed bookings"))
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    primary: false,
+                                    itemCount: bookingController
+                                        .completedBookings.length,
+                                    itemBuilder: (context, index) {
+                                      final booking = bookingController
+                                          .completedBookings[index];
+                                      return BookingCompletedHistoryCard(
+                                        coachName: booking
+                                                .session?.coach?.user?.name ??
+                                            "Unknown",
+                                        sessionTitle:
+                                            booking.session?.name ?? "Unknown",
+                                        date: DateTimeFormationClass.formatDate(
+                                            booking.session?.startDate),
+                                        amountPaid: booking.amount.toString(),
+                                        startTime:
+                                            booking.slot?.startTime ?? '',
+                                        endTime: booking.slot?.endTime ?? '',
+                                        imageUrl: booking.session?.coach?.user
+                                                ?.photoUrl ??
+                                            AppImages.profileImageTwo,
+                                        status: booking.status,
+                                        // onRebook: () => print("Rebook Pressed"),
+                                        // onLeaveReview: booking.status == "Complete"
+                                        //     ? () => Get.to(() => WriteReviewView())
+                                        //     : null,
+                                        // onViewRefund:
+                                        //     booking.status == "Canceled"
+                                        //         ? () => debugPrint(
+                                        //             "View Refund Pressed")
+                                        //         : null,
+                                      );
+                                    },
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Upcoming Tab
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        SearchFiled(
+                          onChanged: (value) {
+                            if (value.isEmpty) {
+                              bookingController.fetchAllBooking(null);
+                            } else {
+                              bookingController
+                                  .onSearchQueryChangedAllMyBooking(value);
+                            }
+                          },
+                        ),
+                        sh20,
+                        Expanded(
+                          child: Obx(
+                            () => bookingController.upcomingBookings.isEmpty
+                                ? const Center(
+                                    child: Text("No upcoming bookings"))
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    primary: false,
+                                    itemCount: bookingController
+                                        .upcomingBookings.length,
+                                    itemBuilder: (context, index) {
+                                      final booking = bookingController
+                                          .upcomingBookings[index];
+                                      return BookingUpcomingHistoryCard(
+                                        coachName: booking
+                                                .session?.coach?.user?.name ??
+                                            "Unknown",
+                                        sessionTitle:
+                                            booking.session?.name ?? "Unknown",
+                                        date: DateTimeFormationClass.formatDate(
+                                            booking.session?.startDate),
+                                        amountPaid: booking.amount.toString(),
+                                        startTime:
+                                            booking.slot?.startTime ?? '',
+                                        endTime: booking.slot?.endTime ?? '',
+                                        imageUrl: booking.session?.coach?.user
+                                                ?.photoUrl ??
+                                            AppImages.profileImageTwo,
+                                        onCancel: () {
+                                          _showCancelPopup(booking);
+                                        },
+                                      );
+                                    },
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicatorColor: Colors.lightGreen,
-                labelColor: Colors.lightGreen,
-                unselectedLabelColor: AppColors.black,
-                dividerColor: AppColors.transparent,
-                padding: const EdgeInsets.symmetric(horizontal: 45),
               ),
-              sh16,
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    // Completed Tab
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        children: [
-                          SearchFiled(
-                            onChanged: (value) {},
-                          ),
-                          sh20,
-                          Expanded(
-                            child: bookingController.completedBookings.isEmpty
-                                ? const Center(child: Text("No completed bookings"))
-                                : ListView.builder(
-                              shrinkWrap: true,
-                              primary: false,
-                              itemCount: bookingController.completedBookings.length,
-                              itemBuilder: (context, index) {
-                                final booking = bookingController.completedBookings[index];
-                                return BookingCompletedHistoryCard(
-                                  coachName: booking.session?.coach?.user?.name ?? "Unknown",
-                                  sessionTitle: booking.session?.name ?? "Unknown",
-                                  date: DateTimeFormationClass.formatDate(booking.session?.startDate),
-                                  amountPaid: booking.amount.toString(),
-                                  startTime: booking.slot?.startTime ?? '',
-                                  endTime: booking.slot?.endTime ?? '',
-                                  imageUrl: booking.session?.coach?.user?.photoUrl ?? AppImages.profileImageTwo,
-                                  status: booking.status,
-                                  // onRebook: () => print("Rebook Pressed"),
-                                  // onLeaveReview: booking.status == "Complete"
-                                  //     ? () => Get.to(() => WriteReviewView())
-                                  //     : null,
-                                  onViewRefund: booking.status == "Canceled"
-                                      ? () => debugPrint("View Refund Pressed")
-                                      : null,
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    // Upcoming Tab
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        children: [
-                          SearchFiled(
-                            onChanged: (value) {},
-                          ),
-                          sh20,
-                          Expanded(
-                            child: bookingController.upcomingBookings.isEmpty
-                                ? const Center(child: Text("No upcoming bookings"))
-                                : ListView.builder(
-                              shrinkWrap: true,
-                              primary: false,
-                              itemCount: bookingController.upcomingBookings.length,
-                              itemBuilder: (context, index) {
-                                final booking = bookingController.upcomingBookings[index];
-                                return BookingUpcomingHistoryCard(
-                                  coachName: booking.session?.coach?.user?.name ?? "Unknown",
-                                  sessionTitle: booking.session?.name ?? "Unknown",
-                                  date: DateTimeFormationClass.formatDate(booking.session?.startDate),
-                                  amountPaid: booking.amount.toString(),
-                                  startTime: booking.slot?.startTime ?? '',
-                                  endTime: booking.slot?.endTime ?? '',
-                                  imageUrl: booking.session?.coach?.user?.photoUrl ?? AppImages.profileImageTwo,
-                                  onCancel: (){
-                                    _showCancelPopup(booking);
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
+
   void _showCancelPopup(dynamic booking) {
     Get.dialog(
       AlertDialog(
@@ -359,7 +394,7 @@ class _HistoryViewState extends State<HistoryView> {
     );
   }
 
-  void _showRefundPopup(dynamic confirmData) {
+  void _showRefundPopup(dynamic booking) {
     Get.dialog(
       barrierDismissible: false,
       PopScope(
@@ -367,15 +402,15 @@ class _HistoryViewState extends State<HistoryView> {
         child: AlertDialog(
           backgroundColor: AppColors.white,
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title:
-          Text('Click to refund', style: h3, textAlign: TextAlign.center),
+              Text('Click to refund', style: h3, textAlign: TextAlign.center),
           actionsAlignment: MainAxisAlignment.center,
           actions: [
             OutlinedButton(
               onPressed: () {
                 Get.back();
-                bookingController.cancelBooking(confirmData.id!);
+                bookingController.cancelBooking(booking.id!);
               },
               style: OutlinedButton.styleFrom(
                 backgroundColor: AppColors.red,

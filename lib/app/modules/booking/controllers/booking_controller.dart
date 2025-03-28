@@ -19,13 +19,22 @@ class BookingController extends GetxController {
   var confirmBooking = <Datum>[].obs;
   var upcomingBookings = <Datum>[].obs;
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   fetchWaitlist();
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    fetchWaitlist(null);
+  }
 
-  Future<void> fetchWaitlist() async {
+
+  void onSearchQueryChangedWaitlist(String waitlistQuery) {
+    fetchWaitlist(waitlistQuery);
+  }
+
+  void onSearchQueryChangedAllMyBooking(String bookingQuery) {
+    fetchAllBooking(bookingQuery);
+  }
+
+  Future<void> fetchWaitlist(String? waitlistQuery) async {
     try {
       isLoading(true);
       String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
@@ -35,7 +44,7 @@ class BookingController extends GetxController {
       };
 
       var response = await BaseClient.getRequest(
-        api: Api.getMyWaitlist,
+        api: Api.getMyWaitlist(waitlistQuery ?? ''),
         headers: headers,
       );
 
@@ -88,7 +97,7 @@ class BookingController extends GetxController {
 
       if (responseBody['success'] == true) {
         debugPrint("Waitlist remove successfully: ${responseBody['message']}");
-        await fetchWaitlist();
+        await fetchWaitlist('');
       } else {
         debugPrint("Failed to remove waitlist: ${responseBody['message']}");
       }
@@ -100,7 +109,7 @@ class BookingController extends GetxController {
   }
 
   ///
-  Future<void> fetchAllBooking() async {
+  Future<void> fetchAllBooking(String? bookingQuery) async {
     try {
       isLoading(true);
       String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
@@ -110,7 +119,7 @@ class BookingController extends GetxController {
       };
 
       var response = await BaseClient.getRequest(
-        api: Api.myBookings,
+        api: Api.myBookings(bookingQuery ?? ''),
         headers: headers,
       );
 
@@ -210,7 +219,7 @@ class BookingController extends GetxController {
 
       if (responseBody['success'] == true) {
         debugPrint("Refund successfully: ${responseBody['message']}");
-        await fetchAllBooking();
+        await fetchAllBooking('');
         return true;
       } else {
         debugPrint("Failed to Refund: ${responseBody['message']}");

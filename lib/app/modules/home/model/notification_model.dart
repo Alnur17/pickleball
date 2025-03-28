@@ -26,6 +26,7 @@ class Datum {
   Datum({
     required this.id,
     required this.receiver,
+    required this.reference,
     required this.modelType,
     required this.message,
     required this.description,
@@ -33,11 +34,11 @@ class Datum {
     required this.isDeleted,
     required this.createdAt,
     required this.updatedAt,
-    required this.reference,
   });
 
   final String? id;
   final String? receiver;
+  final String? reference;
   final String? modelType;
   final String? message;
   final String? description;
@@ -45,12 +46,12 @@ class Datum {
   final bool? isDeleted;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final String? reference;
 
   factory Datum.fromJson(Map<String, dynamic> json){
     return Datum(
       id: json["_id"],
       receiver: json["receiver"],
+      reference: json["reference"],
       modelType: json["model_type"],
       message: json["message"],
       description: json["description"],
@@ -58,7 +59,6 @@ class Datum {
       isDeleted: json["isDeleted"],
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
-      reference: json["reference"],
     );
   }
 
