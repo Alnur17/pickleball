@@ -1,5 +1,6 @@
 
 import 'package:get/get.dart';
+import 'package:pickleball/app/data/api.dart';
 import 'package:pickleball/common/app_constant/app_constant.dart';
 import 'package:pickleball/common/helper_widget/local_store.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -13,7 +14,7 @@ class SocketService extends GetxService {
 
 
     socket = IO.io(
-      'http://192.168.10.144:4000',
+      Api.socket,
       IO.OptionBuilder()
           .setTransports(['websocket'])
           .disableAutoConnect()

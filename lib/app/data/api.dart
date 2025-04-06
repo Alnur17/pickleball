@@ -1,7 +1,8 @@
 class Api {
   /// base url
 
-  static const baseUrl = "http://192.168.10.144:5000/api/v1";
+  static const baseUrl = "http://159.223.184.53:5011/api/v1";
+  static const socket = "http://159.223.184.53:4002";
 
   ///auth
   static const register = "$baseUrl/users/register"; //done
@@ -18,6 +19,9 @@ class Api {
       : "$baseUrl/sessions"; // If query is null or empty, omit searchTerm //done
 
   ///Trainers Data
+  ///
+  ///
+  ///
   static trainers(String? query) {
     // Add the searchTerm parameter only if the query is not null or empty
     return query?.isNotEmpty ?? false
