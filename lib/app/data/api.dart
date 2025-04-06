@@ -19,9 +19,6 @@ class Api {
       : "$baseUrl/sessions"; // If query is null or empty, omit searchTerm //done
 
   ///Trainers Data
-  ///
-  ///
-  ///
   static trainers(String? query) {
     // Add the searchTerm parameter only if the query is not null or empty
     return query?.isNotEmpty ?? false
