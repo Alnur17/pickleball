@@ -28,6 +28,7 @@ class VerifyYourEmailView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       backgroundColor: AppColors.mainColor,
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
@@ -98,7 +99,7 @@ class VerifyYourEmailView extends GetView {
               () => signupController.isLoading.value == true
                   ? CustomLoader(color: AppColors.white)
                   : CustomButton(
-                      text: 'Verify',
+                      text: 'Verify Email',
                       onPressed: () {
                         signupController.emailVerify(otp: otpTEController.text);
                       },

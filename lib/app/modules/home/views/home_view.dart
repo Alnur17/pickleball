@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:pickleball/app/modules/home/views/notification_view.dart';
+import 'package:pickleball/app/modules/home/views/credit_pack_view.dart';
 import 'package:pickleball/app/modules/my_search/views/my_search_view.dart';
 import 'package:pickleball/app/modules/my_search/views/trainer_profile_view.dart';
 import 'package:pickleball/app/modules/profile_and_settings/controllers/profile_and_settings_controller.dart';
@@ -66,21 +67,29 @@ class HomeView extends GetView<HomeController> {
         ),
         automaticallyImplyLeading: false,
         actions: [
-          // GestureDetector(
-          //   onTap: () {
-          //     Get.to(()=> SubscriptionView());
-          //   },
-          //   child: Image.asset(
-          //     AppImages.subscriptionButton,
-          //     scale: 4,
-          //   ),
-          // ),
+          GestureDetector(
+            onTap: () {
+              Get.to(()=> CreditPackView());
+            },
+            child: Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppColors.textColorBlue,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: AppColors.orangeLight),
+              ),
+              child: Text(
+                '⭐ 120 Credits',
+                style: h3.copyWith(color: AppColors.white),
+              ),
+            ),
+          ),
           GestureDetector(
             onTap: () {
               Get.to(() => NotificationView());
             },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.only(right: 20,left: 4),
               child: Image.asset(
                 AppImages.notification,
                 scale: 4,
@@ -174,7 +183,9 @@ class HomeView extends GetView<HomeController> {
               var session = homeController.courseSessions[index];
               return Padding(
                 padding: EdgeInsets.only(
-                  left: index == homeController.courseSessions.length*0 ? 20 : 0,
+                  left: index == homeController.courseSessions.length * 0
+                      ? 20
+                      : 0,
                   right: index == homeController.courseSessions.length - 1
                       ? 20
                       : 12,
@@ -183,7 +194,8 @@ class HomeView extends GetView<HomeController> {
                   backgroundImage: session.thumbnail,
                   title: session.name ?? "No title",
                   description: session.description ?? "No description",
-                  startDate: DateTimeFormationClass.formatDate(session.startDate),
+                  startDate:
+                      DateTimeFormationClass.formatDate(session.startDate),
                   duration: session.duration.toString(),
                   // startTime: session.startTime ?? "No start time",
                   // endTime: session.endTime ?? "No end time",
@@ -191,7 +203,9 @@ class HomeView extends GetView<HomeController> {
                   skillLevel: session.skillLevel ?? "No skill level",
                   price: session.price ?? 0,
                   onViewDetails: () {
-                    Get.to(() => SessionDetailsView(id: session.id,));
+                    Get.to(() => SessionDetailsView(
+                          id: session.id,
+                        ));
                   },
                 ),
               );
@@ -201,8 +215,6 @@ class HomeView extends GetView<HomeController> {
       ],
     );
   }
-
-
 
   Widget _buildExpertSection() {
     return Column(
@@ -231,7 +243,9 @@ class HomeView extends GetView<HomeController> {
               var trainer = homeController.trainerList[index];
               return Padding(
                 padding: EdgeInsets.only(
-                  left: index == homeController.courseSessions.length * 0 ? 20 : 0,
+                  left: index == homeController.courseSessions.length * 0
+                      ? 20
+                      : 0,
                   right:
                       index == homeController.trainerList.length - 1 ? 20 : 12,
                 ),
@@ -243,7 +257,9 @@ class HomeView extends GetView<HomeController> {
                   profileImage:
                       trainer.user?.photoUrl ?? AppImages.profileImageTwo,
                   onTap: () {
-                    Get.to(() => TrainerProfileView(id: trainer.id,));
+                    Get.to(() => TrainerProfileView(
+                          id: trainer.id,
+                        ));
                   },
                 ),
               );

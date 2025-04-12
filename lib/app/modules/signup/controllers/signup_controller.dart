@@ -15,6 +15,7 @@ import '../views/verify_your_email_view.dart';
 class SignupController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController contactNumberController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -25,6 +26,7 @@ class SignupController extends GetxController {
     super.onClose();
     nameController.dispose();
     contactNumberController.dispose();
+    addressController.dispose();
     emailController.dispose();
     passwordController.dispose();
   }
@@ -39,6 +41,7 @@ class SignupController extends GetxController {
       'email': emailController.text,
       'password': passwordController.text,
       'contactNumber': contactNumberController.text,
+      'address': addressController.text,
     });
 
     try {

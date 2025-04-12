@@ -63,17 +63,17 @@ class _SignupViewState extends State<SignupView> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Full Name', style: h4),
+                  Text('Name', style: h4),
                   sh8,
                   CustomTextField(
-                    hintText: 'Enter your full name',
+                    hintText: 'Enter your name',
                     controller: signupController.nameController,
                   ),
                   sh12,
                   Text('Mobile Number', style: h4),
                   sh8,
                   CustomTextField(
-                    hintText: 'Your mobile number',
+                    hintText: 'Enter your number',
                     controller: signupController.contactNumberController,
                   ),
                   sh12,
@@ -84,7 +84,14 @@ class _SignupViewState extends State<SignupView> {
                     controller: signupController.emailController,
                   ),
                   sh12,
-                  Text('Create a Password', style: h4),
+                  Text('Address', style: h4),
+                  sh8,
+                  CustomTextField(
+                    hintText: 'Enter your address here..',
+                    controller: signupController.addressController,
+                  ),
+                  sh12,
+                  Text('Create Password', style: h4),
                   sh8,
                   CustomTextField(
                     sufIcon: Image.asset(

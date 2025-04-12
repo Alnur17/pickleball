@@ -1,7 +1,7 @@
 class Api {
   /// base url
 
-  static const baseUrl = "http://159.223.184.53:5011/api/v1";
+  static const baseUrl = "http://192.168.10.144:5007/api/v1";
   static const socket = "http://159.223.184.53:4002";
 
   ///auth
@@ -76,6 +76,8 @@ class Api {
 
   static const String refundPayment =
       "$baseUrl/payments/refound-payment"; //done
+
+  static const String creditPackages = "$baseUrl/packages"; //
 
   static const String notifications =
       "$baseUrl/notification/my-notification"; //
