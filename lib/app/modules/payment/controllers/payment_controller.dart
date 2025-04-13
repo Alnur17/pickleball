@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:pickleball/app/modules/booking/controllers/booking_controller.dart';
 import 'package:pickleball/app/modules/my_search/controllers/my_search_controller.dart';
 import 'package:pickleball/app/modules/payment/model/payment_details_model.dart';
 import 'package:pickleball/app/modules/payment/views/payment_confirmation_view.dart';
+import 'package:pickleball/app/modules/profile_and_settings/controllers/profile_and_settings_controller.dart';
 
 import '../../../../common/app_color/app_colors.dart';
 import '../../../../common/app_constant/app_constant.dart';
@@ -20,6 +20,8 @@ class PaymentController extends GetxController {
   var isLoading = false.obs;
   var paymentDetailsData = Rxn<Data>();
 
+  final profileAndSettingsController = Get.put(ProfileAndSettingsController());
+
   final MySearchController mySearchController = Get.put(MySearchController());
   final BookingController bookingController = Get.put(BookingController());
 
@@ -30,16 +32,17 @@ class PaymentController extends GetxController {
 
     String token = LocalStorage.getData(key: AppConstant.accessToken);
 
-    var decodedToken = JwtDecoder.decode(token);
-
-    String? id = decodedToken['_id']?.toString();
+    // var decodedToken = JwtDecoder.decode(token);
+    //
+    // String? id = decodedToken['_id']?.toString();
+     String? id = profileAndSettingsController.myProfileData.value?.id ?? '';
 
     var headers = {
       'Authorization': token,
       'Content-Type': 'application/json',
     };
 
-    var map = {"modelType": "Booking", "account": id, "reference": reference};
+    var map = {"modelType": "Subscription", "account": id, "reference": reference};
 
     dynamic responseBody = await BaseClient.handleResponse(
       await BaseClient.postRequest(
@@ -60,8 +63,6 @@ class PaymentController extends GetxController {
   Future<void> paymentResults({required String paymentLink}) async {
     try {
       isLoading.value = true;
-
-      debugPrint("Fetching Profile Data...");
 
       var headers = {
         'Content-Type': "application/json",

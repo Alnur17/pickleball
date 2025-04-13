@@ -42,7 +42,7 @@ class Data {
   final Account? account;
   final Reference? reference;
   final String? transactionId;
-  final int? amount;
+  final double? amount;
   final String? status;
   final String? paymentIntentId;
   final bool? isPaid;
@@ -58,7 +58,7 @@ class Data {
       modelType: json["modelType"],
       account: json["account"] == null ? null : Account.fromJson(json["account"]),
       reference: json["reference"] == null ? null : Reference.fromJson(json["reference"]),
-      transactionId: json["transaction_id"],
+      transactionId: json["transactionId"],
       amount: json["amount"],
       status: json["status"],
       paymentIntentId: json["paymentIntentId"],
@@ -87,7 +87,7 @@ class Account {
   final String? name;
   final String? email;
   final String? contactNumber;
-  final String? photoUrl;
+  final dynamic photoUrl;
   final dynamic age;
 
   factory Account.fromJson(Map<String, dynamic> json){

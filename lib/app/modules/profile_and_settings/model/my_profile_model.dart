@@ -1,20 +1,17 @@
 class MyProfileModel {
   MyProfileModel({
     required this.success,
-    required this.statusCode,
     required this.message,
     required this.data,
   });
 
   final bool? success;
-  final int? statusCode;
   final String? message;
   final Data? data;
 
   factory MyProfileModel.fromJson(Map<String, dynamic> json){
     return MyProfileModel(
       success: json["success"],
-      statusCode: json["statusCode"],
       message: json["message"],
       data: json["data"] == null ? null : Data.fromJson(json["data"]),
     );
@@ -30,6 +27,7 @@ class Data {
     required this.contactNumber,
     required this.photoUrl,
     required this.age,
+    required this.credits,
     required this.status,
     required this.dataId,
     required this.createdAt,
@@ -42,6 +40,7 @@ class Data {
   final String? contactNumber;
   final dynamic photoUrl;
   final dynamic age;
+  final int? credits;
   final String? status;
   final String? dataId;
   final DateTime? createdAt;
@@ -55,6 +54,7 @@ class Data {
       contactNumber: json["contactNumber"],
       photoUrl: json["photoUrl"],
       age: json["age"],
+      credits: json["credits"],
       status: json["status"],
       dataId: json["id"],
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),

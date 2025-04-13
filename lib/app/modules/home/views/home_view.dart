@@ -56,10 +56,23 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
                 sw12,
-                Text(
-                  profileAndSettingsController.myProfileData.value?.name ??
-                      'Unknown',
-                  style: appBarStyle,
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => CreditPackView());
+                  },
+                  child: Container(
+                    height: 42,
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: AppColors.textColorBlue,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.orangeLight),
+                    ),
+                    child: Text(
+                      'Balance: ⭐ ${profileAndSettingsController.myProfileData.value?.credits.toString() ?? ''} Credits',
+                      style: h3.copyWith(color: AppColors.white),
+                    ),
+                  ),
                 ),
               ],
             );
@@ -69,27 +82,10 @@ class HomeView extends GetView<HomeController> {
         actions: [
           GestureDetector(
             onTap: () {
-              Get.to(()=> CreditPackView());
-            },
-            child: Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: AppColors.textColorBlue,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.orangeLight),
-              ),
-              child: Text(
-                '⭐ 120 Credits',
-                style: h3.copyWith(color: AppColors.white),
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
               Get.to(() => NotificationView());
             },
             child: Padding(
-              padding: const EdgeInsets.only(right: 20,left: 4),
+              padding: const EdgeInsets.only(right: 20, left: 4),
               child: Image.asset(
                 AppImages.notification,
                 scale: 4,

@@ -15,6 +15,7 @@ import '../../../../common/app_images/app_images.dart';
 import '../../../../common/helper_widget/local_store.dart';
 import '../../../../common/size_box/custom_sizebox.dart';
 import '../../../../common/widgets/custom_list_tile.dart';
+import '../../home/views/credit_pack_view.dart';
 import '../controllers/profile_and_settings_controller.dart';
 import 'edit_profile_view.dart';
 
@@ -73,6 +74,37 @@ class ProfileAndSettingsView extends GetView<ProfileAndSettingsController> {
                 style: h2.copyWith(fontSize: 20),
               ),
             ),
+            sh12,
+            GestureDetector(
+                onTap: () {
+                  Get.to(() => CreditPackView());
+                },
+                child: Container(
+                  height: 48,
+                  width: 200,
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColors.textColorBlue,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppColors.orangeLight),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Buy more credits',
+                        style: h4.copyWith(color: AppColors.white),
+                      ),
+                      sw5,
+                      Image.asset(
+                        AppImages.arrowRight,
+                        scale: 4,
+                        color: AppColors.white,
+                      )
+                    ],
+                  ),
+                ),
+              ),
             sh12,
             CustomListTile(
               onTap: () {

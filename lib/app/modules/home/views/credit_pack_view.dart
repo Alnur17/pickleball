@@ -8,7 +8,7 @@ import '../../../../common/app_images/app_images.dart';
 import '../../../../common/widgets/custom_button.dart';
 import '../controllers/credit_pack_controller.dart';
 
-class CreditPackView extends StatefulWidget { // Changed to StatelessWidget
+class CreditPackView extends StatefulWidget {
   const CreditPackView({super.key});
 
   @override
@@ -16,12 +16,11 @@ class CreditPackView extends StatefulWidget { // Changed to StatelessWidget
 }
 
 class _CreditPackViewState extends State<CreditPackView> {
-  final CreditPackController creditPackController = Get.put(CreditPackController());
+  final CreditPackController creditPackController =
+  Get.put(CreditPackController());
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -37,47 +36,57 @@ class _CreditPackViewState extends State<CreditPackView> {
         ),
         scrolledUnderElevation: 0,
       ),
-      body: Obx(() =>
-      Padding(
+      body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
             sh40,
-            if (creditPackController.isLoading.value)
-              const Expanded(
-                child: Center(child: CircularProgressIndicator()),
-              )
-            else if (creditPackController.creditList.isEmpty)
-              const Expanded(
-                child: Center(child: Text('No credit packs available')),
-              )
-            else
-              Expanded(
-                child: ListView.builder(
-                  itemCount: creditPackController.creditList.length,
-                  itemBuilder: (context, index) {
-                    final pack = creditPackController.creditList[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: CustomCreditWidget(
-                        credits: pack.credits ?? 0,
-                        price: pack.price ?? 0.0,
-                        isSelected: creditPackController.selectedIndex.value == index,
-                        onTap: () => creditPackController.selectItem(index),
-                      ),
+            Expanded(
+              child: Obx(
+                    () {
+                  if (creditPackController.isLoading.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (creditPackController.creditList.isEmpty) {
+                    return const Center(child: Text('No credit packs available'));
+                  } else {
+                    return ListView.builder(
+                      key: ValueKey(creditPackController.selectedIndex.value),
+                      itemCount: creditPackController.creditList.length,
+                      itemBuilder: (context, index) {
+                        final pack = creditPackController.creditList[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: CustomCreditWidget(
+                            credits: pack.credits ?? 0,
+                            price: pack.price ?? 0.0,
+                            isSelected: creditPackController.selectedIndex.value == index,
+                            onTap: () => creditPackController.selectItem(index),
+                          ),
+                        );
+                      },
                     );
-                  },
-                ),
+                  }
+                },
               ),
+            ),
             CustomButton(
               text: 'Buy Now',
-              onPressed:(){},
+              onPressed: () {
+                if (creditPackController.creditList.isNotEmpty &&
+                    creditPackController.selectedIndex.value >= 0) {
+                  String packageId = creditPackController.creditList[
+                  creditPackController.selectedIndex.value].id!;
+                  debugPrint(':;;;;;;;;;;;packageID : $packageId :::::::::::::');
+                  creditPackController.createSubscription(packageId: packageId);
+                } else {
+                  Get.snackbar('Error', 'Please select a credit pack to purchase');
+                }
+              },
               gradientColors: AppColors.gradientColor,
             ),
             sh16,
           ],
         ),
-      ),
       ),
     );
   }

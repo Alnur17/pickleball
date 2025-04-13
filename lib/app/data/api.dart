@@ -64,21 +64,22 @@ class Api {
 
   static const String conditionsPage = "$baseUrl/settings"; //done
 
-  // static String confirmPayment(String sessionsId, String paymentId) =>
-  //     "$baseUrl/payments/confirm-payment?sessionId=$sessionsId&paymentId=$paymentId"; //done
+  static String confirmPayment(String sessionsId, String paymentId) =>
+      "$baseUrl/payments/confirm-payment?sessionId=$sessionsId&paymentId=$paymentId"; //done
 
   static const String createPayment = "$baseUrl/payments/checkout"; //done
 
   static String paymentDetails(String id) => "$baseUrl/payments/$id"; //done
 
-  static String singlePaymentByBookingId(String id) =>
-      "$baseUrl/payments/reference/$id"; //done
+  static String singlePaymentByBookingId(String id) => "$baseUrl/payments/reference/$id"; //done
 
   static const String refundPayment =
       "$baseUrl/payments/refound-payment"; //done
 
-  static const String creditPackages = "$baseUrl/packages"; //
+  static const String creditPackages = "$baseUrl/packages"; //done
+
+  static const  String createSubscription = "$baseUrl/subscriptions"; //done
 
   static const String notifications =
-      "$baseUrl/notification/my-notification"; //
+      "$baseUrl/notification/my-notification"; //done
 }
