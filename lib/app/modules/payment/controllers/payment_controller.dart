@@ -118,36 +118,10 @@ class PaymentController extends GetxController {
             PaymentDetailsModel.fromJson(responseBody);
         paymentDetailsData.value = paymentDetailsModel.data;
         debugPrint(':::::::::::::: $message ::::::::::::::::::');
-
-        String sessionId = LocalStorage.getData(key: AppConstant.sessionId);
-        debugPrint(':::::::: $sessionId ::::::::');
-
-        await cancelWaitlistBySessionId(sessionId);
       }
       isLoading.value = false;
     } catch (e) {
       //Get.snackbar("Error", "Failed to create payment session $e");
-    }
-  }
-
-
-  Future<void>cancelWaitlistBySessionId(String id) async {
-    try {
-      isLoading(true);
-      var response = await BaseClient.deleteRequest(
-        api: Api.removeWaitlistBySessionId(id),
-      );
-
-      var responseBody = await BaseClient.handleResponse(response);
-
-      if (responseBody['success'] == true) {
-        debugPrint("Waitlist remove successfully: ${responseBody['message']}");
-        await bookingController.fetchWaitlist('');
-      }
-    } catch (e) {
-      debugPrint("Error remove waitlist: $e");
-    } finally {
-      isLoading(false);
     }
   }
 

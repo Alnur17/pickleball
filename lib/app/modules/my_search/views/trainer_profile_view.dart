@@ -68,13 +68,13 @@ class _TrainerProfileViewState extends State<TrainerProfileView> {
         sh10,
         CircleAvatar(
           radius: 50,
-          backgroundImage: trainer.user?.photoUrl != null
-              ? NetworkImage(trainer.user!.photoUrl!)
+          backgroundImage: trainer.photoUrl != null
+              ? NetworkImage(trainer.photoUrl!)
               : NetworkImage(AppImages.profileImageTwo) as ImageProvider,
         ),
         sh12,
         Text(
-          trainer.user?.name ?? 'Unknown Trainer',
+          trainer.name ?? 'Unknown Trainer',
           style: h3.copyWith(fontWeight: FontWeight.w700),
         ),
         sh12,
@@ -120,11 +120,11 @@ class _TrainerProfileViewState extends State<TrainerProfileView> {
                     color: AppColors.blue,
                   ),
                   text: 'Email',
-                  onPressed: trainer.user?.email != null
+                  onPressed: trainer.email != null
                       ? () {
-                          _launchEmail(trainer.user!.email!);
+                          _launchEmail(trainer.email!);
                           print(
-                              ':::::::::::: ${trainer.user!.email!} :::::::::::::::');
+                              ':::::::::::: ${trainer..email!} :::::::::::::::');
                         }
                       : () {},
                   imageAssetPath: AppImages.email,
@@ -142,8 +142,8 @@ class _TrainerProfileViewState extends State<TrainerProfileView> {
                     fontWeight: FontWeight.bold,
                     color: AppColors.blue,
                   ),
-                  onPressed: trainer.user?.contactNumber != null
-                      ? () => _launchPhone(trainer.user!.contactNumber!)
+                  onPressed: trainer.contactNumber != null
+                      ? () => _launchPhone(trainer.contactNumber!)
                       : () {},
                   imageAssetPath: AppImages.call,
                 ),
@@ -180,22 +180,14 @@ class _TrainerProfileViewState extends State<TrainerProfileView> {
                     Text('Coaching Expertise',
                         style: h3.copyWith(fontWeight: FontWeight.w700)),
                     sh12,
-                    ...trainer.coachingExpertise.map((expertise) => Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
-                          child: Text(
-                            expertise,
-                            style: h6.copyWith(fontWeight: FontWeight.w700),
-                          ),
-                        )),
-                    sh20,
-                    Text('Availability',
-                        style: h3.copyWith(fontWeight: FontWeight.w700)),
-                    sh12,
-                    Text(
-                      trainer.availability.isNotEmpty
-                          ? trainer.availability.join(', ')
-                          : 'Not specified',
-                      style: h6.copyWith(fontWeight: FontWeight.w500),
+                    ...trainer.coachingExpertise.map(
+                      (expertise) => Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: Text(
+                          expertise,
+                          style: h6.copyWith(fontWeight: FontWeight.w700),
+                        ),
+                      ),
                     ),
                     sh20,
                     Text('Skill Level',
@@ -203,6 +195,14 @@ class _TrainerProfileViewState extends State<TrainerProfileView> {
                     sh12,
                     Text(
                       trainer.skillExpertise ?? 'Not specified',
+                      style: h6.copyWith(fontWeight: FontWeight.w500),
+                    ),
+                    sh20,
+                    Text('Location',
+                        style: h3.copyWith(fontWeight: FontWeight.w700)),
+                    sh12,
+                    Text(
+                      trainer.location ?? 'Location not specified',
                       style: h6.copyWith(fontWeight: FontWeight.w500),
                     ),
                     sh20,

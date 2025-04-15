@@ -92,8 +92,7 @@ class MySearchView extends GetView<MySearchController> {
           SearchFiled(
             onChanged: (value) {
               if (value.isEmpty) {
-                homeController.fetchCourseSessions(
-                    null);
+                homeController.fetchCourseSessions(null);
               } else {
                 homeController.onSearchQueryChangedSession(value);
               }
@@ -127,13 +126,14 @@ class MySearchView extends GetView<MySearchController> {
                     backgroundImage: session.thumbnail,
                     title: session.name ?? "No title",
                     description: session.description ?? "No description",
-                    startDate: DateTimeFormationClass.formatDate(session.startDate),
+                    startDate:
+                        DateTimeFormationClass.formatDate(session.startDate),
                     duration: session.duration.toString(),
                     // startTime: session.startTime ?? "No start time",
                     // endTime: session.endTime ?? "No end time",
                     location: session.location ?? "No location",
                     skillLevel: session.skillLevel ?? "No skill level",
-                    price: session.price ?? 0,
+                    creditPoints: session.credit ?? 0,
                     onViewDetails: () {
                       Get.to(() => SessionDetailsView(
                             id: session.id,
@@ -158,8 +158,8 @@ class MySearchView extends GetView<MySearchController> {
           SearchFiled(
             onChanged: (value) {
               if (value.isEmpty) {
-                homeController.fetchCourseSessions(
-                    null); // Fetch all course sessions
+                homeController
+                    .fetchCourseSessions(null); // Fetch all course sessions
                 //homeController.fetchTrainers(null);  // Fetch all trainers
               } else {
                 // Trigger search filtering dynamically
@@ -193,14 +193,15 @@ class MySearchView extends GetView<MySearchController> {
               itemBuilder: (context, index) {
                 var trainer = homeController.trainerList[index];
                 return ProfileCardWidget(
-                  name: trainer.user?.name ?? 'Unknown',
+                  name: trainer.name ?? 'Unknown',
                   rating: trainer.avgRating ?? 0.0,
                   experience: (trainer.experience ?? 0).toString(),
                   hourlyRate: (trainer.perHourRate ?? 0).toString(),
-                  profileImage:
-                      trainer.user?.photoUrl ?? AppImages.profileImageTwo,
+                  profileImage: trainer.photoUrl ?? AppImages.profileImageTwo,
                   onTap: () {
-                    Get.to(() => TrainerProfileView(  id: trainer.id,));
+                    Get.to(() => TrainerProfileView(
+                          id: trainer.id,
+                        ));
                   },
                 );
               },

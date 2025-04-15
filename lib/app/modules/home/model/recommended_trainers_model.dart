@@ -1,5 +1,5 @@
-class TrainersModel {
-  TrainersModel({
+class RecommendedTrainersModel {
+  RecommendedTrainersModel({
     required this.success,
     required this.message,
     required this.meta,
@@ -9,22 +9,23 @@ class TrainersModel {
   final bool? success;
   final String? message;
   final Meta? meta;
-  final List<DatumT> data;
+  final List<RecommendedDatum> data;
 
-  factory TrainersModel.fromJson(Map<String, dynamic> json){
-    return TrainersModel(
+  factory RecommendedTrainersModel.fromJson(Map<String, dynamic> json){
+    return RecommendedTrainersModel(
       success: json["success"],
       message: json["message"],
       meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
-      data: json["data"] == null ? [] : List<DatumT>.from(json["data"]!.map((x) => DatumT.fromJson(x))),
+      data: json["data"] == null ? [] : List<RecommendedDatum>.from(json["data"]!.map((x) => RecommendedDatum.fromJson(x))),
     );
   }
 
 }
 
-class DatumT {
-  DatumT({
+class RecommendedDatum {
+  RecommendedDatum({
     required this.id,
+    required this.datumId,
     required this.name,
     required this.email,
     required this.contactNumber,
@@ -38,12 +39,12 @@ class DatumT {
     required this.perHourRate,
     required this.avgRating,
     required this.isDeleted,
-    required this.datumId,
     required this.createdAt,
     required this.updatedAt,
   });
 
   final String? id;
+  final String? datumId;
   final String? name;
   final String? email;
   final String? contactNumber;
@@ -57,13 +58,13 @@ class DatumT {
   final int? perHourRate;
   final double? avgRating;
   final bool? isDeleted;
-  final String? datumId;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  factory DatumT.fromJson(Map<String, dynamic> json){
-    return DatumT(
+  factory RecommendedDatum.fromJson(Map<String, dynamic> json){
+    return RecommendedDatum(
       id: json["_id"],
+      datumId: json["id"],
       name: json["name"],
       email: json["email"],
       contactNumber: json["contactNumber"],
@@ -79,7 +80,6 @@ class DatumT {
           ? (json["avgRating"] as int).toDouble()
           : json["avgRating"] as double?,
       isDeleted: json["isDeleted"],
-      datumId: json["id"],
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
     );

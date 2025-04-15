@@ -150,13 +150,9 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                                       .timeSlotList[mySearchController.selectedTimeSlotIndex.value];
                                   final userId = profileAndSettingsController.myProfileData.value?.id ?? '';
                                   final sessionId = widget.id!;
-                                  final slotId = selectedSlot.id ?? ''; // Assuming DatumSlot has an 'id' field
-
-                                  // Call the addBooking API
+                                  final slotId = selectedSlot.id ?? '';
                                   bool success = await mySearchController.addBooking(userId, sessionId, slotId);
-
                                   if (success) {
-                                    // Navigation is already handled in addBooking, so no need to call Get.to() here
                                     debugPrint("Booking successful, navigated to confirmation.");
                                   } else {
                                     Get.snackbar(
@@ -166,7 +162,6 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                                     );
                                   }
                                 } else {
-                                  // Show a snackbar if no time slot is selected
                                   Get.snackbar(
                                     'Error',
                                     'Please select a time slot before booking.',
@@ -250,7 +245,7 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                                         fontWeight: FontWeight.w700)),
                                 sh12,
                                 Text(
-                                  '\$${mySearchController.sessionsDetails.value!.price ?? 0} per session',
+                                  '${mySearchController.sessionsDetails.value!.credit ?? 0} Credits',
                                   style:
                                       h6.copyWith(fontWeight: FontWeight.w500),
                                 ),
@@ -265,7 +260,7 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                                       radius: 25,
                                       backgroundImage: NetworkImage(
                                         mySearchController.sessionsDetails
-                                                .value!.coach?.user?.photoUrl ??
+                                                .value!.coach?.photoUrl ??
                                             AppImages.profileImageTwo,
                                       ),
                                     ),
@@ -276,7 +271,7 @@ class _SessionDetailsViewState extends State<SessionDetailsView> {
                                       children: [
                                         Text(
                                           mySearchController.sessionsDetails
-                                                  .value!.coach?.user?.name ??
+                                                  .value!.coach?.name ??
                                               'John Smith',
                                           style: h6.copyWith(
                                             fontWeight: FontWeight.w500,

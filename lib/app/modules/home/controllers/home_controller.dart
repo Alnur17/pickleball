@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pickleball/app/modules/home/model/recommended_trainers_model.dart';
 import 'package:pickleball/app/modules/home/model/trainers_model.dart';
 
 import '../../../../common/app_constant/app_constant.dart';
@@ -11,6 +12,7 @@ import '../model/course_sessions_model.dart';
 class HomeController extends GetxController {
   var courseSessions = <Datum>[].obs;
   var trainerList = <DatumT>[].obs;
+  var recommendedTrainerList = <RecommendedDatum>[].obs;
   var isLoading = true.obs;
 
   @override
@@ -18,6 +20,7 @@ class HomeController extends GetxController {
     super.onInit();
     fetchCourseSessions(null);
     fetchTrainers(null);
+    fetchRecommendedTrainers();
   }
 
   Future<void> fetchCourseSessions(String? sessionQuery) async {
@@ -67,6 +70,31 @@ class HomeController extends GetxController {
       update();
     } catch (e) {
       debugPrint("Error fetching trainers: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> fetchRecommendedTrainers() async {
+    try {
+      isLoading(true);
+      String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
+      var headers = {
+        'Authorization': accessToken,
+        'Content-Type': 'application/json',
+      };
+
+      var response = await BaseClient.getRequest(
+        api: Api.recommendedTrainers,
+        headers: headers,
+      );
+
+      var responseBody = await BaseClient.handleResponse(response);
+      RecommendedTrainersModel recommendedTrainersModel = RecommendedTrainersModel.fromJson(responseBody);
+      recommendedTrainerList.value = recommendedTrainersModel.data;
+      update();
+    } catch (e) {
+      debugPrint("Error fetching recommended trainers: $e");
     } finally {
       isLoading(false);
     }

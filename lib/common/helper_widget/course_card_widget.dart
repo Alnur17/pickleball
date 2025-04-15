@@ -16,7 +16,7 @@ class CourseCardWidget extends StatelessWidget {
   // final String endTime;
   final String location;
   final String skillLevel;
-  final int price;
+  final int creditPoints;
   final String? backgroundImage;
   final double? width;
   final double? height;
@@ -32,7 +32,7 @@ class CourseCardWidget extends StatelessWidget {
     // required this.endTime,
     required this.location,
     required this.skillLevel,
-    required this.price,
+    required this.creditPoints,
     this.backgroundImage,
     this.width = 300,
     this.height = 300,
@@ -148,7 +148,7 @@ class CourseCardWidget extends StatelessWidget {
                   children: [
                     SkillBadge(label: skillLevel),
                     sw10,
-                    SkillBadge(label: '$price per session'),
+                    SkillBadge(label: '$creditPoints Credits'),
                   ],
                 ),
                 Spacer(),

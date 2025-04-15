@@ -250,19 +250,20 @@ class _HistoryViewState extends State<HistoryView> {
                                           .completedBookings[index];
                                       return BookingCompletedHistoryCard(
                                         coachName: booking
-                                                .session?.coach?.user?.name ??
+                                                .session?.coach?.name ??
                                             "Unknown",
                                         sessionTitle:
                                             booking.session?.name ?? "Unknown",
                                         date: DateTimeFormationClass.formatDate(
                                             booking.session?.startDate),
-                                        amountPaid: booking.amount.toString(),
+                                        amountPaid:
+                                            booking.session?.credit.toString(),
                                         startTime:
                                             booking.slot?.startTime ?? '',
                                         endTime: booking.slot?.endTime ?? '',
-                                        imageUrl: booking.session?.coach?.user
-                                                ?.photoUrl ??
-                                            AppImages.profileImageTwo,
+                                        imageUrl:
+                                            booking.session?.coach?.photoUrl ??
+                                                AppImages.profileImageTwo,
                                         status: booking.status,
                                         // onRebook: () => print("Rebook Pressed"),
                                         // onLeaveReview: booking.status == "Complete"
@@ -312,18 +313,17 @@ class _HistoryViewState extends State<HistoryView> {
                                           .upcomingBookings[index];
                                       return BookingUpcomingHistoryCard(
                                         coachName: booking
-                                                .session?.coach?.user?.name ??
+                                                .session?.coach?.name ??
                                             "Unknown",
                                         sessionTitle:
                                             booking.session?.name ?? "Unknown",
                                         date: DateTimeFormationClass.formatDate(
                                             booking.session?.startDate),
-                                        amountPaid: booking.amount.toString(),
+                                        amountPaid: booking.session?.credit.toString() ?? '',
                                         startTime:
                                             booking.slot?.startTime ?? '',
                                         endTime: booking.slot?.endTime ?? '',
-                                        imageUrl: booking.session?.coach?.user
-                                                ?.photoUrl ??
+                                        imageUrl: booking.session?.coach?.photoUrl ??
                                             AppImages.profileImageTwo,
                                         onCancel: () {
                                           _showCancelPopup(booking);
@@ -345,7 +345,7 @@ class _HistoryViewState extends State<HistoryView> {
     );
   }
 
-  void _showCancelPopup(dynamic booking) {
+  void _showCancelPopup(dynamic confirmData) {
     Get.dialog(
       AlertDialog(
         backgroundColor: AppColors.white,
@@ -360,7 +360,7 @@ class _HistoryViewState extends State<HistoryView> {
               OutlinedButton(
                 onPressed: () {
                   Get.back();
-                  _showRefundPopup(booking);
+                  bookingController.cancelBooking(confirmData.id!);
                 },
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(color: AppColors.red, width: 1.5),
@@ -390,41 +390,6 @@ class _HistoryViewState extends State<HistoryView> {
             ],
           ),
         ],
-      ),
-    );
-  }
-
-  void _showRefundPopup(dynamic booking) {
-    Get.dialog(
-      barrierDismissible: false,
-      PopScope(
-        canPop: false,
-        child: AlertDialog(
-          backgroundColor: AppColors.white,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          title:
-              Text('Click to refund', style: h3, textAlign: TextAlign.center),
-          actionsAlignment: MainAxisAlignment.center,
-          actions: [
-            OutlinedButton(
-              onPressed: () {
-                Get.back();
-                bookingController.cancelBooking(booking.id!);
-              },
-              style: OutlinedButton.styleFrom(
-                backgroundColor: AppColors.red,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-                minimumSize: Size(100, 40),
-              ),
-              child: Text(
-                'Refund',
-                style: h3.copyWith(fontSize: 14, color: AppColors.mainColor),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

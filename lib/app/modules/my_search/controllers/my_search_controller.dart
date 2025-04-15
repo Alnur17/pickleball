@@ -24,7 +24,6 @@ class MySearchController extends GetxController {
   var selectedTimeSlotIndex = (-1).obs;
   var bookingController = Get.put(BookingController());
 
-
   Future<void> fetchSessionsDetails(String id) async {
     try {
       isLoading(true);
@@ -113,7 +112,7 @@ class MySearchController extends GetxController {
 
       var responseBody = await BaseClient.handleResponse(response);
       TimeSlotModel timeSlotModel = TimeSlotModel.fromJson(responseBody);
-      timeSlotList.value = timeSlotModel.data; // Update timeSlot list
+      timeSlotList.value = timeSlotModel.data;
       update();
     } catch (e) {
       debugPrint("Error fetching time: $e");
@@ -124,8 +123,7 @@ class MySearchController extends GetxController {
 
   void selectTimeSlot(int index) {
     if (selectedTimeSlotIndex.value == index) {
-      selectedTimeSlotIndex.value =
-          -1; // Deselect if already selected (optional)
+      selectedTimeSlotIndex.value = -1; // Deselect if already selected
     } else {
       selectedTimeSlotIndex.value = index; // Select the new time slot
     }
@@ -154,13 +152,15 @@ class MySearchController extends GetxController {
 
       if (responseBody['success'] == true) {
         debugPrint("Waitlist created successfully: ${responseBody['message']}");
-        kSnackBar(message: "${responseBody['message']}", bgColor: AppColors.green);
-        // Optionally, refresh the waitlist after creating
+        kSnackBar(
+            message: "${responseBody['message']}", bgColor: AppColors.green);
+        // refresh the waitlist after creating
         await bookingController.fetchWaitlist('');
         return true;
       } else {
         debugPrint("Failed to create waitlist: ${responseBody['message']}");
-        kSnackBar(message: "${responseBody['message']}", bgColor: AppColors.red);
+        kSnackBar(
+            message: "${responseBody['message']}", bgColor: AppColors.red);
         return false;
       }
     } catch (e) {
@@ -178,7 +178,9 @@ class MySearchController extends GetxController {
 
       String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
       LocalStorage.saveData(key: AppConstant.sessionId, data: sessionId);
-      String sId = LocalStorage.getData(key: AppConstant.sessionId,);
+      String sId = LocalStorage.getData(
+        key: AppConstant.sessionId,
+      );
       debugPrint(':::::::: $sId ::::::::');
 
       var headers = {
@@ -204,17 +206,23 @@ class MySearchController extends GetxController {
         String id = LocalStorage.getData(key: AppConstant.bookingId);
         debugPrint(':::::: $id :::::::::');
 
-        await getSingleBooking(bookingId);
-        Get.to(() => BookingConfirmationView(
-              bookingId: bookingId,
-            ));
+        //await getSingleBooking(bookingId);
+
+        String sessionId = LocalStorage.getData(key: AppConstant.sessionId);
+        debugPrint(':::::::: $sessionId ::::::::');
+
+        await cancelWaitlistBySessionId(sessionId);
+        Get.to(
+          () => BookingConfirmationView(
+            //bookingId: bookingId,
+          ),
+        );
 
         return true;
       } else {
         debugPrint("Failed to create bookings: ${responseBody['message']}");
         isLoading(false);
         return false;
-
       }
     } catch (e) {
       debugPrint("Error creating bookings: $e");
@@ -224,41 +232,60 @@ class MySearchController extends GetxController {
     }
   }
 
-  Future<bool> getSingleBooking(String bookingId) async {
+  // Future<bool> getSingleBooking(String bookingId) async {
+  //   try {
+  //     isLoading(true);
+  //
+  //     String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
+  //
+  //     var headers = {
+  //       'Authorization': accessToken,
+  //       'Content-Type': 'application/json',
+  //     };
+  //
+  //     var response = await BaseClient.getRequest(
+  //       api: Api.getSingleBookingById(bookingId),
+  //       headers: headers,
+  //     );
+  //
+  //     var responseBody = await BaseClient.handleResponse(response);
+  //
+  //     if (responseBody['success'] == true) {
+  //       debugPrint("Bookings created successfully: ${responseBody['message']}");
+  //
+  //       SingleBookingModel singleBookingModel =
+  //           SingleBookingModel.fromJson(responseBody);
+  //       singleBookingList.value = singleBookingModel.data; // Update data
+  //
+  //       return true;
+  //     } else {
+  //       debugPrint("Failed to create bookings: ${responseBody['message']}");
+  //       isLoading(false);
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     debugPrint("Error creating bookings: $e");
+  //     return false;
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
+
+  Future<void> cancelWaitlistBySessionId(String id) async {
     try {
       isLoading(true);
-
-      String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
-
-      var headers = {
-        'Authorization': accessToken,
-        'Content-Type': 'application/json',
-      };
-
-      var response = await BaseClient.getRequest(
-        api: Api.getSingleBookingById(bookingId),
-        headers: headers,
+      var response = await BaseClient.deleteRequest(
+        api: Api.removeWaitlistBySessionId(id),
       );
 
       var responseBody = await BaseClient.handleResponse(response);
 
-      if (responseBody['success'] == true ) {
-        debugPrint("Bookings created successfully: ${responseBody['message']}");
-
-        SingleBookingModel singleBookingModel =
-            SingleBookingModel.fromJson(responseBody);
-        singleBookingList.value =
-            singleBookingModel.data; // Update data
-
-        return true;
-      } else {
-        debugPrint("Failed to create bookings: ${responseBody['message']}");
-        isLoading(false);
-        return false;
+      if (responseBody['success'] == true) {
+        debugPrint("Waitlist remove successfully: ${responseBody['message']}");
+        await bookingController.fetchWaitlist('');
       }
     } catch (e) {
-      debugPrint("Error creating bookings: $e");
-      return false;
+      debugPrint("Error remove waitlist: $e");
     } finally {
       isLoading(false);
     }

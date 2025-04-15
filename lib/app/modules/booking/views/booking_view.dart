@@ -105,7 +105,7 @@ class _BookingViewState extends State<BookingView> {
                                                 : 8),
                                         child: BookingCardConfirmWidget(
                                           coachName: confirmData
-                                                  .session?.coach?.user?.name ??
+                                                  .session?.coach?.name ??
                                               "Unknown",
                                           sessionTitle:
                                               confirmData.session?.name ??
@@ -119,7 +119,7 @@ class _BookingViewState extends State<BookingView> {
                                           endTime:
                                               confirmData.slot?.endTime ?? '',
                                           imageUrl: confirmData.session?.coach
-                                                  ?.user?.photoUrl ??
+                                                  ?.photoUrl ??
                                               AppImages.profileImageTwo,
                                           onCancel: () {
                                             _showCancelPopup(confirmData);
@@ -226,7 +226,7 @@ class _BookingViewState extends State<BookingView> {
               OutlinedButton(
                 onPressed: () {
                   Get.back();
-                  _showRefundPopup(confirmData);
+                  bookingController.cancelBooking(confirmData.id!);
                 },
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(color: AppColors.red, width: 1.5),
@@ -260,38 +260,4 @@ class _BookingViewState extends State<BookingView> {
     );
   }
 
-  void _showRefundPopup(dynamic confirmData) {
-    Get.dialog(
-      barrierDismissible: false,
-      PopScope(
-        canPop: false,
-        child: AlertDialog(
-          backgroundColor: AppColors.white,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          title:
-              Text('Click to refund', style: h3, textAlign: TextAlign.center),
-          actionsAlignment: MainAxisAlignment.center,
-          actions: [
-            OutlinedButton(
-              onPressed: () {
-                Get.back();
-                bookingController.cancelBooking(confirmData.id!);
-              },
-              style: OutlinedButton.styleFrom(
-                backgroundColor: AppColors.red,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-                minimumSize: Size(100, 40),
-              ),
-              child: Text(
-                'Refund',
-                style: h3.copyWith(fontSize: 14, color: AppColors.mainColor),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

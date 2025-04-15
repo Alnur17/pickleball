@@ -28,7 +28,6 @@ class Datum {
     required this.user,
     required this.session,
     required this.slot,
-    required this.amount,
     required this.paymentStatus,
     required this.status,
     required this.createdAt,
@@ -39,7 +38,6 @@ class Datum {
   final String? user;
   final Session? session;
   final Slot? slot;
-  final int? amount;
   final String? paymentStatus;
   final String? status;
   final DateTime? createdAt;
@@ -51,7 +49,6 @@ class Datum {
       user: json["user"],
       session: json["session"] == null ? null : Session.fromJson(json["session"]),
       slot: json["slot"] == null ? null : Slot.fromJson(json["slot"]),
-      amount: json["amount"],
       paymentStatus: json["paymentStatus"],
       status: json["status"],
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
@@ -68,6 +65,7 @@ class Session {
     required this.coach,
     required this.startDate,
     required this.duration,
+    required this.credit,
   });
 
   final String? id;
@@ -75,6 +73,7 @@ class Session {
   final Coach? coach;
   final DateTime? startDate;
   final int? duration;
+  final int? credit;
 
   factory Session.fromJson(Map<String, dynamic> json){
     return Session(
@@ -83,6 +82,7 @@ class Session {
       coach: json["coach"] == null ? null : Coach.fromJson(json["coach"]),
       startDate: DateTime.tryParse(json["startDate"] ?? ""),
       duration: json["duration"],
+      credit: json["credit"],
     );
   }
 
@@ -91,39 +91,18 @@ class Session {
 class Coach {
   Coach({
     required this.id,
-    required this.user,
-  });
-
-  final String? id;
-  final User? user;
-
-  factory Coach.fromJson(Map<String, dynamic> json){
-    return Coach(
-      id: json["_id"],
-      user: json["user"] == null ? null : User.fromJson(json["user"]),
-    );
-  }
-
-}
-
-class User {
-  User({
-    required this.id,
     required this.name,
-    required this.email,
     required this.photoUrl,
   });
 
   final String? id;
   final String? name;
-  final String? email;
   final String? photoUrl;
 
-  factory User.fromJson(Map<String, dynamic> json){
-    return User(
+  factory Coach.fromJson(Map<String, dynamic> json){
+    return Coach(
       id: json["_id"],
       name: json["name"],
-      email: json["email"],
       photoUrl: json["photoUrl"],
     );
   }

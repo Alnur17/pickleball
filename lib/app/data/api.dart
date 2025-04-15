@@ -26,6 +26,8 @@ class Api {
         : "$baseUrl/trainers"; // If query is null or empty, omit searchTerm
   } //done
 
+   static const recommendedTrainers = "$baseUrl/trainers/recommended"; //done
+
   /// get session details by id
   static getSingleSession(String id) => "$baseUrl/sessions/$id"; //done
 
@@ -51,6 +53,7 @@ class Api {
       : "$baseUrl/waitLists/my-waitlist"; //done
 
   static removeWaitlist(String id) => "$baseUrl/waitLists/$id"; //done
+
   static removeWaitlistBySessionId(String sessionId) =>
       "$baseUrl/waitLists/session/$sessionId"; //done
 

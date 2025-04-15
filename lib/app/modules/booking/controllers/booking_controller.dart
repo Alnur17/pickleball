@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pickleball/app/modules/booking/model/my_waitlist_model.dart';
@@ -7,6 +5,7 @@ import '../../../../common/app_constant/app_constant.dart';
 import '../../../../common/helper_widget/local_store.dart';
 import '../../../data/api.dart';
 import '../../../data/base_client.dart';
+import '../../profile_and_settings/controllers/profile_and_settings_controller.dart';
 import '../model/my_all_booking_model.dart';
 import '../model/signle_payment_details_model.dart';
 
@@ -18,6 +17,9 @@ class BookingController extends GetxController {
   var completedBookings = <Datum>[].obs;
   var confirmBooking = <Datum>[].obs;
   var upcomingBookings = <Datum>[].obs;
+
+  final ProfileAndSettingsController profileAndSettingsController =
+  Get.put(ProfileAndSettingsController());
 
   @override
   void onInit() {
@@ -59,31 +61,31 @@ class BookingController extends GetxController {
     }
   }
 
-  Future<void> getSinglePaymentByBookingId(String bookingId) async {
-    try {
-      isLoading(true);
-      String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
-      var headers = {
-        'Authorization': accessToken,
-        'Content-Type': 'application/json',
-      };
-
-      var response = await BaseClient.getRequest(
-        api: Api.singlePaymentByBookingId(bookingId),
-        headers: headers,
-      );
-
-      var responseBody = await BaseClient.handleResponse(response);
-      SinglePaymentDetailsModel singlePaymentDetailsModel =
-          SinglePaymentDetailsModel.fromJson(responseBody);
-      singlePaymentDetails.value = singlePaymentDetailsModel.data; // Update
-      update();
-    } catch (e) {
-      debugPrint("Error fetching waitlist: $e");
-    } finally {
-      isLoading(false);
-    }
-  }
+  // Future<void> getSinglePaymentByBookingId(String bookingId) async {
+  //   try {
+  //     isLoading(true);
+  //     String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
+  //     var headers = {
+  //       'Authorization': accessToken,
+  //       'Content-Type': 'application/json',
+  //     };
+  //
+  //     var response = await BaseClient.getRequest(
+  //       api: Api.singlePaymentByBookingId(bookingId),
+  //       headers: headers,
+  //     );
+  //
+  //     var responseBody = await BaseClient.handleResponse(response);
+  //     SinglePaymentDetailsModel singlePaymentDetailsModel =
+  //         SinglePaymentDetailsModel.fromJson(responseBody);
+  //     singlePaymentDetails.value = singlePaymentDetailsModel.data; // Update
+  //     update();
+  //   } catch (e) {
+  //     debugPrint("Error fetching single payment: $e");
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
 
   Future<void> removeWaitlist(String id) async {
     try {
@@ -146,7 +148,7 @@ class BookingController extends GetxController {
       // Completed bookings: includes both canceled and past confirmed bookings
       completedBookings.value = allBookingList.where((booking) {
         // Include canceled bookings
-        if (booking.status?.toLowerCase() == "canceled") {
+        if (booking.status?.toLowerCase() == "cancelled") {
           return true;
         }
 
@@ -182,13 +184,16 @@ class BookingController extends GetxController {
 
       if (responseBody['success'] == true) {
         debugPrint("Bookings cancel successfully: ${responseBody['message']}");
-        String bookingId = LocalStorage.getData(key: AppConstant.bookingId);
-        await getSinglePaymentByBookingId(bookingId);
-        await refundBooking(
-          paymentIntendId:
-              singlePaymentDetails.value?.paymentIntentId.toString() ?? '',
-          amount: singlePaymentDetails.value?.amount.toString() ?? '',
-        );
+        //String bookingId = LocalStorage.getData(key: AppConstant.bookingId);
+        //await getSinglePaymentByBookingId(bookingId);
+        // await refundBooking(
+        //   paymentIntendId:
+        //       singlePaymentDetails.value?.paymentIntentId.toString() ?? '',
+        //   amount: singlePaymentDetails.value?.amount.toString() ?? '',
+        // );
+
+        await fetchAllBooking('');
+        profileAndSettingsController.getMyProfile();
         isLoading(false);
         return true;
       } else {
@@ -203,33 +208,33 @@ class BookingController extends GetxController {
     }
   }
 
-  Future<bool> refundBooking(
-      {required String paymentIntendId, required String amount}) async {
-    try {
-      isLoading(true);
-
-      var body = {"intendId": paymentIntendId, "amount": amount};
-
-      var response = await BaseClient.patchRequest(
-        api: Api.refundPayment,
-        body: jsonEncode(body),
-      );
-
-      var responseBody = await BaseClient.handleResponse(response);
-
-      if (responseBody['success'] == true) {
-        debugPrint("Refund successfully: ${responseBody['message']}");
-        await fetchAllBooking('');
-        return true;
-      } else {
-        debugPrint("Failed to Refund: ${responseBody['message']}");
-        return false;
-      }
-    } catch (e) {
-      debugPrint("Error Refund: $e");
-      return false;
-    } finally {
-      isLoading(false);
-    }
-  }
+  // Future<bool> refundBooking(
+  //     {required String paymentIntendId, required String amount}) async {
+  //   try {
+  //     isLoading(true);
+  //
+  //     var body = {"intendId": paymentIntendId, "amount": amount};
+  //
+  //     var response = await BaseClient.patchRequest(
+  //       api: Api.refundPayment,
+  //       body: jsonEncode(body),
+  //     );
+  //
+  //     var responseBody = await BaseClient.handleResponse(response);
+  //
+  //     if (responseBody['success'] == true) {
+  //       debugPrint("Refund successfully: ${responseBody['message']}");
+  //       await fetchAllBooking('');
+  //       return true;
+  //     } else {
+  //       debugPrint("Failed to Refund: ${responseBody['message']}");
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     debugPrint("Error Refund: $e");
+  //     return false;
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
 }

@@ -53,7 +53,7 @@ class ProfileCardWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(experience, style: h2.copyWith(fontSize: 12)),
+              Text("$experience+ Years", style: h2.copyWith(fontSize: 12)),
               sw8,
               Text('\$$hourlyRate', style: h2.copyWith(fontSize: 12)),
             ],

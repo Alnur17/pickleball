@@ -197,7 +197,7 @@ class HomeView extends GetView<HomeController> {
                   // endTime: session.endTime ?? "No end time",
                   location: session.location ?? "No location",
                   skillLevel: session.skillLevel ?? "No skill level",
-                  price: session.price ?? 0,
+                  creditPoints: session.credit ?? 0,
                   onViewDetails: () {
                     Get.to(() => SessionDetailsView(
                           id: session.id,
@@ -234,24 +234,24 @@ class HomeView extends GetView<HomeController> {
           height: 190,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: homeController.trainerList.length,
+            itemCount: homeController.recommendedTrainerList.length,
             itemBuilder: (context, index) {
-              var trainer = homeController.trainerList[index];
+              var trainer = homeController.recommendedTrainerList[index];
               return Padding(
                 padding: EdgeInsets.only(
-                  left: index == homeController.courseSessions.length * 0
+                  left: index == homeController.recommendedTrainerList.length * 0
                       ? 20
                       : 0,
                   right:
-                      index == homeController.trainerList.length - 1 ? 20 : 12,
+                      index == homeController.recommendedTrainerList.length - 1 ? 20 : 12,
                 ),
                 child: ProfileCardWidget(
-                  name: trainer.user?.name ?? 'Unknown',
+                  name: trainer.name ?? 'Unknown',
                   rating: trainer.avgRating ?? 0.0,
                   experience: (trainer.experience ?? 0).toString(),
                   hourlyRate: (trainer.perHourRate ?? 0).toString(),
                   profileImage:
-                      trainer.user?.photoUrl ?? AppImages.profileImageTwo,
+                      trainer.photoUrl ?? AppImages.profileImageTwo,
                   onTap: () {
                     Get.to(() => TrainerProfileView(
                           id: trainer.id,
