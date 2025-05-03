@@ -50,7 +50,9 @@ class Datum {
     return Datum(
       id: json["_id"],
       credits: json["credits"],
-      price: json["price"],
+      price: (json["price"] is int)
+        ? (json["price"] as int).toDouble()
+        : json["price"] as double?,
       popularity: json["popularity"],
       isDeleted: json["isDeleted"],
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),

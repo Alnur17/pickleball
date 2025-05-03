@@ -1,8 +1,9 @@
 class Api {
   /// base url
 
-  static const baseUrl = "http://192.168.10.144:5007/api/v1";
-  static const socket = "http://159.223.184.53:4002";
+  static const baseUrl = "http://172.252.13.74:5007/api/v1";
+  static const socket = "http://172.252.13.74:4000";
+
 
   ///auth
   static const register = "$baseUrl/users/register"; //done
@@ -16,14 +17,13 @@ class Api {
   ///Sessions Data
   static sessions(String? query) => query?.isNotEmpty ?? false
       ? "$baseUrl/sessions?searchTerm=$query"
-      : "$baseUrl/sessions"; // If query is null or empty, omit searchTerm //done
+      : "$baseUrl/sessions"; //done
 
   ///Trainers Data
   static trainers(String? query) {
-    // Add the searchTerm parameter only if the query is not null or empty
     return query?.isNotEmpty ?? false
         ? "$baseUrl/trainers?searchTerm=$query"
-        : "$baseUrl/trainers"; // If query is null or empty, omit searchTerm
+        : "$baseUrl/trainers";
   } //done
 
    static const recommendedTrainers = "$baseUrl/trainers/recommended"; //done

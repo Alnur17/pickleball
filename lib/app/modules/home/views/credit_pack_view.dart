@@ -22,7 +22,9 @@ class _CreditPackViewState extends State<CreditPackView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: AppBar(
+        backgroundColor: AppColors.white,
         title: Text(
           'Credit Pack',
           style: appBarStyle,
