@@ -57,7 +57,7 @@ class VerifyYourEmailView extends GetView {
             ),
             sh20,
             Text(
-              'We have just sent you 4 digit code via your email.',
+              'We have just sent you 6 digit code via your email.',
               style: h5,
               textAlign: TextAlign.center,
             ),

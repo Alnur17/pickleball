@@ -8,16 +8,4 @@ class DashboardController extends GetxController {
     selectedIndex.value = index;
   }
 
-  // final List<Widget> _screens = [
-  //    HomeView(),
-  //    Container(),
-  //    Container(),
-  //    Container(),
-  // ];
-
-  // Widget get currentScreen => _screens[selectedIndex.value];
-  //
-  // void changeTabIndex(int index) {
-  //   selectedIndex.value = index;
-  // }
 }

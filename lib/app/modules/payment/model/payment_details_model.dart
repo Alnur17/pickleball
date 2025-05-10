@@ -42,7 +42,7 @@ class Data {
   final Account? account;
   final Reference? reference;
   final String? transactionId;
-  final double? amount;
+  final int? amount;
   final String? status;
   final String? paymentIntentId;
   final bool? isPaid;
@@ -107,21 +107,21 @@ class Reference {
   Reference({
     required this.id,
     required this.user,
-    required this.paymentStatus,
     required this.status,
+    required this.paymentStatus,
   });
 
   final String? id;
   final String? user;
-  final String? paymentStatus;
   final String? status;
+  final String? paymentStatus;
 
   factory Reference.fromJson(Map<String, dynamic> json){
     return Reference(
       id: json["_id"],
       user: json["user"],
-      paymentStatus: json["paymentStatus"],
       status: json["status"],
+      paymentStatus: json["paymentStatus"],
     );
   }
 

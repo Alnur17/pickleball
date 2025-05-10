@@ -27,9 +27,10 @@ class PaymentController extends GetxController {
 
   Future<void> createPaymentSession({
     required String reference,
+    required String modelType,
   }) async {
     isLoading.value = true;
-
+    debugPrint(';;;;;;;;;;;;;;;;;; $modelType ;;;;;;;;;;;;;;;;;;;');
     String token = LocalStorage.getData(key: AppConstant.accessToken);
 
     // var decodedToken = JwtDecoder.decode(token);
@@ -42,7 +43,7 @@ class PaymentController extends GetxController {
       'Content-Type': 'application/json',
     };
 
-    var map = {"modelType": "Subscription", "account": id, "reference": reference};
+    var map = {"modelType": modelType, "account": id, "reference": reference};
 
     dynamic responseBody = await BaseClient.handleResponse(
       await BaseClient.postRequest(

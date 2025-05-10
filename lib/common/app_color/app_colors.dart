@@ -10,6 +10,7 @@ class AppColors {
   static const textColorBlueV2 = Color(0xff007FF5);
   static const textColorBlueLight = Color(0x1a305fa1);
   static const gradientColor = [Color(0xff007FF5), Color(0xff003A71)];
+  //static const gradientBorder = [Color(0xffFEDE8B), Color(0xffFE911B)];
 
   //fixed color
   static const transparent = Colors.transparent;

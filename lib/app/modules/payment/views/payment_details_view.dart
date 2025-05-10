@@ -197,22 +197,6 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
         scrolledUnderElevation: 0,
         backgroundColor: AppColors.white,
         automaticallyImplyLeading: false,
-        // leading: GestureDetector(
-        //   onTap: () {
-        //     Get.back();
-        //   },
-        //   child: Container(
-        //     margin: EdgeInsets.only(left: 20),
-        //     decoration: ShapeDecoration(
-        //       shape: CircleBorder(),
-        //       color: AppColors.silver,
-        //     ),
-        //     child: Image.asset(
-        //       AppImages.close,
-        //       scale: 4,
-        //     ),
-        //   ),
-        // ),
         title: Text(
           'Payment Details',
           style: appBarStyle,

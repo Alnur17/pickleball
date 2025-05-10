@@ -1,9 +1,9 @@
-import 'dart:convert'; // For json.encode
-import 'package:http/http.dart' as http; // For HTTP requests
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:pickleball/app/data/api.dart';
-import 'package:pickleball/app/modules/dashboard/views/dashboard_view.dart';
+import 'package:pickleball/app/modules/membership/views/membership_view.dart';
 import 'package:pickleball/common/app_constant/app_constant.dart';
 import 'package:pickleball/common/helper_widget/local_store.dart';
 
@@ -117,7 +117,7 @@ class SignupController extends GetxController {
         kSnackBar(message: message, bgColor: AppColors.green);
 
         if (success == true) {
-          Get.offAll(() => DashboardView());
+          Get.offAll(() => MembershipView());
         } else {
           kSnackBar(message: 'Failed', bgColor: AppColors.red);
         }

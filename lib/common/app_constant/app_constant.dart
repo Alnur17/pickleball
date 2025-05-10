@@ -6,6 +6,7 @@ class AppConstant {
   static const bookingId = 'bookingId';
   static const sessionId = 'sessionId';
   static const subscriptionId = 'subscriptionId';
+  static const orderId = 'OrderId';
 
   static const refCode = 'refCode';
   static const createRouteId = 'createRouteId';

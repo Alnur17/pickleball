@@ -10,6 +10,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/membership/bindings/membership_binding.dart';
+import '../modules/membership/views/membership_view.dart';
 import '../modules/my_search/bindings/my_search_binding.dart';
 import '../modules/my_search/views/my_search_view.dart';
 import '../modules/payment/bindings/payment_binding.dart';
@@ -31,7 +33,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () =>  HomeView(),
+      page: () => HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -71,13 +73,18 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PAYMENT,
-      page: () =>  PaymentView(),
+      page: () => PaymentView(),
       binding: PaymentBinding(),
     ),
     GetPage(
       name: _Paths.SPLASH,
       page: () => const SplashView(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.MEMBERSHIP,
+      page: () => const MembershipView(),
+      binding: MembershipBinding(),
     ),
   ];
 }

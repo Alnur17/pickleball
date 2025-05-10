@@ -79,7 +79,11 @@ class Api {
   static const String refundPayment =
       "$baseUrl/payments/refound-payment"; //done
 
-  static const String creditPackages = "$baseUrl/packages"; //done
+  static const String membershipPackages = "$baseUrl/packages"; //done
+
+  static const String creditPackages = "$baseUrl/credits"; //done
+
+  static const  String createOrder = "$baseUrl/orders"; //done
 
   static const  String createSubscription = "$baseUrl/subscriptions"; //done
 

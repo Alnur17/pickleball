@@ -79,7 +79,7 @@ class _CreditPackViewState extends State<CreditPackView> {
                   String packageId = creditPackController.creditList[
                   creditPackController.selectedIndex.value].id!;
                   debugPrint(':;;;;;;;;;;;packageID : $packageId :::::::::::::');
-                  creditPackController.createSubscription(packageId: packageId);
+                  creditPackController.createOrder(creditId: packageId);
                 } else {
                   Get.snackbar('Error', 'Please select a credit pack to purchase');
                 }

@@ -55,8 +55,8 @@ class CreditPackController extends GetxController {
     }
   }
 
-  Future<void> createSubscription({
-    required String packageId,
+  Future<void> createOrder({
+    required String creditId,
   }) async {
     try {
       isLoading.value = true;
@@ -64,10 +64,10 @@ class CreditPackController extends GetxController {
       // var decodedToken = JwtDecoder.decode(accessToken);
       // var userId = decodedToken['_id'].toString();
       final userId = profileAndSettingsController.myProfileData.value?.id ?? '';
-      debugPrint(':::::::::::::: $userId ::::::::::::::::');
+      debugPrint(':::::::::::::: UserID $userId ::::::::::::::::');
       var body = {
         'user': userId,
-        'package': packageId,
+        'credit': creditId,
       };
       var headers = {
         'Authorization': accessToken,
@@ -77,25 +77,25 @@ class CreditPackController extends GetxController {
       debugPrint(';;;;;;;;;;;;;;;;;;; $headers ::::::::::::::::');
 
       var response = await BaseClient.postRequest(
-        api: Api.createSubscription,
+        api: Api.createOrder,
         body: jsonEncode(body),
         headers: headers,
       );
 
       var responseBody = await BaseClient.handleResponse(response);
       if (responseBody['success'] = true) {
-        String subscriptionId = responseBody['data']['_id'].toString();
-        LocalStorage.saveData(key: AppConstant.subscriptionId, data: subscriptionId);
-        String? subsId = LocalStorage.getData(key: AppConstant.subscriptionId);
-        if (subsId != null) {
-          paymentController.createPaymentSession(reference: subsId);
-          debugPrint(';;;;;;;;;;;;;;;;;; $subsId ;;;;;;;;;;;;;;;;;;;');
+        String orderId = responseBody['data']['_id'].toString();
+        LocalStorage.saveData(key: AppConstant.orderId, data: orderId);
+        String? ordsId = LocalStorage.getData(key: AppConstant.orderId);
+        if (ordsId != null) {
+          paymentController.createPaymentSession(reference: ordsId,modelType: 'Order');
+          debugPrint(';;;;;;;;;;;;;;;;;; $ordsId ;;;;;;;;;;;;;;;;;;;');
         } else {
-          debugPrint('Failed to retrieve subscription ID from LocalStorage');
+          debugPrint('Failed to retrieve order ID from LocalStorage');
         }
       }
     } catch (e) {
-      debugPrint("subscription failed: $e");
+      debugPrint("Order failed: $e");
     } finally {
       isLoading.value = false;
     }

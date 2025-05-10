@@ -1,5 +1,5 @@
-class CreditModel {
-  CreditModel({
+class MembershipModel {
+  MembershipModel({
     required this.success,
     required this.message,
     required this.meta,
@@ -11,8 +11,8 @@ class CreditModel {
   final Meta? meta;
   final List<Datum> data;
 
-  factory CreditModel.fromJson(Map<String, dynamic> json){
-    return CreditModel(
+  factory MembershipModel.fromJson(Map<String, dynamic> json){
+    return MembershipModel(
       success: json["success"],
       message: json["message"],
       meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
@@ -25,16 +25,24 @@ class CreditModel {
 class Datum {
   Datum({
     required this.id,
-    required this.credits,
+    required this.title,
+    required this.billingCycle,
+    required this.description,
     required this.price,
+    required this.discount,
+    required this.popularity,
     required this.isDeleted,
     required this.createdAt,
     required this.updatedAt,
   });
 
   final String? id;
-  final int? credits;
-  final double? price;
+  final String? title;
+  final String? billingCycle;
+  final List<String> description;
+  final int? price;
+  final int? discount;
+  final int? popularity;
   final bool? isDeleted;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -42,10 +50,12 @@ class Datum {
   factory Datum.fromJson(Map<String, dynamic> json){
     return Datum(
       id: json["_id"],
-      credits: json["credits"],
-      price: (json["price"] is int)
-          ? (json["price"] as int).toDouble()
-          : json["price"] as double?,
+      title: json["title"],
+      billingCycle: json["billingCycle"],
+      description: json["description"] == null ? [] : List<String>.from(json["description"]!.map((x) => x)),
+      price: json["price"],
+      discount: json["discount"],
+      popularity: json["popularity"],
       isDeleted: json["isDeleted"],
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
