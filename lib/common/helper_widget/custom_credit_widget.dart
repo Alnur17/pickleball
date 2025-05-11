@@ -66,7 +66,7 @@ class CustomCreditWidget extends StatelessWidget {
               ],
             ),
             Text(
-              '\$${price.toStringAsFixed(2)}',
+              '€${price.toStringAsFixed(2)}',
               style: h1.copyWith(
                 fontSize: 20,
                 color:

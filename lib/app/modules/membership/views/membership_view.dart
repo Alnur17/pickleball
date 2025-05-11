@@ -45,30 +45,27 @@ class _MembershipViewState extends State<MembershipView> {
                 ? const Center(child: CircularProgressIndicator())
                 : membershipController.membershipData.isEmpty
                     ? const Center(child: Text('No membership plans available'))
-                    : Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: membershipController.membershipData.length,
-                          itemBuilder: (context, index) {
-                            final membership =
-                                membershipController.membershipData[index];
-                            return Column(
-                              children: [
-                                MembershipContainer(
-                                  title: membership.title ?? 'Membership Plan',
-                                  benefits: membership.description,
-                                  price: '\$${membership.price ?? 0}',
-                                  onTap: () {
-                                    membershipController.createSubscription(
-                                        packageId: membership.id ?? '');
-                                  },
-                                ),
-                                sh20,
-                              ],
-                            );
-                          },
-                        ),
-                      )),
+                    : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: membershipController.membershipData.length,
+                      itemBuilder: (context, index) {
+                        final membership =
+                            membershipController.membershipData[index];
+                        return Column(
+                          children: [
+                            MembershipContainer(
+                              title: membership.title ?? 'Membership Plan',
+                              benefits: membership.description,
+                              price: '€${membership.price ?? 0}',
+                              onTap: () {
+                                membershipController.createSubscription(
+                                    packageId: membership.id ?? '');
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    )),
             sh20,
             GestureDetector(
               onTap: () {
