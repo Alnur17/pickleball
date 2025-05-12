@@ -30,6 +30,8 @@ class Datum {
     required this.isDeleted,
     required this.createdAt,
     required this.updatedAt,
+    required this.originalPrice,
+    required this.discountApplied,
   });
 
   final String? id;
@@ -38,6 +40,8 @@ class Datum {
   final bool? isDeleted;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final int? originalPrice;
+  final String? discountApplied;
 
   factory Datum.fromJson(Map<String, dynamic> json){
     return Datum(
@@ -49,6 +53,8 @@ class Datum {
       isDeleted: json["isDeleted"],
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
+      originalPrice: json["originalPrice"],
+      discountApplied: json["discountApplied"],
     );
   }
 
@@ -77,3 +83,6 @@ class Meta {
   }
 
 }
+
+
+
