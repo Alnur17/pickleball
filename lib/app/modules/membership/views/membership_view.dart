@@ -56,7 +56,7 @@ class _MembershipViewState extends State<MembershipView> {
                             MembershipContainer(
                               title: membership.title ?? 'Membership Plan',
                               benefits: membership.description,
-                              price: '€${membership.price ?? 0}',
+                              price: '£${membership.price ?? 0}',
                               onTap: () {
                                 membershipController.createSubscription(
                                     packageId: membership.id ?? '');
