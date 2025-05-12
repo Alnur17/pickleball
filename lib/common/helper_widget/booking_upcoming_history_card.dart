@@ -64,7 +64,7 @@ class BookingUpcomingHistoryCard extends StatelessWidget {
             children: [
               Text('Amount Paid', style: h6.copyWith(fontWeight: FontWeight.w500)),
               sw12,
-              Text('\$$amountPaid', style: h6.copyWith(fontWeight: FontWeight.bold)),
+              Text('$amountPaid credits', style: h6.copyWith(fontWeight: FontWeight.bold)),
             ],
           ),
           sh8,

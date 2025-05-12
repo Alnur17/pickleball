@@ -84,7 +84,7 @@ class _MembershipViewState extends State<MembershipView> {
                   children: [
                     Text(
                       'Pay As You Go',
-                      style: h1,
+                      style: h2,
                     ),
                     sh12,
                     Text(

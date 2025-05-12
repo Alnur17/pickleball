@@ -237,7 +237,7 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
                       ),
                       sh8,
                       Text(
-                        "\$${paymentController.paymentDetailsData.value?.amount.toString() ?? ''}",
+                        "£${paymentController.paymentDetailsData.value?.amount.toString() ?? ''}",
                         style: h2.copyWith(
                           fontWeight: FontWeight.w500,
                         ),
@@ -264,11 +264,11 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
                       ),
                       _buildRow(
                         'Total Payment',
-                        "\$${paymentController.paymentDetailsData.value?.amount.toString() ?? ''}",
+                        "£${paymentController.paymentDetailsData.value?.amount.toString() ?? ''}",
                       ),
                       _buildRow(
                         'Total',
-                        "\$${paymentController.paymentDetailsData.value?.amount.toString() ?? ''}",
+                        "£${paymentController.paymentDetailsData.value?.amount.toString() ?? ''}",
                       ),
                     ],
                   );

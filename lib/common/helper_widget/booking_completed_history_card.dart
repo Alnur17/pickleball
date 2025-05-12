@@ -97,7 +97,7 @@ class BookingCompletedHistoryCard extends StatelessWidget {
               Text('Amount Paid', style: h6.copyWith(fontWeight: FontWeight.w500)),
               sw12,
               Text(
-                '\$${amountPaid ?? "0"}',
+                '${amountPaid ?? "0"} credits',
                 style: h6.copyWith(fontWeight: FontWeight.bold),
               ),
             ],
