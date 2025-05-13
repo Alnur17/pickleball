@@ -35,9 +35,9 @@ class BookingCompletedHistoryCard extends StatelessWidget {
 
   Color getStatusColor() {
     switch (status?.toLowerCase()) {
-      case "complete":
+      case "confirmed":
         return AppColors.lightGreenTwo;
-      case "canceled":
+      case "cancelled":
         return AppColors.red;
       default:
         return AppColors.grey; // Fallback for unexpected statuses
@@ -123,7 +123,7 @@ class BookingCompletedHistoryCard extends StatelessWidget {
           sh12,
           Row(
             children: [
-              if (status?.toLowerCase() == "complete" && onRebook != null)
+              if (status?.toLowerCase() == "confirmed" && onRebook != null)
                 Expanded(
                   child: CustomButton(
                     height: 40,
@@ -135,8 +135,8 @@ class BookingCompletedHistoryCard extends StatelessWidget {
                     backgroundColor: AppColors.lightGreenTwo.withOpacity(0.1),
                   ),
                 ),
-              if (status?.toLowerCase() == "complete" && onRebook != null && onLeaveReview != null) sw12,
-              if (status?.toLowerCase() == "complete" && onLeaveReview != null)
+              if (status?.toLowerCase() == "confirmed" && onRebook != null && onLeaveReview != null) sw12,
+              if (status?.toLowerCase() == "confirmed" && onLeaveReview != null)
                 Expanded(
                   child: CustomButton(
                     height: 40,
@@ -148,7 +148,7 @@ class BookingCompletedHistoryCard extends StatelessWidget {
                     backgroundColor: AppColors.lightGreenTwo.withOpacity(0.1),
                   ),
                 ),
-              if (status?.toLowerCase() == "canceled" && onViewRefund != null)
+              if (status?.toLowerCase() == "cancelled" && onViewRefund != null)
                 Expanded(
                   child: CustomButton(
                     height: 40,

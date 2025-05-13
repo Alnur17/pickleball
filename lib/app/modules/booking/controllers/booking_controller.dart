@@ -125,6 +125,8 @@ class BookingController extends GetxController {
         headers: headers,
       );
 
+
+
       var responseBody = await BaseClient.handleResponse(response);
       MyAllBookingModel myAllBookingModel =
           MyAllBookingModel.fromJson(responseBody);

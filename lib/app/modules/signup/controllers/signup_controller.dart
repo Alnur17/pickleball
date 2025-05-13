@@ -61,22 +61,26 @@ class SignupController extends GetxController {
         // Save OTP token using LocalStorage
         LocalStorage.saveData(key: AppConstant.otpToken, data: otpToken);
 
-        print(
+        debugPrint(
             '=======> OTP Token saved: ${LocalStorage.getData(key: AppConstant.otpToken)} <====');
 
-        Get.offAll(() => VerifyYourEmailView(email: emailController.text,));
-
-      } else {
-        debugPrint(
-            '===========================> Failed to register. Status code: ${response.statusCode} <===========================');
-        Get.snackbar('Error', 'Registration failed. Please try again.');
+        Get.offAll(() => VerifyYourEmailView(
+              email: emailController.text,
+            ));
+      } else if (response.statusCode == 403) {
+        Get.snackbar(
+          'Failed',
+          'User already exists with this email.',
+          backgroundColor: AppColors.red,
+          colorText: AppColors.white,
+        );
       }
       isLoading(false);
     } catch (e) {
       debugPrint(
           '=====================> Error: $e <===========================');
       Get.snackbar('Error', 'An error occurred. Please try again.');
-    }finally{
+    } finally {
       isLoading(false);
     }
   }
@@ -85,16 +89,15 @@ class SignupController extends GetxController {
     required String otp,
   }) async {
     try {
-
       String otpToken = LocalStorage.getData(key: AppConstant.otpToken);
 
-      debugPrint("============================> $otpToken <==================================");
+      debugPrint(
+          "============================> $otpToken <==================================");
 
       isLoading(true);
       var map = {
         'otp': otp,
       };
-
 
       var headers = {
         'Authorization': otpToken,
@@ -106,13 +109,11 @@ class SignupController extends GetxController {
       );
 
       if (responseBody != null) {
-
         String message = responseBody['message'].toString();
         bool success = responseBody['success'];
         String accessToken = responseBody['data']['accessToken'].toString();
 
         LocalStorage.saveData(key: AppConstant.accessToken, data: accessToken);
-
 
         kSnackBar(message: message, bgColor: AppColors.green);
 
