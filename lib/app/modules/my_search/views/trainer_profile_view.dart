@@ -96,7 +96,7 @@ class _TrainerProfileViewState extends State<TrainerProfileView> {
             sw12,
             Text(
               trainer.perHourRate != null
-                  ? '\$${trainer.perHourRate}/hour'
+                  ? '£${trainer.perHourRate}/hour'
                   : 'N/A',
               style: h3.copyWith(
                   fontWeight: FontWeight.w700, color: AppColors.black100),

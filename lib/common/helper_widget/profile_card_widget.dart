@@ -55,7 +55,7 @@ class ProfileCardWidget extends StatelessWidget {
             children: [
               Text("$experience+ Years", style: h2.copyWith(fontSize: 12)),
               sw8,
-              Text('\$$hourlyRate', style: h2.copyWith(fontSize: 12)),
+              Text('£$hourlyRate', style: h2.copyWith(fontSize: 12)),
             ],
           ),
           sh8,
