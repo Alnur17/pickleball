@@ -27,8 +27,8 @@ class _BookingViewState extends State<BookingView> {
   @override
   void initState() {
     super.initState();
-    bookingController.fetchWaitlist(null);
-    bookingController.fetchAllBooking(null);
+    bookingController.fetchWaitlist();
+    bookingController.fetchAllBooking();
   }
 
   @override
@@ -72,12 +72,8 @@ class _BookingViewState extends State<BookingView> {
                       children: [
                         SearchFiled(
                           onChanged: (value) {
-                            if (value.isEmpty) {
-                              bookingController.fetchAllBooking(null);
-                            } else {
-                              bookingController
-                                  .onSearchQueryChangedAllMyBooking(value);
-                            }
+                            bookingController
+                                .onSearchQueryChangedAllMyBooking(value);
                           },
                         ),
                         sh20,
@@ -118,8 +114,8 @@ class _BookingViewState extends State<BookingView> {
                                               confirmData.slot?.startTime ?? '',
                                           endTime:
                                               confirmData.slot?.endTime ?? '',
-                                          imageUrl: confirmData.session?.coach
-                                                  ?.photoUrl ??
+                                          imageUrl: confirmData
+                                                  .session?.coach?.photoUrl ??
                                               AppImages.profileImageTwo,
                                           onCancel: () {
                                             _showCancelPopup(confirmData);
@@ -142,12 +138,8 @@ class _BookingViewState extends State<BookingView> {
                       children: [
                         SearchFiled(
                           onChanged: (value) {
-                            if (value.isEmpty) {
-                              bookingController.waitListList(null);
-                            } else {
-                              bookingController
-                                  .onSearchQueryChangedWaitlist(value);
-                            }
+                            bookingController
+                                .onSearchQueryChangedWaitlist(value);
                           },
                         ),
                         sh20,
@@ -259,5 +251,4 @@ class _BookingViewState extends State<BookingView> {
       ),
     );
   }
-
 }

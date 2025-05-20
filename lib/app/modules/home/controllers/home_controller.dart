@@ -10,6 +10,11 @@ import '../../../data/base_client.dart';
 import '../model/course_sessions_model.dart';
 
 class HomeController extends GetxController {
+  // Full original data fetched from API
+  var _allCourseSessions = <Datum>[];
+  var _allTrainerList = <DatumT>[];
+
+  // Observable filtered lists used in UI
   var courseSessions = <Datum>[].obs;
   var trainerList = <DatumT>[].obs;
   var recommendedTrainerList = <RecommendedDatum>[].obs;
@@ -18,12 +23,12 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchCourseSessions(null);
-    fetchTrainers(null);
+    fetchCourseSessions();
+    fetchTrainers();
     fetchRecommendedTrainers();
   }
 
-  Future<void> fetchCourseSessions(String? sessionQuery) async {
+  Future<void> fetchCourseSessions() async {
     try {
       isLoading(true);
       String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
@@ -33,15 +38,17 @@ class HomeController extends GetxController {
       };
 
       var response = await BaseClient.getRequest(
-        api: Api.sessions(sessionQuery ?? ''),
+        api: Api.sessions,
         headers: headers,
       );
 
       var responseBody = await BaseClient.handleResponse(response);
       CourseSessionsModel courseSessionsModel =
-          CourseSessionsModel.fromJson(responseBody);
-      courseSessions.value =
-          courseSessionsModel.data; // Update course sessions list
+      CourseSessionsModel.fromJson(responseBody);
+
+      _allCourseSessions = courseSessionsModel.data;
+      courseSessions.value = List.from(_allCourseSessions); // Show all initially
+
       update();
     } catch (e) {
       debugPrint("Error fetching course sessions: $e");
@@ -50,7 +57,7 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> fetchTrainers(String? trainerQuery) async {
+  Future<void> fetchTrainers() async {
     try {
       isLoading(true);
       String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
@@ -60,18 +67,47 @@ class HomeController extends GetxController {
       };
 
       var response = await BaseClient.getRequest(
-        api: Api.trainers(trainerQuery ?? ''),
+        api: Api.trainers,
         headers: headers,
       );
 
       var responseBody = await BaseClient.handleResponse(response);
       TrainersModel trainersModel = TrainersModel.fromJson(responseBody);
-      trainerList.value = trainersModel.data; // Update trainers list
+
+      _allTrainerList = trainersModel.data;
+      trainerList.value = List.from(_allTrainerList); // Show all initially
+
       update();
     } catch (e) {
       debugPrint("Error fetching trainers: $e");
     } finally {
       isLoading(false);
+    }
+  }
+
+  // Local search on courseSessions
+  void onSearchQueryChangedSession(String query) {
+    if (query.isEmpty) {
+      courseSessions.value = List.from(_allCourseSessions);
+    } else {
+      courseSessions.value = _allCourseSessions
+          .where((session) =>
+      session.name?.toLowerCase().contains(query.toLowerCase()) == true ||
+          (session.description != null &&
+              session.description!.toLowerCase().contains(query.toLowerCase())))
+          .toList();
+    }
+  }
+
+  // Local search on trainerList
+  void onSearchQueryChangedTrainer(String query) {
+    if (query.isEmpty) {
+      trainerList.value = List.from(_allTrainerList);
+    } else {
+      trainerList.value = _allTrainerList
+          .where((trainer) =>
+      trainer.name?.toLowerCase().contains(query.toLowerCase()) == true)
+          .toList();
     }
   }
 
@@ -100,11 +136,11 @@ class HomeController extends GetxController {
     }
   }
 
-  void onSearchQueryChangedSession(String sessionQuery) {
-    fetchCourseSessions(sessionQuery);
-  }
-
-  void onSearchQueryChangedTrainer(String trainerQuery) {
-    fetchTrainers(trainerQuery);
-  }
+  // void onSearchQueryChangedSession(String sessionQuery) {
+  //   fetchCourseSessions(sessionQuery);
+  // }
+  //
+  // void onSearchQueryChangedTrainer(String trainerQuery) {
+  //   fetchTrainers(trainerQuery);
+  // }
 }

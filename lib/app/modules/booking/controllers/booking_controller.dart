@@ -11,6 +11,11 @@ import '../model/signle_payment_details_model.dart';
 
 class BookingController extends GetxController {
   var isLoading = true.obs;
+
+  // Full original data fetched from API
+  List<Result> _allWaitList = [];
+  List<Datum> _allBookingList = [];
+
   var waitListList = <Result>[].obs;
   var singlePaymentDetails = Rxn<SPMData>();
   var allBookingList = <Datum>[].obs;
@@ -19,24 +24,44 @@ class BookingController extends GetxController {
   var upcomingBookings = <Datum>[].obs;
 
   final ProfileAndSettingsController profileAndSettingsController =
-  Get.put(ProfileAndSettingsController());
+      Get.put(ProfileAndSettingsController());
 
   @override
   void onInit() {
     super.onInit();
-    fetchWaitlist(null);
+    fetchWaitlist();
   }
 
-
   void onSearchQueryChangedWaitlist(String waitlistQuery) {
-    fetchWaitlist(waitlistQuery);
+    if (waitlistQuery.isEmpty) {
+      waitListList.value = List.from(_allWaitList);
+    } else {
+      waitListList.value = _allWaitList
+          .where((waitlist) =>
+              (waitlist.session?.name // replace with real field(s)
+                      ?.toLowerCase()
+                      .contains(waitlistQuery.toLowerCase()) ??
+                  false))
+          .toList();
+    }
   }
 
   void onSearchQueryChangedAllMyBooking(String bookingQuery) {
-    fetchAllBooking(bookingQuery);
+    if (bookingQuery.isEmpty) {
+      allBookingList.value = List.from(_allBookingList);
+      _updateBookingLists();
+    } else {
+      allBookingList.value = _allBookingList.where((booking) {
+        final sessionName = booking.session?.name?.toLowerCase() ?? '';
+        final coachName = booking.session?.coach?.name?.toLowerCase() ?? '';
+        final query = bookingQuery.toLowerCase();
+        return sessionName.contains(query) || coachName.contains(query);
+      }).toList();
+      _updateBookingLists();
+    }
   }
 
-  Future<void> fetchWaitlist(String? waitlistQuery) async {
+  Future<void> fetchWaitlist() async {
     try {
       isLoading(true);
       String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
@@ -46,13 +71,15 @@ class BookingController extends GetxController {
       };
 
       var response = await BaseClient.getRequest(
-        api: Api.getMyWaitlist(waitlistQuery ?? ''),
+        api: Api.getMyWaitlist,
         headers: headers,
       );
 
       var responseBody = await BaseClient.handleResponse(response);
       MyWaitlistModel waitlistModel = MyWaitlistModel.fromJson(responseBody);
-      waitListList.value = waitlistModel.data!.data; // Update waitlist
+
+      _allWaitList = waitlistModel.data!.data;
+      waitListList.value = List.from(_allWaitList);
       update();
     } catch (e) {
       debugPrint("Error fetching waitlist: $e");
@@ -61,31 +88,67 @@ class BookingController extends GetxController {
     }
   }
 
-  // Future<void> getSinglePaymentByBookingId(String bookingId) async {
-  //   try {
-  //     isLoading(true);
-  //     String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
-  //     var headers = {
-  //       'Authorization': accessToken,
-  //       'Content-Type': 'application/json',
-  //     };
-  //
-  //     var response = await BaseClient.getRequest(
-  //       api: Api.singlePaymentByBookingId(bookingId),
-  //       headers: headers,
-  //     );
-  //
-  //     var responseBody = await BaseClient.handleResponse(response);
-  //     SinglePaymentDetailsModel singlePaymentDetailsModel =
-  //         SinglePaymentDetailsModel.fromJson(responseBody);
-  //     singlePaymentDetails.value = singlePaymentDetailsModel.data; // Update
-  //     update();
-  //   } catch (e) {
-  //     debugPrint("Error fetching single payment: $e");
-  //   } finally {
-  //     isLoading(false);
-  //   }
-  // }
+  Future<void> fetchAllBooking() async {
+    try {
+      isLoading(true);
+      String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
+      var headers = {
+        'Authorization': accessToken,
+        'Content-Type': 'application/json',
+      };
+
+      var response = await BaseClient.getRequest(
+        api: Api.myBookings,
+        headers: headers,
+      );
+
+      var responseBody = await BaseClient.handleResponse(response);
+      MyAllBookingModel myAllBookingModel =
+          MyAllBookingModel.fromJson(responseBody);
+
+      _allBookingList = myAllBookingModel.data;
+      allBookingList.value = List.from(_allBookingList);
+      _updateBookingLists();
+
+      update();
+    } catch (e) {
+      debugPrint("Error fetching my booking: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void _updateBookingLists() {
+    DateTime currentDate = DateTime.now();
+
+    confirmBooking.value = allBookingList
+        .where((booking) => booking.status?.toLowerCase() == "confirmed")
+        .toList();
+
+    upcomingBookings.value = allBookingList
+        .where((booking) =>
+            booking.session?.startDate != null &&
+            booking.session!.startDate!.isAfter(currentDate) &&
+            booking.status?.toLowerCase() == 'confirmed')
+        .toList();
+
+    completedBookings.value = allBookingList.where((booking) {
+      if (booking.status?.toLowerCase() == "cancelled") {
+        return true;
+      }
+
+      if (booking.status?.toLowerCase() != "confirmed" ||
+          booking.session?.startDate == null ||
+          booking.session?.duration == null) {
+        return false;
+      }
+
+      DateTime endDate = booking.session!.startDate!
+          .add(Duration(minutes: booking.session!.duration!));
+
+      return endDate.isBefore(currentDate);
+    }).toList();
+  }
 
   Future<void> removeWaitlist(String id) async {
     try {
@@ -99,77 +162,12 @@ class BookingController extends GetxController {
 
       if (responseBody['success'] == true) {
         debugPrint("Waitlist remove successfully: ${responseBody['message']}");
-        await fetchWaitlist('');
+        await fetchWaitlist();
       } else {
         debugPrint("Failed to remove waitlist: ${responseBody['message']}");
       }
     } catch (e) {
       debugPrint('Failed to remove waitlist $e');
-    } finally {
-      isLoading(false);
-    }
-  }
-
-  ///
-  Future<void> fetchAllBooking(String? bookingQuery) async {
-    try {
-      isLoading(true);
-      String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
-      var headers = {
-        'Authorization': accessToken,
-        'Content-Type': 'application/json',
-      };
-
-      var response = await BaseClient.getRequest(
-        api: Api.myBookings(bookingQuery ?? ''),
-        headers: headers,
-      );
-
-
-
-      var responseBody = await BaseClient.handleResponse(response);
-      MyAllBookingModel myAllBookingModel =
-          MyAllBookingModel.fromJson(responseBody);
-      allBookingList.value = myAllBookingModel.data; // Update confirmedList
-
-      DateTime currentDate = DateTime.now();
-
-      //Confirm booking: all date future, past and present
-      confirmBooking.value = allBookingList
-          .where((booking) => booking.status?.toLowerCase() == "confirmed")
-          .toList();
-
-      // Upcoming bookings: future date
-      upcomingBookings.value = allBookingList
-          .where((booking) =>
-              booking.session?.startDate != null &&
-              booking.session!.startDate!.isAfter(currentDate) &&
-              booking.status?.toLowerCase() == 'confirmed')
-          .toList();
-
-      // Completed bookings: includes both canceled and past confirmed bookings
-      completedBookings.value = allBookingList.where((booking) {
-        // Include canceled bookings
-        if (booking.status?.toLowerCase() == "cancelled") {
-          return true;
-        }
-
-        // Check for completed confirmed bookings
-        if (booking.status?.toLowerCase() != "confirmed" ||
-            booking.session?.startDate == null ||
-            booking.session?.duration == null) {
-          return false;
-        }
-
-        // Calculate end date by adding duration to start date
-        DateTime endDate = booking.session!.startDate!
-            .add(Duration(minutes: booking.session!.duration!));
-
-        return endDate.isBefore(currentDate);
-      }).toList();
-      update();
-    } catch (e) {
-      debugPrint("Error fetching my booking: $e");
     } finally {
       isLoading(false);
     }
@@ -186,15 +184,7 @@ class BookingController extends GetxController {
 
       if (responseBody['success'] == true) {
         debugPrint("Bookings cancel successfully: ${responseBody['message']}");
-        //String bookingId = LocalStorage.getData(key: AppConstant.bookingId);
-        //await getSinglePaymentByBookingId(bookingId);
-        // await refundBooking(
-        //   paymentIntendId:
-        //       singlePaymentDetails.value?.paymentIntentId.toString() ?? '',
-        //   amount: singlePaymentDetails.value?.amount.toString() ?? '',
-        // );
-
-        await fetchAllBooking('');
+        await fetchAllBooking();
         profileAndSettingsController.getMyProfile();
         isLoading(false);
         return true;
@@ -209,34 +199,4 @@ class BookingController extends GetxController {
       isLoading(false);
     }
   }
-
-  // Future<bool> refundBooking(
-  //     {required String paymentIntendId, required String amount}) async {
-  //   try {
-  //     isLoading(true);
-  //
-  //     var body = {"intendId": paymentIntendId, "amount": amount};
-  //
-  //     var response = await BaseClient.patchRequest(
-  //       api: Api.refundPayment,
-  //       body: jsonEncode(body),
-  //     );
-  //
-  //     var responseBody = await BaseClient.handleResponse(response);
-  //
-  //     if (responseBody['success'] == true) {
-  //       debugPrint("Refund successfully: ${responseBody['message']}");
-  //       await fetchAllBooking('');
-  //       return true;
-  //     } else {
-  //       debugPrint("Failed to Refund: ${responseBody['message']}");
-  //       return false;
-  //     }
-  //   } catch (e) {
-  //     debugPrint("Error Refund: $e");
-  //     return false;
-  //   } finally {
-  //     isLoading(false);
-  //   }
-  // }
 }

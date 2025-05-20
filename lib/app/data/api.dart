@@ -2,7 +2,6 @@ class Api {
   /// base url
 
   static const baseUrl = "http://172.252.13.74:5007/api/v1";
-  //static const baseUrl = "http://192.168.10.144:5007/api/v1";
   static const socket = "http://172.252.13.74:4000";
 
 
@@ -16,16 +15,15 @@ class Api {
   static const changePassword = "$baseUrl/auth/change-password"; // done
 
   ///Sessions Data
-  static sessions(String? query) => query?.isNotEmpty ?? false
-      ? "$baseUrl/sessions?searchTerm=$query"
-      : "$baseUrl/sessions"; //done
+  static const sessions = "$baseUrl/sessions"; //done
 
   ///Trainers Data
-  static trainers(String? query) {
-    return query?.isNotEmpty ?? false
-        ? "$baseUrl/trainers?searchTerm=$query"
-        : "$baseUrl/trainers";
-  } //done
+  // static trainers(String? query) {
+  //   return query?.isNotEmpty ?? false
+  //       ? "$baseUrl/trainers?searchTerm=$query"
+  //       : "$baseUrl/trainers";
+  // } //done
+   static const trainers = "$baseUrl/trainers";//done
 
    static const recommendedTrainers = "$baseUrl/trainers/recommended"; //done
 
@@ -36,9 +34,7 @@ class Api {
   static getSingleTrainer(String id) => "$baseUrl/trainers/$id"; //done
 
   ///showBookMarked
-  static myBookings(String? query) => query?.isNotEmpty ?? false
-      ? "$baseUrl/bookings/my-bookings?searchTerm=$query"
-      : "$baseUrl/bookings/my-bookings"; //done
+  static const myBookings= "$baseUrl/bookings/my-bookings"; //done
 
   static const addBookings = "$baseUrl/bookings"; // done
 
@@ -49,9 +45,7 @@ class Api {
   /// WaitList
   static const addMyWaitlist = "$baseUrl/waitLists"; // done
 
-  static getMyWaitlist(String? query) => query?.isNotEmpty ?? false
-      ? "$baseUrl/waitLists/my-waitlist?searchTerm=$query"
-      : "$baseUrl/waitLists/my-waitlist"; //done
+  static const getMyWaitlist = "$baseUrl/waitLists/my-waitlist"; //done
 
   static removeWaitlist(String id) => "$baseUrl/waitLists/$id"; //done
 

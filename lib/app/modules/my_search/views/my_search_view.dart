@@ -91,11 +91,7 @@ class MySearchView extends GetView<MySearchController> {
         children: [
           SearchFiled(
             onChanged: (value) {
-              if (value.isEmpty) {
-                homeController.fetchCourseSessions(null);
-              } else {
-                homeController.onSearchQueryChangedSession(value);
-              }
+              homeController.onSearchQueryChangedSession(value);
             },
           ),
           // sw12,
@@ -112,34 +108,36 @@ class MySearchView extends GetView<MySearchController> {
           // ),
           sh20,
           Expanded(
-            child: ListView.builder(
-              itemCount: homeController.courseSessions.length,
-              itemBuilder: (context, index) {
-                var session = homeController.courseSessions[index];
-                return Padding(
-                  padding: EdgeInsets.only(
-                    bottom: index == homeController.courseSessions.length - 1
-                        ? 116
-                        : 12,
-                  ),
-                  child: CourseCardWidget(
-                    backgroundImage: session.thumbnail,
-                    title: session.name ?? "No title",
-                    description: session.description ?? "No description",
-                    startDate:
-                        DateTimeFormationClass.formatDate(session.startDate),
-                    duration: session.duration.toString(),
-                    // startTime: session.startTime ?? "No start time",
-                    // endTime: session.endTime ?? "No end time",
-                    location: session.location ?? "No location",
-                    skillLevel: session.skillLevel ?? "No skill level",
-                    creditPoints: session.credit ?? 0,
-                    onViewDetails: () {
-                      Get.to(() => SessionDetailsView(
-                            id: session.id,
-                          ));
-                    },
-                  ),
+            child: Obx(
+              () {
+                return ListView.builder(
+                  itemCount: homeController.courseSessions.length,
+                  itemBuilder: (context, index) {
+                    var session = homeController.courseSessions[index];
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          bottom:
+                              index == homeController.courseSessions.length - 1
+                                  ? 116
+                                  : 12),
+                      child: CourseCardWidget(
+                        backgroundImage: session.thumbnail,
+                        title: session.name ?? "No title",
+                        description: session.description ?? "No description",
+                        startDate: DateTimeFormationClass.formatDate(
+                            session.startDate),
+                        duration: session.duration.toString(),
+                        location: session.location ?? "No location",
+                        skillLevel: session.skillLevel ?? "No skill level",
+                        creditPoints: session.credit ?? 0,
+                        onViewDetails: () {
+                          Get.to(() => SessionDetailsView(
+                                id: session.id,
+                              ));
+                        },
+                      ),
+                    );
+                  },
                 );
               },
             ),
@@ -154,54 +152,39 @@ class MySearchView extends GetView<MySearchController> {
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          //_buildSearchBar(),
           SearchFiled(
             onChanged: (value) {
-              if (value.isEmpty) {
-                homeController
-                    .fetchCourseSessions(null); // Fetch all course sessions
-                //homeController.fetchTrainers(null);  // Fetch all trainers
-              } else {
-                // Trigger search filtering dynamically
-                homeController.onSearchQueryChangedSession(value);
-              }
+              homeController.onSearchQueryChangedTrainer(value);
             },
           ),
-          // sw12,
-          // Container(
-          //   height: 48,
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(12),
-          //     border: Border.all(color: AppColors.silver),
-          //   ),
-          //   child: Image.asset(
-          //     AppImages.filter,
-          //     scale: 4,
-          //   ),
-          // ),
           sh20,
           Expanded(
-            child: GridView.builder(
-              padding: EdgeInsets.only(bottom: 116),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                mainAxisExtent: 220,
-              ),
-              itemCount: homeController.trainerList.length,
-              itemBuilder: (context, index) {
-                var trainer = homeController.trainerList[index];
-                return ProfileCardWidget(
-                  name: trainer.name ?? 'Unknown',
-                  rating: trainer.avgRating ?? 0.0,
-                  experience: (trainer.experience ?? 0).toString(),
-                  hourlyRate: (trainer.perHourRate ?? 0).toString(),
-                  profileImage: trainer.photoUrl ?? AppImages.profileImageTwo,
-                  onTap: () {
-                    Get.to(() => TrainerProfileView(
-                          id: trainer.id,
-                        ));
+            child: Obx(
+              () {
+                return GridView.builder(
+                  padding: EdgeInsets.only(bottom: 116),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                    mainAxisExtent: 220,
+                  ),
+                  itemCount: homeController.trainerList.length,
+                  itemBuilder: (context, index) {
+                    var trainer = homeController.trainerList[index];
+                    return ProfileCardWidget(
+                      name: trainer.name ?? 'Unknown',
+                      rating: trainer.avgRating ?? 0.0,
+                      experience: (trainer.experience ?? 0).toString(),
+                      hourlyRate: (trainer.perHourRate ?? 0).toString(),
+                      profileImage:
+                          trainer.photoUrl ?? AppImages.profileImageTwo,
+                      onTap: () {
+                        Get.to(() => TrainerProfileView(
+                              id: trainer.id,
+                            ));
+                      },
+                    );
                   },
                 );
               },
@@ -211,37 +194,4 @@ class MySearchView extends GetView<MySearchController> {
       ),
     );
   }
-
-// Widget _buildSearchBar() {
-//   return Row(
-//     children: [
-//       Expanded(
-//         child: SearchFiled(
-//           onChanged: (value) {
-//             if (value.isEmpty) {
-//               homeController
-//                   .fetchCourseSessions(null); // Fetch all course sessions
-//               homeController.fetchTrainers(null); // Fetch all trainers
-//             } else {
-//               // Trigger search filtering dynamically
-//              // homeController.onSearchQueryChanged(value);
-//             }
-//           },
-//         ),
-//       ),
-//       sw12,
-//       Container(
-//         height: 48,
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(12),
-//           border: Border.all(color: AppColors.silver),
-//         ),
-//         child: Image.asset(
-//           AppImages.filter,
-//           scale: 4,
-//         ),
-//       ),
-//     ],
-//   );
-// }
 }

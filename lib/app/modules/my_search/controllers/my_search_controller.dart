@@ -155,7 +155,7 @@ class MySearchController extends GetxController {
         kSnackBar(
             message: "${responseBody['message']}", bgColor: AppColors.green);
         // refresh the waitlist after creating
-        await bookingController.fetchWaitlist('');
+        await bookingController.fetchWaitlist();
         return true;
       } else {
         debugPrint("Failed to create waitlist: ${responseBody['message']}");
@@ -232,45 +232,6 @@ class MySearchController extends GetxController {
     }
   }
 
-  // Future<bool> getSingleBooking(String bookingId) async {
-  //   try {
-  //     isLoading(true);
-  //
-  //     String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
-  //
-  //     var headers = {
-  //       'Authorization': accessToken,
-  //       'Content-Type': 'application/json',
-  //     };
-  //
-  //     var response = await BaseClient.getRequest(
-  //       api: Api.getSingleBookingById(bookingId),
-  //       headers: headers,
-  //     );
-  //
-  //     var responseBody = await BaseClient.handleResponse(response);
-  //
-  //     if (responseBody['success'] == true) {
-  //       debugPrint("Bookings created successfully: ${responseBody['message']}");
-  //
-  //       SingleBookingModel singleBookingModel =
-  //           SingleBookingModel.fromJson(responseBody);
-  //       singleBookingList.value = singleBookingModel.data; // Update data
-  //
-  //       return true;
-  //     } else {
-  //       debugPrint("Failed to create bookings: ${responseBody['message']}");
-  //       isLoading(false);
-  //       return false;
-  //     }
-  //   } catch (e) {
-  //     debugPrint("Error creating bookings: $e");
-  //     return false;
-  //   } finally {
-  //     isLoading(false);
-  //   }
-  // }
-
   Future<void> cancelWaitlistBySessionId(String id) async {
     try {
       isLoading(true);
@@ -282,7 +243,7 @@ class MySearchController extends GetxController {
 
       if (responseBody['success'] == true) {
         debugPrint("Waitlist remove successfully: ${responseBody['message']}");
-        await bookingController.fetchWaitlist('');
+        await bookingController.fetchWaitlist();
       }
     } catch (e) {
       debugPrint("Error remove waitlist: $e");

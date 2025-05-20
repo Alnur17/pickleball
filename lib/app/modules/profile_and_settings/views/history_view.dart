@@ -226,12 +226,8 @@ class _HistoryViewState extends State<HistoryView> {
                       children: [
                         SearchFiled(
                           onChanged: (value) {
-                            if (value.isEmpty) {
-                              bookingController.fetchAllBooking(null);
-                            } else {
-                              bookingController
-                                  .onSearchQueryChangedAllMyBooking(value);
-                            }
+                            bookingController
+                                .onSearchQueryChangedAllMyBooking(value);
                           },
                         ),
                         sh20,
@@ -249,9 +245,9 @@ class _HistoryViewState extends State<HistoryView> {
                                       final booking = bookingController
                                           .completedBookings[index];
                                       return BookingCompletedHistoryCard(
-                                        coachName: booking
-                                                .session?.coach?.name ??
-                                            "Unknown",
+                                        coachName:
+                                            booking.session?.coach?.name ??
+                                                "Unknown",
                                         sessionTitle:
                                             booking.session?.name ?? "Unknown",
                                         date: DateTimeFormationClass.formatDate(
@@ -289,12 +285,8 @@ class _HistoryViewState extends State<HistoryView> {
                       children: [
                         SearchFiled(
                           onChanged: (value) {
-                            if (value.isEmpty) {
-                              bookingController.fetchAllBooking(null);
-                            } else {
-                              bookingController
-                                  .onSearchQueryChangedAllMyBooking(value);
-                            }
+                            bookingController
+                                .onSearchQueryChangedAllMyBooking(value);
                           },
                         ),
                         sh20,
@@ -312,19 +304,22 @@ class _HistoryViewState extends State<HistoryView> {
                                       final booking = bookingController
                                           .upcomingBookings[index];
                                       return BookingUpcomingHistoryCard(
-                                        coachName: booking
-                                                .session?.coach?.name ??
-                                            "Unknown",
+                                        coachName:
+                                            booking.session?.coach?.name ??
+                                                "Unknown",
                                         sessionTitle:
                                             booking.session?.name ?? "Unknown",
                                         date: DateTimeFormationClass.formatDate(
                                             booking.session?.startDate),
-                                        amountPaid: booking.session?.credit.toString() ?? '',
+                                        amountPaid: booking.session?.credit
+                                                .toString() ??
+                                            '',
                                         startTime:
                                             booking.slot?.startTime ?? '',
                                         endTime: booking.slot?.endTime ?? '',
-                                        imageUrl: booking.session?.coach?.photoUrl ??
-                                            AppImages.profileImageTwo,
+                                        imageUrl:
+                                            booking.session?.coach?.photoUrl ??
+                                                AppImages.profileImageTwo,
                                         onCancel: () {
                                           _showCancelPopup(booking);
                                         },
