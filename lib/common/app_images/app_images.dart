@@ -128,6 +128,7 @@ class AppImages {
   static const starImage = "assets/images/star image.png";
   static const containerImage = "assets/images/container image.jpg";
   static const containerImageTwo = "assets/images/container image two.jpg";
+  static const profileImageAsset = "assets/images/profile image.png";
 
   static const profileImage = 'https://images.unsplash.com/photo-1578320339911-5e7974b2720a?q=80&w=778&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
   static const profileImageCamera = 'https://e7.pngegg.com/pngimages/442/477/png-clipart-computer-icons-user-profile-avatar-profile-heroes-profile-thumbnail.png';

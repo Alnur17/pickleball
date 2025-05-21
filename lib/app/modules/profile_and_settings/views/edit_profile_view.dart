@@ -96,7 +96,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                               : (profileAndSettingsController.myProfileData.value?.photoUrl != null &&
                               profileAndSettingsController.myProfileData.value!.photoUrl!.isNotEmpty)
                                   ? NetworkImage(profileAndSettingsController.myProfileData.value!.photoUrl!)
-                                  : const AssetImage(AppImages.profileImageCamera)
+                                  : const AssetImage(AppImages.profileImageAsset) as ImageProvider,
                         ),
                       ),
                       Positioned(
