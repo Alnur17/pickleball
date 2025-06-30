@@ -47,7 +47,10 @@ class _CreditPackViewState extends State<CreditPackView> {
               child: Obx(
                 () {
                   if (creditPackController.isLoading.value) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                        child: CircularProgressIndicator(
+                      color: AppColors.textColorBlueV2,
+                    ));
                   } else if (creditPackController.creditList.isEmpty) {
                     return const Center(
                         child: Text('No credit packs available'));

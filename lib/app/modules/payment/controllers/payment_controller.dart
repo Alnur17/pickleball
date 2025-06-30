@@ -28,7 +28,8 @@ class PaymentController extends GetxController {
   Future<void> createPaymentSession({
     required String reference,
     required String modelType,
-  }) async {
+  })
+  async {
     isLoading.value = true;
     debugPrint(';;;;;;;;;;;;;;;;;; $modelType ;;;;;;;;;;;;;;;;;;;');
     String token = LocalStorage.getData(key: AppConstant.accessToken);

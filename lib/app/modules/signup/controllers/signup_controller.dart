@@ -21,6 +21,20 @@ class SignupController extends GetxController {
 
   var isLoading = false.obs;
 
+
+  var isPasswordVisible = false.obs;
+  var isCheckboxVisible = false.obs;
+
+  // Method to toggle password visibility
+  void togglePasswordVisibility() {
+    isPasswordVisible.toggle();
+  }
+
+  void toggleCheckboxVisibility() {
+    isCheckboxVisible.toggle();
+
+  }
+
   @override
   void onClose() {
     super.onClose();
@@ -35,6 +49,16 @@ class SignupController extends GetxController {
   Future<void> registerUser() async {
     final Uri url = Uri.parse(Api.register);
     final request = http.MultipartRequest('POST', url);
+
+    if (passwordController.text.trim().length < 6) {
+      Get.snackbar('Error', 'Password must be at least 6 characters');
+      return;
+    }
+
+    if (contactNumberController.text.trim().length < 11 || contactNumberController.text.trim().length < 10 ) {
+      Get.snackbar('Error', 'Contact number must be at least 10/11 characters');
+      return;
+    }
 
     request.fields['data'] = json.encode({
       'name': nameController.text,

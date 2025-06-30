@@ -1,5 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pickleball/app/modules/profile_and_settings/views/privacy_and_security_view.dart';
 import 'package:pickleball/app/modules/signup/controllers/signup_controller.dart';
 import 'package:pickleball/common/widgets/custom_loader.dart';
 
@@ -10,6 +12,7 @@ import '../../../../common/size_box/custom_sizebox.dart';
 import '../../../../common/widgets/custom_button.dart';
 import '../../../../common/widgets/custom_textfield.dart';
 import '../../login/views/login_view.dart';
+import '../../profile_and_settings/views/term_and_conditios_view.dart';
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
@@ -93,27 +96,64 @@ class _SignupViewState extends State<SignupView> {
                   sh12,
                   Text('Create Password', style: h4),
                   sh8,
-                  CustomTextField(
-                    sufIcon: Image.asset(
-                      AppImages.eyeClose,
-                      scale: 4,
+                  Obx(() => CustomTextField(
+                    sufIcon: GestureDetector(
+                      onTap: () {
+                        signupController.togglePasswordVisibility();
+                      },
+                      child: Image.asset(
+                        signupController.isPasswordVisible.value
+                            ? AppImages.eye
+                            : AppImages.eyeClose,
+                        scale: 4,
+                      ),
                     ),
+                    obscureText: !signupController.isPasswordVisible.value,
                     hintText: '**********',
                     controller: signupController.passwordController,
                     //obscureText: true,
-                  ),
+                  ),),
                   sh20,
                   Row(
                     children: [
-                      Image.asset(
-                        AppImages.checkBoxFilled,
-                        scale: 4,
+                      Obx(
+                            () => GestureDetector(
+                          onTap: () {
+                            signupController.toggleCheckboxVisibility();
+                          },
+                          child: Image.asset(
+                            signupController.isCheckboxVisible.value
+                                ? AppImages.checkBoxFilled
+                                : AppImages.checkBox,
+                            scale: 4,
+                          ),
+                        ),
                       ),
-                      sw16,
+                      sw12,
                       Expanded(
-                        child: Text(
-                          'I agree to the Terms & Conditions and Privacy Policy',
-                          style: h4,
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(text: 'I agree to the ', style: h4),
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Get.to(() => TermsAndConditionsView());
+                                  },
+                                text: 'Terms & Condition',
+                                style: h4.copyWith(color: AppColors.textColorBlueV2),
+                              ),
+                              TextSpan(text: ' and ', style: h4),
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Get.to(() => PrivacyAndSecurityView());
+                                  },
+                                text: 'Privacy Policy',
+                                style: h4.copyWith(color: AppColors.textColorBlueV2),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ],

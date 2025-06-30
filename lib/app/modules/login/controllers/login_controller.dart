@@ -14,10 +14,24 @@ import '../../dashboard/views/dashboard_view.dart';
 class LoginController extends GetxController {
   var isLoading = false.obs;
 
+  var isPasswordVisible = false.obs;
+  var isCheckboxVisible = false.obs;
+
+  // Method to toggle password visibility
+  void togglePasswordVisibility() {
+    isPasswordVisible.toggle();
+  }
+
+  void toggleCheckboxVisibility() {
+    isCheckboxVisible.toggle();
+
+  }
+
   Future userLogin({
     required String email,
     required String password,
-  }) async {
+  })
+  async {
     try {
       isLoading(true);
       var map = {

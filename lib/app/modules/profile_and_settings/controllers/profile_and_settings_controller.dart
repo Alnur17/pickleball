@@ -123,6 +123,7 @@ class ProfileAndSettingsController extends GetxController {
   })
   async {
     try {
+      isLoading.value = true;
       String accessToken = LocalStorage.getData(key: AppConstant.accessToken);
       if (accessToken.isEmpty) {
         kSnackBar(message: "User not authenticated", bgColor: AppColors.orange);
@@ -192,6 +193,8 @@ class ProfileAndSettingsController extends GetxController {
       kSnackBar(
           message: "Error updating profile: $e", bgColor: AppColors.orange);
       debugPrint("Update Error: $e");
+    }finally {
+      isLoading.value = false;
     }
   }
 

@@ -22,7 +22,6 @@ class BookingView extends StatefulWidget {
 class _BookingViewState extends State<BookingView> {
   final BookingController bookingController = Get.put(BookingController());
 
-  //final PaymentController paymentController = Get.put(PaymentController());
 
   @override
   void initState() {

@@ -40,7 +40,7 @@ class Datum {
   final bool? isDeleted;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final int? originalPrice;
+  final double? originalPrice;
   final String? discountApplied;
 
   factory Datum.fromJson(Map<String, dynamic> json){
@@ -53,7 +53,9 @@ class Datum {
       isDeleted: json["isDeleted"],
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
-      originalPrice: json["originalPrice"],
+      originalPrice: (json["originalPrice"] is int)
+          ? (json["originalPrice"] as int).toDouble()
+          : json["originalPrice"] as double,
       discountApplied: json["discountApplied"],
     );
   }
@@ -83,6 +85,3 @@ class Meta {
   }
 
 }
-
-
-

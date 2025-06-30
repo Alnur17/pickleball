@@ -26,7 +26,7 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController emailTEController = TextEditingController();
   TextEditingController passwordTEController = TextEditingController();
 
-  final RxBool isChecked = false.obs;
+  final isChecked = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +70,22 @@ class _LoginViewState extends State<LoginView> {
                   const SizedBox(height: 12),
                   Text('Password', style: h4),
                   sh8,
-                  CustomTextField(
+                  Obx(() => CustomTextField(
                     controller: passwordTEController,
-                    sufIcon: Image.asset(
-                      AppImages.eyeClose,
-                      scale: 4,
+                    sufIcon: GestureDetector(
+                      onTap: () {
+                        loginController.togglePasswordVisibility();
+                      },
+                      child: Image.asset(
+                        loginController.isPasswordVisible.value
+                            ? AppImages.eye
+                            : AppImages.eyeClose,
+                        scale: 4,
+                      ),
                     ),
+                    obscureText: !loginController.isPasswordVisible.value,
                     hintText: '**********',
-                  ),
+                  ),),
                 ],
               ),
               sh16,
